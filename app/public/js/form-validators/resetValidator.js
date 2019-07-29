@@ -12,7 +12,7 @@ ResetValidator.prototype.validatePassword = function(s)
 	if (s.length >= 6){
 		return true;
 	}	else{
-		this.showAlert('Password Should Be At Least 6 Characters');
+		this.showAlert('A jelszó minimum 6 karakter hosszú legyen!');
 		return false;
 	}
 }

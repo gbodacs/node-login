@@ -16,20 +16,14 @@ function AccountValidator()
 		return s.length >= 3;
 	}
 	
-	this.validatePassword = function(s)
+	this.validateYturl = function(s)
 	{
-	// if user is logged in and hasn't changed their password, return ok
-		if ($('#userId').val() && s===''){
-			return true;
-		}	else{
-			return s.length >= 6;
-		}
+		return s.length >= 3;
 	}
 	
-	this.validateEmail = function(e)
+	this.validateUnit = function(e)
 	{
-		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-		return re.test(e);
+		return s.length >= 1;
 	}
 	
 	this.showErrors = function(a)

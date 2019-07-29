@@ -1,34 +1,34 @@
 
 $(document).ready(function(){
 
-	var hc = new HomeController();
-	var av = new AccountValidator();
+	var ec = new ExcerciseController();
+	var ev = new ExcerciseValidator();
 	
-	$('#account-form').ajaxForm({
+	$('#excercise-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
-			if (av.validateForm() == false){
+			if (ev.validateForm() == false){
 				return false;
 			} 	else{
 			// push the disabled username field onto the form data array //
-				formData.push({name:'user', value:$('#user-tf').val()})
+				formData.push({name:'excercise', value:$('#excercise-tf').val()})
 				return true;
 			}
 		},
 		success	: function(responseText, status, xhr, $form){
-			if (status == 'success') hc.onUpdateSuccess();
+			if (status == 'success') ec.onUpdateSuccess();
 		},
 		error : function(e){
-			if (e.responseText == 'email-taken'){
-				av.showInvalidEmail();
+			/*if (e.responseText == 'email-taken'){
+				ev.showInvalidEmail();
 			}	else if (e.responseText == 'username-taken'){
-				av.showInvalidUserName();
-			}
+				ev.showInvalidUserName();
+			}*/
 		}
 	});
 	$('#name-tf').focus();
 
 // customize the account settings form //
-	
+	/*
 	$('#account-form h3').text('Felhasználói beállítások');
 	$('#account-form #sub').text('Itt vannak a fiókod beállításai és az adataid.');
 	$('#user-tf').attr('disabled', 'disabled');
@@ -45,5 +45,5 @@ $(document).ready(function(){
 	$('.modal-confirm .cancel').html('Mégsem');
 	$('.modal-confirm .submit').html('Törlés');
 	$('.modal-confirm .submit').addClass('btn-danger');
-
+*/
 });

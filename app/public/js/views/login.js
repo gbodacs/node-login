@@ -20,7 +20,7 @@ $(document).ready(function(){
 			if (status == 'success') window.location.href = '/home';
 		},
 		error : function(e){
-			lv.showLoginError('Login Failure', 'Please check your username and/or password');
+			lv.showLoginError('Nem sikerült belépni', 'Biztosan jól írtad be az adataidat?');
 		}
 	}); 
 
@@ -47,22 +47,22 @@ $(document).ready(function(){
 				ev.hideEmailAlert();
 				return true;
 			}	else{
-				ev.showEmailAlert("Please enter a valid email address");
+				ev.showEmailAlert("Kérlek egy valódi emailt adj meg");
 				return false;
 			}
 		},
 		success	: function(responseText, status, xhr, $form){
 			$('#cancel').html('OK');
 			$('#retrieve-password-submit').hide();
-			ev.showEmailSuccess("A link to reset your password was emailed to you.");
+			ev.showEmailSuccess("Emailben elküldtük a jelszavad törléséhez szükséges információkat.");
 		},
 		error : function(e){
 			if (e.responseText == 'email-not-found'){
-				ev.showEmailAlert("Email not found. Are you sure you entered it correctly?");
+				ev.showEmailAlert("Az email címed nem találjuk, biztosan jól írtad be?");
 			}	else{
 				$('#cancel').html('OK');
 				$('#retrieve-password-submit').hide();
-				ev.showEmailAlert("Sorry. There was a problem, please try again later.");
+				ev.showEmailAlert("Sajnáljuk, valami probléma történt, később próbáld újra.");
 			}
 		}
 	});

@@ -6,11 +6,11 @@ input(type='hidden', value= user._id)#userId
 
 #account-form-container.center-vertical
 	form.card.card-body.bg-light(method='post')#account-form
-		h2
-		h6#sub Please tell us a little about yourself.
+		h
+		h6#sub Kérlek adj meg néhány alapadatot magadról.
 		hr
 		.form-group.row
-			label.col-sm-3.col-form-label.col-form-label-sm Name
+			label.col-sm-3.col-form-label.col-form-label-sm Név
 			.col-sm-9
 				input.form-control#name-tf(type='text', name='name', value= user.name)
 
@@ -20,19 +20,19 @@ input(type='hidden', value= user._id)#userId
 				input.form-control#email-tf(type='email', name='email', value= user.email)
 
 		.form-group.row.margin-zero
-			label.col-sm-3.col-form-label.col-form-label-sm Location
+			label.col-sm-3.col-form-label.col-form-label-sm Ország
 			.col-sm-9
 				select.custom-select#country-list(name='country')
 					each item in countries
 						option(selected=item.name == user.country)= item.name
 		hr
 		.form-group.row
-			label.col-sm-3.col-form-label.col-form-label-sm Username
+			label.col-sm-3.col-form-label.col-form-label-sm Felhasználó
 			.col-sm-9
 				input.form-control#user-tf(type='text', name='user', value= user.user).disabled
 
 		.form-group.row.margin-zero
-			label.col-sm-3.col-form-label.col-form-label-sm Password
+			label.col-sm-3.col-form-label.col-form-label-sm Jelszó
 			.col-sm-9
 				input.form-control#pass-tf(type='password', name='pass', value='')
 

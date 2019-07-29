@@ -4,27 +4,27 @@ extends layout
 block content
 	#login.center-vertical
 		form.card.card-body.bg-light(method='post')
-			h2 Hello!
-			h6 Please Login To Your Account
+			h3 Üdv újra itt!
+			h6 Kérlek lépj be, ha már van fiókod
 			.form-group
-				label Username
+				label Felhasználó
 				input.form-control(type='text', id='user-tf', name='user')
 			.form-group
-				label Password
+				label Jelszó
 				input.form-control(type='password', id='pass-tf', name='pass')
 			#row1
 				button(type='button')#btn_remember.btn.btn-light.btn-left
 					span.fa.fa-check-square
-					| Remember Me
+					| Emlékezz rám
 				button(type='submit')#btn_sign_in.btn.btn-primary
 					span.fa.fa-lock
-					| Sign In
+					| Belépés
 			hr
 			.btm-links
 				#forgot-password
-					a(href='#') Forgot Your Password?
+					a(href='#') Elfelejtettem a jelszavam
 				#create-account
-					a(href='/signup') Create An Account
+					a(href='/signup') Fiók nyitása
 
 	include modals/alert
 	include modals/lost-password

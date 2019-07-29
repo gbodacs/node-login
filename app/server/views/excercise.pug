@@ -1,0 +1,43 @@
+
+
+// preset form values if we receive an excercise object //
+- excercise = typeof(udata) != 'undefined' ? udata : { }
+// store the excercise ID on the client side in a hidden input field //
+input(type='hidden', value= excercise._id)#ExcerId
+
+#excercise-form-container.center-vertical
+	form.card.card-body.bg-light(method='post')#excercise-form
+		h3
+		h6#sub Itt tudsz új gyakorlatot felvenni.
+		hr
+		.form-group.row.margin-zero
+			label.col-sm-3.col-form-label.col-form-label-sm Név
+			.col-sm-9
+				input.form-control#name-tf(type='text', name='name', value=excercise.name)
+		hr
+
+		.form-group.row.margin-zero
+			label.col-sm-3.col-form-label.col-form-label-sm Youtube URL
+			.col-sm-9
+				input.form-control#email-tf(type='text', name='yturl', value=excercise.yturl)
+		hr
+
+		.form-group.row.margin-zero
+			label.col-sm-3.col-form-label.col-form-label-sm Mértékegység
+			.col-sm-9
+				input.form-control#email-tf(type='text', name='unit', value=excercise.unit)
+		hr
+
+		.form-group.row.margin-zero
+			label.col-sm-3.col-form-label.col-form-label-sm Megjegyzés
+			.col-sm-9
+				input.form-control#pass-tf(type='text', name='comment', value=excercise.comment)
+
+		hr
+		.form-buttons
+			button(type='submit')#excercise-form-btn1.btn.btn-outline-dark Törlés
+			button(type='submit')#excercise-form-btn2.btn.btn-primary Hozzáadás
+
+// display form errors in a custom modal window //
+
+include modals/form-errors

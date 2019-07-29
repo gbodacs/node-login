@@ -23,7 +23,7 @@ $(document).ready(function(){
 	
 // customize the account signup form //
 	
-	$('#account-form h2').text('Signup');
+	$('#account-form h3').text('Signup');
 	$('#account-form #sub').text('Please tell us a little about yourself');
 	$('#account-form-btn1').html('Cancel');
 	$('#account-form-btn2').html('Submit');
