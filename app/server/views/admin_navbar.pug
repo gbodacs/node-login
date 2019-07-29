@@ -1,0 +1,22 @@
+
+extends layout
+
+block content
+	nav.navbar.navbar-expand.navbar-light.bg-light
+		ul.navbar-nav.mr-auto
+			li.nav-item
+				a.nav-link(href='/admin_users') Felhasználók
+			li.nav-item
+				a.nav-link(href='/admin_dailyplan') Napi tervek
+			li.nav-item
+				a.nav-link(href='/admin_excercises') Gyakorlatok
+			li.nav-item
+				a.nav-link(href='/admin_blocks') Blokkok
+		ul.navbar-nav.float-right
+			li.nav-item
+				a.nav-link(href='/login') Login
+			li.nav-item.dropdown
+				a.nav-link.dropdown-toggle(id='navbarDropdownMenuLink', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Accounts
+					.dropdown-menu(aria-labelledby='navbarDropdownMenuLink')
+						a.dropdown-item(href='#') Settings
+						a.dropdown-item(href='#') Logout

@@ -1,10 +1,10 @@
 
-function AccountValidator()
+function ExcerciseValidator()
 {
 // build array maps of the form inputs & control groups //
 
-	this.formFields = [$('#name-tf'), $('#email-tf'), $('#user-tf'), $('#pass-tf')];
-	this.controlGroups = [$('#name-cg'), $('#email-cg'), $('#user-cg'), $('#pass-cg')];
+	this.formFields = [$('#name-tf'), $('#yturl-tf'), $('#unit-tf'), $('#comment-tf')];
+	this.controlGroups = [$('#name-cg'), $('#yturl-cg'), $('#unit-cg'), $('#comment-cg')];
 	
 // bind the form-error modal window to this controller to display any errors //
 	
@@ -37,37 +37,43 @@ function AccountValidator()
 
 }
 
-AccountValidator.prototype.showInvalidEmail = function()
+ExcerciseValidator.prototype.showInvalidName = function()
 {
 	this.controlGroups[1].addClass('error');
-	this.showErrors(['Ez az email cím már használatban van.']);
+	this.showErrors(['Hibás vevet adtál meg, minimum 3 karakter hosszú legyen.']);
 }
 
-AccountValidator.prototype.showInvalidUserName = function()
+ExcerciseValidator.prototype.showInvalidYturl = function()
 {
 	this.controlGroups[2].addClass('error');
-	this.showErrors(['Ez a felhasználónév már használatban van.']);
+	this.showErrors(['Hibás a YouTube link, minimum 3 karakter hosszú legyen']);
 }
 
-AccountValidator.prototype.validateForm = function()
+ExcerciseValidator.prototype.showInvalidUnit = function()
+{
+	this.controlGroups[2].addClass('error');
+	this.showErrors(['Hibás a mértékegység, minimum 1 karakter hosszú legyen']);
+}
+
+ExcerciseValidator.prototype.validateForm = function()
 {
 	var e = [];
 	for (var i=0; i < this.controlGroups.length; i++) this.controlGroups[i].removeClass('error');
+
 	if (this.validateName(this.formFields[0].val()) == false) {
 		this.controlGroups[0].addClass('error'); e.push('Kérlek add meg a neved!');
 	}
-	if (this.validateEmail(this.formFields[1].val()) == false) {
-		this.controlGroups[1].addClass('error'); e.push('Kérlek adj meg egy valódi email címet!');
+	if (this.validateYturl(this.formFields[1].val()) == false) {
+		this.controlGroups[1].addClass('error'); e.push('Kérlek adj meg egy YouTube URL-t!');
 	}
-	if (this.validateName(this.formFields[2].val()) == false) {
-		this.controlGroups[2].addClass('error');
-		e.push('Válassz felhasználónevet!');
+	if (this.validateUnit(this.formFields[2].val()) == false) {
+		this.controlGroups[2].addClass('error'); e.push('Kérlek adj meg egy mértékegységet!');
 	}
-	if (this.validatePassword(this.formFields[3].val()) == false) {
-		this.controlGroups[3].addClass('error');
-		e.push('A jelszó minimum 6 karakter hosszú legyen!');
-	}
-	if (e.length) this.showErrors(e);
+	
+
+	if (e.length) 
+		this.showErrors(e);
+
 	return e.length === 0;
 }
 

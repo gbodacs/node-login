@@ -55,22 +55,22 @@ module.exports = function(app) {
 /*
 	ADMIN
 */
-app.get('/admin', function(req, res) {
+app.get('/admin_excercise', function(req, res) {
 	if (req.session.user == null){
 		res.redirect('/');
 	}	else{
-		res.render('admin', {
+		res.render('admin_excercise', {
 			countries : CT,
-			udata : req.session.user
+//			udata : req.session.user
 		});
 	}
 });
 
-app.post('/admin', function(req, res){
+app.post('/admin_excercise', function(req, res){
 	if (req.session.user == null){
 		res.redirect('/');
 	}	else{
-		AM.updateAccount({
+		/*AM.updateAccount({
 			id		: req.session.user._id,
 			name	: req.body['name'],
 			email	: req.body['email'],
@@ -83,7 +83,7 @@ app.post('/admin', function(req, res){
 				req.session.user = o.value;
 				res.status(200).send('ok');
 			}
-		});
+		});*/
 	}
 });
 

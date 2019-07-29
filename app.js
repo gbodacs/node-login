@@ -28,7 +28,7 @@ app.use(express.static(__dirname + '/app/public'));
 
 process.env.DB_HOST = process.env.DB_HOST || 'localhost'
 process.env.DB_PORT = process.env.DB_PORT || 27017;
-process.env.DB_NAME = process.env.DB_NAME || 'node-login';
+process.env.DB_NAME = process.env.DB_NAME || 'brigilogin';
 
 if (app.get('env') != 'live'){
 	process.env.DB_URL = 'mongodb://'+process.env.DB_HOST+':'+process.env.DB_PORT;

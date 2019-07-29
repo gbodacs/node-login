@@ -10,7 +10,7 @@ $(document).ready(function(){
 				return false;
 			} 	else{
 			// push the disabled username field onto the form data array //
-				formData.push({name:'excercise', value:$('#excercise-tf').val()})
+				formData.push({name:'name', value:$('#name-tf').val()})
 				return true;
 			}
 		},

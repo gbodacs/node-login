@@ -1,5 +1,5 @@
 
-function HomeController()
+function ExcerciseController()
 {
 // bind event listeners to button clicks //
 	var that = this;
@@ -7,13 +7,13 @@ function HomeController()
 // handle user logout //
 	$('#btn-logout').click(function(){ that.attemptLogout(); });
 
-// confirm account deletion //
-	$('#account-form-btn1').click(function(){$('.modal-confirm').modal('show')});
+// Clear input //
+	$('#excercise-form-btn1').click(function(){ that.clearInput(); });
 
-// handle account deletion //
-	$('.modal-confirm .submit').click(function(){ that.deleteAccount(); });
+// Add new excercise //
+	$('.modal-confirm .submit').click(function(){ that.addExcercise(); });
 
-	this.deleteAccount = function()
+	/*this.deleteAccount = function()
 	{
 		$('.modal-confirm').modal('hide');
 		var that = this;
@@ -27,7 +27,7 @@ function HomeController()
 				console.log(jqXHR.responseText+' :: '+jqXHR.statusText);
 			}
 		});
-	}
+	}*/
 
 	this.attemptLogout = function()
 	{

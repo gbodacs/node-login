@@ -1,17 +1,9 @@
 
-extends layout
 
-block content
-	nav.navbar.navbar-expand.navbar-light.bg-light
-		.nav-item
-			.navbar-brand Beállítások
-		.navbar-nav.ml-auto
-			.nav-item
-				button.btn.navbar-btn.btn-outline-dark#btn-logout Kilépés
-
-	include account
-	include modals/alert
-	include modals/confirm
+include user_navbar
+include account
+include modals/alert
+include modals/confirm
 
 block scripts
 	script(src='/js/views/home.js')

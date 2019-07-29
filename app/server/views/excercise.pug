@@ -5,38 +5,34 @@
 // store the excercise ID on the client side in a hidden input field //
 input(type='hidden', value= excercise._id)#ExcerId
 
-#excercise-form-container.center-vertical
+#excercise-form-container.center-vertical.col-sm-10
 	form.card.card-body.bg-light(method='post')#excercise-form
 		h3
-		h6#sub Itt tudsz új gyakorlatot felvenni.
+		h4#sub Itt tudsz új gyakorlatot felvenni.
 		hr
-		.form-group.row.margin-zero
-			label.col-sm-3.col-form-label.col-form-label-sm Név
-			.col-sm-9
-				input.form-control#name-tf(type='text', name='name', value=excercise.name)
-		hr
+		.form-group.row
+			label.col-sm-4.col-form-label.col-form-label-sm Név
+			.col-sm-8
+				input.form-control#name-tf(type='text', name='name', value=excercise.name)		
 
-		.form-group.row.margin-zero
-			label.col-sm-3.col-form-label.col-form-label-sm Youtube URL
-			.col-sm-9
-				input.form-control#email-tf(type='text', name='yturl', value=excercise.yturl)
-		hr
+		.form-group.row
+			label.col-sm-4.col-form-label.col-form-label-sm Youtube URL
+			.col-sm-8
+				input.form-control#yturl-tf(type='text', name='yturl', value=excercise.yturl)
 
-		.form-group.row.margin-zero
-			label.col-sm-3.col-form-label.col-form-label-sm Mértékegység
-			.col-sm-9
-				input.form-control#email-tf(type='text', name='unit', value=excercise.unit)
-		hr
+		.form-group.row
+			label.col-sm-4.col-form-label.col-form-label-sm Mértékegység
+			.col-sm-8
+				input.form-control#unit-tf(type='text', name='unit', value=excercise.unit)
 
-		.form-group.row.margin-zero
-			label.col-sm-3.col-form-label.col-form-label-sm Megjegyzés
-			.col-sm-9
-				input.form-control#pass-tf(type='text', name='comment', value=excercise.comment)
-
+		.form-group.row
+			label.col-sm-4.col-form-label.col-form-label-sm Megjegyzés
+			.col-sm-8
+				input.form-control#comment-tf(type='text', name='comment', value=excercise.comment)
 		hr
 		.form-buttons
-			button(type='submit')#excercise-form-btn1.btn.btn-outline-dark Törlés
-			button(type='submit')#excercise-form-btn2.btn.btn-primary Hozzáadás
+			button(type='button')#excercise-form-btn1.btn.btn-outline-dark Hozzáadás
+			button(type='submit')#excercise-form-btn2.btn.btn-primary Törlés
 
 // display form errors in a custom modal window //
 
