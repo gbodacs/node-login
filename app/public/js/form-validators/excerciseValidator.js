@@ -3,8 +3,8 @@ function ExcerciseValidator()
 {
 // build array maps of the form inputs & control groups //
 
-	this.formFields = [$('#name-tf'), $('#yturl-tf'), $('#unit-tf'), $('#comment-tf')];
-	this.controlGroups = [$('#name-cg'), $('#yturl-cg'), $('#unit-cg'), $('#comment-cg')];
+	this.formFields = [$('#name-tf'), $('#movielink-tf'), $('#unit-tf'), $('#comment-tf')];
+	this.controlGroups = [$('#name-cg'), $('#movielink-cg'), $('#unit-cg'), $('#comment-cg')];
 	
 // bind the form-error modal window to this controller to display any errors //
 	
@@ -16,7 +16,7 @@ function ExcerciseValidator()
 		return s.length >= 3;
 	}
 	
-	this.validateYturl = function(s)
+	this.validateMovieLink = function(s)
 	{
 		return s.length >= 3;
 	}
@@ -30,8 +30,11 @@ function ExcerciseValidator()
 	{
 		$('.modal-form-errors .modal-body p').text('Kérlek javítsd az alábbi hibákat:');
 		var ul = $('.modal-form-errors .modal-body ul');
-			ul.empty();
-		for (var i=0; i < a.length; i++) ul.append('<li>'+a[i]+'</li>');
+		ul.empty();
+
+		for (var i=0; i < a.length; i++) 
+			ul.append('<li>'+a[i]+'</li>');
+
 		this.alert.modal('show');
 	}
 
@@ -43,7 +46,7 @@ ExcerciseValidator.prototype.showInvalidName = function()
 	this.showErrors(['Hibás vevet adtál meg, minimum 3 karakter hosszú legyen.']);
 }
 
-ExcerciseValidator.prototype.showInvalidYturl = function()
+ExcerciseValidator.prototype.showInvalidMovieLink = function()
 {
 	this.controlGroups[2].addClass('error');
 	this.showErrors(['Hibás a YouTube link, minimum 3 karakter hosszú legyen']);
@@ -63,7 +66,7 @@ ExcerciseValidator.prototype.validateForm = function()
 	if (this.validateName(this.formFields[0].val()) == false) {
 		this.controlGroups[0].addClass('error'); e.push('Kérlek add meg a neved!');
 	}
-	if (this.validateYturl(this.formFields[1].val()) == false) {
+	if (this.validateMovieLink(this.formFields[1].val()) == false) {
 		this.controlGroups[1].addClass('error'); e.push('Kérlek adj meg egy YouTube URL-t!');
 	}
 	if (this.validateUnit(this.formFields[2].val()) == false) {

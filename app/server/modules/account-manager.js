@@ -4,23 +4,35 @@ const moment 		= require('moment');
 const MongoClient 	= require('mongodb').MongoClient;
 
 var db, accounts;
-MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function(e, client) {
-	if (e){
+MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function(e, client) 
+{
+	if (e)
+	{
 		console.log(e);
-	}	else{
+	}	else
+	{
 		db = client.db(process.env.DB_NAME);
 		accounts = db.collection('accounts');
-	// index fields 'user' & 'email' for faster new account validation //
-		accounts.createIndex({user: 1, email: 1});
+		accounts.createIndex({user: 1, email: 1}); // index fields 'user' & 'email' for faster new account validation
+
+		block = db.collection('block');
+		block.createIndex({name: 1});
+
+		excercise = db.collection('excercise');
+		excercise.createIndex({name: 1});
+
+		dailyplan = db.collection('dailyplan');
+		dailyplan.createIndex({userid: 1});
+			
 		console.log('mongo :: connected to database :: "'+process.env.DB_NAME+'"');
 	}
 });
 
 const guid = function(){return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {var r = Math.random()*16|0,v=c=='x'?r:r&0x3|0x8;return v.toString(16);});}
 
-/*
+/**********************************************
 	login validation methods
-*/
+**********************************************/
 
 exports.autoLogin = function(user, pass, callback)
 {
@@ -63,7 +75,7 @@ exports.generateLoginKey = function(user, ipAddress, callback)
 
 exports.validateLoginKey = function(cookie, ipAddress, callback)
 {
-// ensure the cookie maps to the user's last recorded ip address //
+// ensure the cookie maps to the user's last recorded ip address
 	accounts.findOne({cookie:cookie, ip:ipAddress}, callback);
 }
 
@@ -80,24 +92,26 @@ exports.generatePasswordKey = function(email, ipAddress, callback)
 			callback(e || 'account not found');
 		}
 	});
-}
+};
 
 exports.validatePasswordKey = function(passKey, ipAddress, callback)
 {
-// ensure the passKey maps to the user's last recorded ip address //
+// ensure the passKey maps to the user's last recorded ip address 
 	accounts.findOne({passKey:passKey, ip:ipAddress}, callback);
-}
+};
 
-/*
-	record insertion, update & deletion methods
-*/
+/**********************************************
+	account insertion, update & deletion methods
+ **********************************************/
 
 exports.addNewAccount = function(newData, callback)
 {
 	accounts.findOne({user:newData.user}, function(e, o) {
-		if (o){
+		if (o)
+		{
 			callback('username-taken');
-		}	else{
+		}	else
+		{
 			accounts.findOne({email:newData.email}, function(e, o) {
 				if (o){
 					callback('email-taken');
@@ -112,7 +126,7 @@ exports.addNewAccount = function(newData, callback)
 			});
 		}
 	});
-}
+};
 
 exports.updateAccount = function(newData, callback)
 {
@@ -133,7 +147,7 @@ exports.updateAccount = function(newData, callback)
 			findOneAndUpdate(newData);
 		});
 	}
-}
+};
 
 exports.updatePassword = function(passKey, newPass, callback)
 {
@@ -141,34 +155,72 @@ exports.updatePassword = function(passKey, newPass, callback)
 		newPass = hash;
 		accounts.findOneAndUpdate({passKey:passKey}, {$set:{pass:newPass}, $unset:{passKey:''}}, {returnOriginal : false}, callback);
 	});
-}
+};
 
-/*
+/**********************************************
 	account lookup methods
-*/
+ **********************************************/
 
 exports.getAllRecords = function(callback)
 {
 	accounts.find().toArray(
 		function(e, res) {
-		if (e) callback(e)
-		else callback(null, res)
+		if (e) 
+			callback(e)
+		else 
+			callback(null, res)
 	});
-}
+};
 
 exports.deleteAccount = function(id, callback)
 {
 	accounts.deleteOne({_id: getObjectId(id)}, callback);
-}
+};
 
 exports.deleteAllAccounts = function(callback)
 {
 	accounts.deleteMany({}, callback);
-}
+};
 
-/*
+/**********************************************
+	excercise insertion, update & deletion methods
+ **********************************************/
+
+exports.addNewExcercise = function(newData, callback)
+{
+	excercise.findOne({name:newData.name}, function(e, o) {
+		if (o)
+		{
+			callback('excercise-name-taken');
+		}	else
+		{
+			// append date stamp when record was created //
+			newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
+			excercise.insertOne(newData, callback);
+		}
+	});
+};
+
+exports.updateExcercise = function(newData, callback)
+{
+	var o = {
+		name : newData.name,
+		movielink : newData.movielink,
+		unit : newData.unit,
+		comment : newData.comment
+	};
+
+	excercise.findOneAndUpdate({_id:getObjectId(newData.id)}, {$set:o}, {returnOriginal : false}, callback);
+};
+
+exports.deleteExcercise = function(id, callback)
+{
+	excercise.deleteOne({_id:getObjectId(id)}, callback);
+};
+
+/**********************************************
 	private encryption & validation methods
-*/
+ ***********************************************/
 
 var generateSalt = function()
 {
