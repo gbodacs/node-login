@@ -13,21 +13,23 @@ function ExcerciseController()
 // Add new excercise //
 	$('.modal-confirm .submit').click(function(){ that.addExcercise(); });
 
-	/*this.deleteAccount = function()
+	this.addExcercise = function()
 	{
 		$('.modal-confirm').modal('hide');
 		var that = this;
 		$.ajax({
-			url: '/delete',
+			url: '/admin_excercise',
 			type: 'POST',
-			success: function(data){
-	 			that.showLockedAlert('A felhasználód kitöröltük.<br>Továbbítunk a főoldalra.');
+			success: function(data)
+			{
+	 			that.showLockedAlert('Gyakorlat az adatbázishoz hozzáadva.<br>blabla.');
 			},
-			error: function(jqXHR){
+			error: function(jqXHR)
+			{
 				console.log(jqXHR.responseText+' :: '+jqXHR.statusText);
 			}
 		});
-	}*/
+	}
 
 	this.attemptLogout = function()
 	{
@@ -50,8 +52,8 @@ function ExcerciseController()
 		$('.modal-alert .modal-header h4').text('Sikerült!');
 		$('.modal-alert .modal-body p').html(msg);
 		$('.modal-alert').modal('show');
-		$('.modal-alert button').click(function(){window.location.href = '/';})
-		setTimeout(function(){window.location.href = '/';}, 3000);
+		$('.modal-alert button').click(function(){window.location.href = '/admin_excercise';})
+		setTimeout(function(){window.location.href = '/admin_excercise';}, 3000);
 	}
 }
 
@@ -59,7 +61,7 @@ ExcerciseController.prototype.onUpdateSuccess = function()
 {
 	$('.modal-alert').modal({ show : false, keyboard : true, backdrop : true });
 	$('.modal-alert .modal-header h4').text('Sikerült!');
-	$('.modal-alert .modal-body p').html('A gyakorlat adatait frissítetted..');
+	$('.modal-alert .modal-body p').html('Felvettél egy új gyakorlatot.');
 	$('.modal-alert').modal('show');
 	$('.modal-alert button').off('click');
 }

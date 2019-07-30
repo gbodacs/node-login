@@ -58,6 +58,14 @@ module.exports = function (app) {
 		});
 	})
 
+	app.get('/logout', function (req, res) {
+		res.clearCookie('login');
+		req.session.destroy(function (e) {
+			//res.status(200).send('ok');
+			res.redirect('/');
+		});
+	})
+
 
 	/*
 		ADMIN
@@ -73,24 +81,29 @@ module.exports = function (app) {
 		}
 	});
 
-	app.post('/admin_excercise', function (req, res) {
-		if (req.session.user == null) {
+	app.post('/admin_excercise', function (req, res) 
+	{
+		if (req.session.user == null) 
+		{
 			res.redirect('/');
-		} else {
-			/*AM.updateAccount({
-				id		: req.session.user._id,
-				name	: req.body['name'],
-				email	: req.body['email'],
-				pass	: req.body['pass'],
-				country	: req.body['country']
-			}, function(e, o){
-				if (e){
-					res.status(400).send('error-updating-account');
-				}	else{
-					req.session.user = o.value;
+		} else 
+		{
+			AM.addNewExcercise({
+				name		: req.body['name'],
+				movielink	: req.body['movielink'],
+				unit		: req.body['unit'],
+				comment		: req.body['comment']
+			}, function(e, o)
+			{
+				if (e)
+				{
+					res.status(400).send('error-adding-excercise');
+				}	else
+				{
+					//req.session.user = o.value;
 					res.status(200).send('ok');
 				}
-			});*/
+			});
 		}
 	});
 

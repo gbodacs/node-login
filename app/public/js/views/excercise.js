@@ -18,9 +18,9 @@ $(document).ready(function(){
 			if (status == 'success') ec.onUpdateSuccess();
 		},
 		error : function(e){
-			/*if (e.responseText == 'email-taken'){
-				ev.showInvalidEmail();
-			}	else if (e.responseText == 'username-taken'){
+			if (e.responseText == 'error-adding-excercise'){
+				ev.showInvalidName();
+			}	/*else if (e.responseText == 'username-taken'){
 				ev.showInvalidUserName();
 			}*/
 		}

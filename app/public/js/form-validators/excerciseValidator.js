@@ -21,7 +21,7 @@ function ExcerciseValidator()
 		return s.length >= 3;
 	}
 	
-	this.validateUnit = function(e)
+	this.validateUnit = function(s)
 	{
 		return s.length >= 1;
 	}
@@ -43,10 +43,10 @@ function ExcerciseValidator()
 ExcerciseValidator.prototype.showInvalidName = function()
 {
 	this.controlGroups[1].addClass('error');
-	this.showErrors(['Hibás vevet adtál meg, minimum 3 karakter hosszú legyen.']);
+	this.showErrors(['Ez a gyakorlat-név már foglalt, adj meg másikat.']);
 }
 
-ExcerciseValidator.prototype.showInvalidMovieLink = function()
+/*ExcerciseValidator.prototype.showInvalidMovieLink = function()
 {
 	this.controlGroups[2].addClass('error');
 	this.showErrors(['Hibás a YouTube link, minimum 3 karakter hosszú legyen']);
@@ -56,20 +56,26 @@ ExcerciseValidator.prototype.showInvalidUnit = function()
 {
 	this.controlGroups[2].addClass('error');
 	this.showErrors(['Hibás a mértékegység, minimum 1 karakter hosszú legyen']);
-}
+}*/
 
 ExcerciseValidator.prototype.validateForm = function()
 {
 	var e = [];
-	for (var i=0; i < this.controlGroups.length; i++) this.controlGroups[i].removeClass('error');
+	for (var i=0; i < this.controlGroups.length; i++) 
+		this.controlGroups[i].removeClass('error');
 
-	if (this.validateName(this.formFields[0].val()) == false) {
+	if (this.validateName(this.formFields[0].val()) == false) 
+	{
 		this.controlGroups[0].addClass('error'); e.push('Kérlek add meg a neved!');
 	}
-	if (this.validateMovieLink(this.formFields[1].val()) == false) {
+
+	if (this.validateMovieLink(this.formFields[1].val()) == false) 
+	{
 		this.controlGroups[1].addClass('error'); e.push('Kérlek adj meg egy YouTube URL-t!');
 	}
-	if (this.validateUnit(this.formFields[2].val()) == false) {
+
+	if (this.validateUnit(this.formFields[2].val()) == false) 
+	{
 		this.controlGroups[2].addClass('error'); e.push('Kérlek adj meg egy mértékegységet!');
 	}
 	

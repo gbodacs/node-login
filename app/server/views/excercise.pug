@@ -11,28 +11,28 @@ input(type='hidden', value= excercise._id)#ExcerId
 		h4#sub Itt tudsz új gyakorlatot felvenni.
 		hr
 		.form-group.row
-			label.col-sm-4.col-form-label.col-form-label-sm Név
+			label.col-sm-3.col-form-label.col-form-label-sm Név
 			.col-sm-8
-				input.form-control#name-tf(type='text', name='name', value=excercise.name)		
+				input.form-control#name-tf(type='text', name='name', value= excercise.name)
 
 		.form-group.row
-			label.col-sm-4.col-form-label.col-form-label-sm Youtube URL
+			label.col-sm-3.col-form-label.col-form-label-sm Youtube URL
 			.col-sm-8
-				input.form-control#movielink-tf(type='text', name='movielink', value=excercise.movielink)
+				input.form-control#movielink-tf(type='text', name='movielink', value= excercise.movielink)
 
 		.form-group.row
-			label.col-sm-4.col-form-label.col-form-label-sm Mértékegység
+			label.col-sm-3.col-form-label.col-form-label-sm Mértékegység
 			.col-sm-8
-				input.form-control#unit-tf(type='text', name='unit', value=excercise.unit)
+				input.form-control#unit-tf(type='text', name='unit', value= excercise.unit)
 
 		.form-group.row
-			label.col-sm-4.col-form-label.col-form-label-sm Megjegyzés
+			label.col-sm-3.col-form-label.col-form-label-sm Megjegyzés
 			.col-sm-8
-				input.form-control#comment-tf(type='text', name='comment', value=excercise.comment)
+				input.form-control#comment-tf(type='text', name='comment', value= excercise.comment)
 		hr
 		.form-buttons
-			button(type='button')#excercise-form-btn1.btn.btn-outline-dark Hozzáadás
-			button(type='submit')#excercise-form-btn2.btn.btn-primary Törlés
+			button(type='button')#excercise-form-btn1.btn.btn-outline-dark Törlés
+			button(type='submit')#excercise-form-btn2.btn.btn-primary Hozzáadás
 
 // display form errors in a custom modal window //
 
