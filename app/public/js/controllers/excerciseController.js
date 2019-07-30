@@ -55,11 +55,11 @@ function ExcerciseController()
 	}
 }
 
-HomeController.prototype.onUpdateSuccess = function()
+ExcerciseController.prototype.onUpdateSuccess = function()
 {
 	$('.modal-alert').modal({ show : false, keyboard : true, backdrop : true });
 	$('.modal-alert .modal-header h4').text('Sikerült!');
-	$('.modal-alert .modal-body p').html('A felhasználói fiókod adatait frissítettük.');
+	$('.modal-alert .modal-body p').html('A gyakorlat adatait frissítetted..');
 	$('.modal-alert').modal('show');
 	$('.modal-alert button').off('click');
 }

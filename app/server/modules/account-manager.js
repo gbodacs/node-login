@@ -36,10 +36,13 @@ const guid = function(){return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[
 
 exports.autoLogin = function(user, pass, callback)
 {
-	accounts.findOne({user:user}, function(e, o) {
-		if (o){
+	accounts.findOne({user:user}, function(e, o)
+	{
+		if (o)
+		{
 			o.pass == pass ? callback(o) : callback(null);
-		}	else{
+		}	else
+		{
 			callback(null);
 		}
 	});
@@ -48,13 +51,18 @@ exports.autoLogin = function(user, pass, callback)
 exports.manualLogin = function(user, pass, callback)
 {
 	accounts.findOne({user:user}, function(e, o) {
-		if (o == null){
+		if (o == null)
+		{
 			callback('user-not-found');
-		}	else{
-			validatePassword(pass, o.pass, function(err, res) {
-				if (res){
+		}	else
+		{
+			validatePassword(pass, o.pass, function(err, res) 
+			{
+				if (res)
+				{
 					callback(null, o);
-				}	else{
+				}	else
+				{
 					callback('invalid-password');
 				}
 			});
@@ -65,10 +73,8 @@ exports.manualLogin = function(user, pass, callback)
 exports.generateLoginKey = function(user, ipAddress, callback)
 {
 	let cookie = guid();
-	accounts.findOneAndUpdate({user:user}, {$set:{
-		ip : ipAddress,
-		cookie : cookie
-	}}, {returnOriginal : false}, function(e, o){ 
+	accounts.findOneAndUpdate({user:user}, {$set:{ ip : ipAddress, cookie : cookie}}, {returnOriginal : false}, function(e, o)
+	{ 
 		callback(cookie);
 	});
 }
@@ -82,13 +88,13 @@ exports.validateLoginKey = function(cookie, ipAddress, callback)
 exports.generatePasswordKey = function(email, ipAddress, callback)
 {
 	let passKey = guid();
-	accounts.findOneAndUpdate({email:email}, {$set:{
-		ip : ipAddress,
-		passKey : passKey
-	}, $unset:{cookie:''}}, {returnOriginal : false}, function(e, o){
-		if (o.value != null){
+	accounts.findOneAndUpdate({email:email}, {$set:{ip : ipAddress,passKey : passKey }, $unset:{cookie:''}}, {returnOriginal : false}, function(e, o)
+	{
+		if (o.value != null)
+		{
 			callback(null, o.value);
-		}	else{
+		}	else
+		{
 			callback(e || 'account not found');
 		}
 	});
@@ -106,17 +112,22 @@ exports.validatePasswordKey = function(passKey, ipAddress, callback)
 
 exports.addNewAccount = function(newData, callback)
 {
-	accounts.findOne({user:newData.user}, function(e, o) {
+	accounts.findOne({user:newData.user}, function(e, o) 
+	{
 		if (o)
 		{
 			callback('username-taken');
 		}	else
 		{
-			accounts.findOne({email:newData.email}, function(e, o) {
-				if (o){
+			accounts.findOne({email:newData.email}, function(e, o) 
+			{
+				if (o)
+				{
 					callback('email-taken');
-				}	else{
-					saltAndHash(newData.pass, function(hash){
+				}	else
+				{
+					saltAndHash(newData.pass, function(hash)
+					{
 						newData.pass = hash;
 					// append date stamp when record was created //
 						newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
@@ -130,28 +141,32 @@ exports.addNewAccount = function(newData, callback)
 
 exports.updateAccount = function(newData, callback)
 {
-	let findOneAndUpdate = function(data){
-		var o = {
+	let findOneAndUpdate = function(data)
+	{
+		var o = 
+		{
 			name : data.name,
 			email : data.email,
 			country : data.country
 		}
-		if (data.pass) o.pass = data.pass;
+		if (data.pass) 
+			o.pass = data.pass;
+
 		accounts.findOneAndUpdate({_id:getObjectId(data.id)}, {$set:o}, {returnOriginal : false}, callback);
 	}
-	if (newData.pass == ''){
+	if (newData.pass == '')
+	{
 		findOneAndUpdate(newData);
-	}	else { 
-		saltAndHash(newData.pass, function(hash){
-			newData.pass = hash;
-			findOneAndUpdate(newData);
-		});
+	}	else 
+	{
+		saltAndHash( newData.pass, function(hash){newData.pass = hash;findOneAndUpdate(newData);} );
 	}
 };
 
 exports.updatePassword = function(passKey, newPass, callback)
 {
-	saltAndHash(newPass, function(hash){
+	saltAndHash(newPass, function(hash)
+	{
 		newPass = hash;
 		accounts.findOneAndUpdate({passKey:passKey}, {$set:{pass:newPass}, $unset:{passKey:''}}, {returnOriginal : false}, callback);
 	});
@@ -164,11 +179,12 @@ exports.updatePassword = function(passKey, newPass, callback)
 exports.getAllRecords = function(callback)
 {
 	accounts.find().toArray(
-		function(e, res) {
+		function(e, res) 
+		{
 		if (e) 
-			callback(e)
+			callback(e);
 		else 
-			callback(null, res)
+			callback(null, res);
 	});
 };
 
@@ -188,7 +204,8 @@ exports.deleteAllAccounts = function(callback)
 
 exports.addNewExcercise = function(newData, callback)
 {
-	excercise.findOne({name:newData.name}, function(e, o) {
+	excercise.findOne({name:newData.name}, function(e, o) 
+	{
 		if (o)
 		{
 			callback('excercise-name-taken');
@@ -203,7 +220,8 @@ exports.addNewExcercise = function(newData, callback)
 
 exports.updateExcercise = function(newData, callback)
 {
-	var o = {
+	var o = 
+	{
 		name : newData.name,
 		movielink : newData.movielink,
 		unit : newData.unit,
@@ -219,6 +237,45 @@ exports.deleteExcercise = function(id, callback)
 };
 
 /**********************************************
+	Block insertion, update & deletion methods
+ **********************************************/
+
+exports.addNewBlock = function(newData, callback)
+{
+	block.findOne({name:newData.name}, function(e, o) 
+	{
+		if (o)
+		{
+			callback('block-name-taken');
+		}	else
+		{
+			// append date stamp when record was created //
+			newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
+			block.insertOne(newData, callback);
+		}
+	});
+};
+
+exports.updateblock = function(newData, callback)
+{
+	var o = 
+	{
+		name : newData.name,
+		unit : newData.unit,
+		excercises: newData.excercises,
+		done: newData.done
+	};
+
+	block.findOneAndUpdate({_id:getObjectId(newData.id)}, {$set:o}, {returnOriginal : false}, callback);
+};
+
+exports.deleteBlock = function(id, callback)
+{
+	block.deleteOne({_id:getObjectId(id)}, callback);
+};
+
+
+/**********************************************
 	private encryption & validation methods
  ***********************************************/
 
@@ -226,14 +283,16 @@ var generateSalt = function()
 {
 	var set = '0123456789abcdefghijklmnopqurstuvwxyzABCDEFGHIJKLMNOPQURSTUVWXYZ';
 	var salt = '';
-	for (var i = 0; i < 10; i++) {
+	for (var i = 0; i < 10; i++) 
+	{
 		var p = Math.floor(Math.random() * set.length);
 		salt += set[p];
 	}
 	return salt;
 }
 
-var md5 = function(str) {
+var md5 = function(str) 
+{
 	return crypto.createHash('md5').update(str).digest('hex');
 }
 
@@ -257,7 +316,8 @@ var getObjectId = function(id)
 
 var listIndexes = function()
 {
-	accounts.indexes(null, function(e, indexes){
+	accounts.indexes(null, function(e, indexes)
+	{
 		for (var i = 0; i < indexes.length; i++) console.log('index:', i, indexes[i]);
 	});
 }
