@@ -176,7 +176,7 @@ exports.updatePassword = function(passKey, newPass, callback)
 	account lookup methods
  **********************************************/
 
-exports.getAllRecords = function(callback)
+exports.getAllAccounts = function(callback)
 {
 	accounts.find().toArray(
 		function(e, res) 
@@ -229,6 +229,17 @@ exports.updateExcercise = function(newData, callback)
 	};
 
 	excercise.findOneAndUpdate({_id:getObjectId(newData.id)}, {$set:o}, {returnOriginal : false}, callback);
+};
+
+exports.getAllExcercise = function(callback)
+{
+	excercise.find().toArray(function(e, res) 
+	{
+		if (e) 
+			callback(e);
+		else 
+			callback(null, res);
+	});
 };
 
 exports.deleteExcercise = function(id, callback)

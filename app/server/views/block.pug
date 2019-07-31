@@ -1,0 +1,56 @@
+
+
+// preset form values if we receive an block object //
+- block = typeof(udata) != 'undefined' ? udata : { }
+// store the block ID on the client side in a hidden input field //
+input(type='hidden', value= block._id)#ExcerId
+
+#block-form-container.center-vertical.col-sm-10
+	form.card.card-body.bg-light(method='post')#block-form
+		h3
+		h4#sub Itt tudsz új blokkot felvenni.
+		hr
+		.form-group.row
+			label.col-sm-3.col-form-label.col-form-label-sm Név
+			.col-sm-8
+				input.form-control#name-tf(type='text', name='name', value= block.name)
+
+		.form-group.row
+			label.col-sm-3.col-form-label.col-form-label-sm Ismétlés
+			.col-sm-8
+				select.form-control#repeat
+					option(value="naponta1x") naponta egyszer
+					option(value="hetente3x") hetente háromszor
+
+		.form-group.row
+			label.col-sm-3.col-form-label.col-form-label-sm Gyakorlat neve
+			.col-sm-8
+				select.form-control#excer_name
+					- for (var i = 0; i < excers.length; i++)
+						option(value=excers[i]._id) #{excers[i].name}
+
+		.form-group.row
+			label.col-sm-3.col-form-label.col-form-label-sm Gyakorlat ismétlése
+			.col-sm-8
+				select.form-control#excer_repeat
+					option(value=1) egyszer
+					option(value=2) kétszer
+					option(value=3) háromszor
+					option(value=4) négyszer
+					option(value=5) ötször
+					option(value=6) hatszor
+					option(value=7) hétszer
+					option(value=8) nyolcszor
+					option(value=9) kilencszer
+					option(value=10) tízszer
+					option(value=20) húszszor
+		hr
+		.form-buttons
+			button(type='button')#block-form-btn1.btn.btn-outline-dark Törlés
+			button(type='submit')#block-form-btn2.btn.btn-primary Hozzáadás
+
+
+
+// display form errors in a custom modal window //
+
+include modals/form-errors

@@ -66,9 +66,8 @@ module.exports = function (app) {
 		});
 	})
 
-
 	/*
-		ADMIN
+		ADMIN - Excercise
 	*/
 	app.get('/admin_excercise', function (req, res) {
 		if (req.session.user == null) {
@@ -98,6 +97,49 @@ module.exports = function (app) {
 				if (e)
 				{
 					res.status(400).send('error-adding-excercise');
+				}	else
+				{
+					//req.session.user = o.value;
+					res.status(200).send('ok');
+				}
+			});
+		}
+	});
+
+	/*
+		ADMIN - Block
+	*/
+
+	app.get('/admin_block', function (req, res) {
+		if (req.session.user == null) 
+		{
+			res.redirect('/');
+		} else 
+		{
+			AM.getAllExcercise(function (e, excercise) 
+			{
+				res.render('admin_block', {excers: excercise});
+			})
+		}
+	});
+
+	app.post('/admin_block', function (req, res) 
+	{
+		if (req.session.user == null) 
+		{
+			res.redirect('/');
+		} else 
+		{
+			AM.addNewBlock({
+				name		: req.body['name'],
+				movielink	: req.body['movielink'],
+				unit		: req.body['unit'],
+				comment		: req.body['comment']
+			}, function(e, o)
+			{
+				if (e)
+				{
+					res.status(400).send('error-adding-block');
 				}	else
 				{
 					//req.session.user = o.value;
@@ -228,7 +270,7 @@ module.exports = function (app) {
 	*/
 
 	app.get('/print', function (req, res) {
-		AM.getAllRecords(function (e, accounts) {
+		AM.getAllAccounts(function (e, accounts) {
 			res.render('print', {
 				title: 'Account List',
 				accts: accounts
