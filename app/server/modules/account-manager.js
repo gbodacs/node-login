@@ -3,6 +3,9 @@ const crypto 		= require('crypto');
 const moment 		= require('moment');
 const MongoClient 	= require('mongodb').MongoClient;
 
+process.env.DB_URL = "mongodb://localhost:27017";
+process.env.DB_NAME = "brigi-login";
+
 var db, accounts;
 MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function(e, client) 
 {

@@ -66,7 +66,7 @@ ExcerciseValidator.prototype.validateForm = function()
 
 	if (this.validateName(this.formFields[0].val()) == false) 
 	{
-		this.controlGroups[0].addClass('error'); e.push('Kérlek add meg a neved!');
+		this.controlGroups[0].addClass('error'); e.push('Kérlek add meg a gyakorlat nevét!');
 	}
 
 	if (this.validateMovieLink(this.formFields[1].val()) == false) 
