@@ -216,6 +216,7 @@ exports.addNewExcercise = function(newData, callback)
 		{
 			// append date stamp when record was created //
 			newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
+			//console.log(newData);
 			excercise.insertOne(newData, callback);
 		}
 	});
@@ -225,7 +226,7 @@ exports.updateExcercise = function(newData, callback)
 {
 	var o = 
 	{
-		name : newData.name,
+		name : newData.name2,
 		movielink : newData.movielink,
 		unit : newData.unit,
 		comment : newData.comment

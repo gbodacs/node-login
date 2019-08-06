@@ -24,7 +24,7 @@ module.exports = function (app) {
 					});
 				} else {
 					res.render('login', {
-						title: 'Hello - Please Login To Your Account'
+						title: 'Üdv, lépj be a felhasználóddal.'
 					});
 				}
 			});
@@ -88,7 +88,7 @@ module.exports = function (app) {
 		} else 
 		{
 			AM.addNewExcercise({
-				name		: req.body['name'],
+				name		: req.body['name2'],
 				movielink	: req.body['movielink'],
 				unit		: req.body['unit'],
 				comment		: req.body['comment']
@@ -110,7 +110,8 @@ module.exports = function (app) {
 		ADMIN - Block
 	*/
 
-	app.get('/admin_block', function (req, res) {
+	app.get('/admin_block', function (req, res) 
+	{
 		if (req.session.user == null) 
 		{
 			res.redirect('/');
@@ -131,7 +132,7 @@ module.exports = function (app) {
 		} else 
 		{
 			AM.addNewBlock({
-				name		: req.body['name'],
+				name		: req.body['name2'],
 				movielink	: req.body['movielink'],
 				unit		: req.body['unit'],
 				comment		: req.body['comment']
@@ -210,9 +211,11 @@ module.exports = function (app) {
 			if (e) {
 				res.status(400).send(e);
 			} else {
+
 				res.status(200).send('ok');
 			}
 		});
+		console.log(req.body['name']);
 	});
 
 	/*
