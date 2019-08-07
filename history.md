@@ -31,7 +31,7 @@
 
 **v1.4.1** –– 02-27-2016
 
-* calls to logout now route to /logout instead of /home
+* calls to logout now route to /logout instead of /user_settings
 * accounts are now looked up by session.id instead of username
 * reset-password modal window fixes
 * updating emailjs to v1.0.4

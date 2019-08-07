@@ -17,7 +17,7 @@ $(document).ready(function(){
 			}
 		},
 		success	: function(responseText, status, xhr, $form){
-			if (status == 'success') window.location.href = '/home';
+			if (status == 'success') window.location.href = '/user_settings';
 		},
 		error : function(e){
 			lv.showLoginError('Nem sikerült belépni', 'Biztosan jól írtad be az adataidat?');

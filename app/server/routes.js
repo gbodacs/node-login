@@ -20,7 +20,7 @@ module.exports = function (app) {
 				if (o) {
 					AM.autoLogin(o.user, o.pass, function (o) {
 						req.session.user = o;
-						res.redirect('/home');
+						res.redirect('/user_settings');
 					});
 				} else {
 					res.render('login', {
@@ -65,6 +65,80 @@ module.exports = function (app) {
 			res.redirect('/');
 		});
 	})
+
+	/*
+		ADMIN - DailyPlan
+	*/
+	app.get('/admin_dailyplan', function (req, res) {
+		if (req.session.user == null) {
+			res.redirect('/');
+		} else {
+			res.render('admin_dailyplan', {excers: excercise});
+		}
+	});
+
+	app.post('/admin_dailyplan', function (req, res) 
+	{
+		if (req.session.user == null) 
+		{
+			res.redirect('/');
+		} else 
+		{
+			/*AM.addNewExcercise({
+				name		: req.body['name2'],
+				movielink	: req.body['movielink'],
+				unit		: req.body['unit'],
+				comment		: req.body['comment']
+			}, function(e, o)
+			{
+				if (e)
+				{
+					res.status(400).send('error-adding-excercise');
+				}	else
+				{
+					//req.session.user = o.value;
+					res.status(200).send('ok');
+				}
+			});*/
+		}
+	});
+
+	/*
+		ADMIN - Users
+	*/
+	app.get('/admin_users', function (req, res) {
+		if (req.session.user == null) {
+			res.redirect('/');
+		} else {
+			res.render('admin_users', {excers: excercise});
+		}
+	});
+
+	app.post('/admin_users', function (req, res) 
+	{
+		if (req.session.user == null) 
+		{
+			res.redirect('/');
+		} else 
+		{
+			/*AM.addNewExcercise({
+				name		: req.body['name2'],
+				movielink	: req.body['movielink'],
+				unit		: req.body['unit'],
+				comment		: req.body['comment']
+			}, function(e, o)
+			{
+				if (e)
+				{
+					res.status(400).send('error-adding-excercise');
+				}	else
+				{
+					//req.session.user = o.value;
+					res.status(200).send('ok');
+				}
+			});*/
+		}
+	});
 
 	/*
 		ADMIN - Excercise
@@ -153,14 +227,14 @@ module.exports = function (app) {
 
 
 	/*
-		control panel
+		Settings
 	*/
 
-	app.get('/home', function (req, res) {
+	app.get('/user_settings', function (req, res) {
 		if (req.session.user == null) {
 			res.redirect('/');
 		} else {
-			res.render('home', {
+			res.render('user_settings', {
 				title: 'Beállítások',
 				countries: CT,
 				udata: req.session.user
@@ -168,7 +242,7 @@ module.exports = function (app) {
 		}
 	});
 
-	app.post('/home', function (req, res) {
+	app.post('/user_settings', function (req, res) {
 		if (req.session.user == null) {
 			res.redirect('/');
 		} else {
@@ -186,6 +260,80 @@ module.exports = function (app) {
 					res.status(200).send('ok');
 				}
 			});
+		}
+	});
+
+	/*
+		User history
+	*/
+
+	app.get('/user_history', function (req, res) {
+		if (req.session.user == null) {
+			res.redirect('/');
+		} else {
+			res.render('user_history', {
+				title: 'Napi terved',
+				countries: CT,
+				udata: req.session.user
+			});
+		}
+	});
+
+	app.post('/user_history', function (req, res) {
+		if (req.session.user == null) {
+			res.redirect('/');
+		} else {
+			/*AM.updateAccount({
+				id: req.session.user._id,
+				name: req.body['name'],
+				email: req.body['email'],
+				pass: req.body['pass'],
+				country: req.body['country']
+			}, function (e, o) {
+				if (e) {
+					res.status(400).send('error-updating-account');
+				} else {
+					req.session.user = o.value;
+					res.status(200).send('ok');
+				}
+			});*/
+		}
+	});
+
+	/*
+		User dailyplan
+	*/
+
+	app.get('/user_dailyplan', function (req, res) {
+		if (req.session.user == null) {
+			res.redirect('/');
+		} else {
+			res.render('user_dailyplan', {
+				title: 'Napi terved',
+				countries: CT,
+				udata: req.session.user
+			});
+		}
+	});
+
+	app.post('/user_dailyplan', function (req, res) {
+		if (req.session.user == null) {
+			res.redirect('/');
+		} else {
+			/*AM.updateAccount({
+				id: req.session.user._id,
+				name: req.body['name'],
+				email: req.body['email'],
+				pass: req.body['pass'],
+				country: req.body['country']
+			}, function (e, o) {
+				if (e) {
+					res.status(400).send('error-updating-account');
+				} else {
+					req.session.user = o.value;
+					res.status(200).send('ok');
+				}
+			});*/
 		}
 	});
 
