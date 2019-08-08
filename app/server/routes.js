@@ -420,38 +420,45 @@ module.exports = function (app) {
 		view, delete & reset accounts
 	*/
 
-	app.get('/print', function (req, res) {
-		AM.getAllAccounts(function (e, accounts) {
-			res.render('print', {
+	app.get('/user_print', function (req, res) 
+	{
+		AM.getAllAccounts(function (e, accounts) 
+		{
+			res.render('user_print', {
 				title: 'Account List',
 				accts: accounts
 			});
 		})
 	});
 
-	app.post('/delete', function (req, res) {
-		AM.deleteAccount(req.session.user._id, function (e, obj) {
-			if (!e) {
+	app.post('/delete', function (req, res) 
+	{
+		AM.deleteAccount(req.session.user._id, function (e, obj) 
+		{
+			if (!e) 
+			{
 				res.clearCookie('login');
-				req.session.destroy(function (e) {
+				req.session.destroy(function (e) 
+				{
 					res.status(200).send('ok');
 				});
-			} else {
+			} else 
+			{
 				res.status(400).send('record not found');
 			}
 		});
 	});
 
-	app.get('/reset', function (req, res) {
+	app.get('/reset', function (req, res) 
+	{
 		AM.deleteAllAccounts(function () {
 			res.redirect('/print');
 		});
 	});
 
-	app.get('*', function (req, res) {
-		res.render('404', {
-			title: 'Page Not Found'
-		});
+	app.get('*', function (req, res) 
+	{
+		res.render('404', {title: 'Page Not Found'});
 	});
 
 };
