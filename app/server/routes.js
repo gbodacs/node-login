@@ -8,24 +8,27 @@ module.exports = function (app) {
 		login & logout
 	*/
 
-	app.get('/', function (req, res) {
+	app.get('/', function (req, res) 
+	{
 		// check if the user has an auto login key saved in a cookie //
-		if (req.cookies.login == undefined) {
-			res.render('login', {
-				title: 'Hello - Please Login To Your Account'
-			});
-		} else {
+		if (req.cookies.login == undefined) 
+		{
+			res.render('login', {title: 'Hello - Please Login To Your Account'});
+		} else 
+		{
 			// attempt automatic login //
-			AM.validateLoginKey(req.cookies.login, req.ip, function (e, o) {
-				if (o) {
-					AM.autoLogin(o.user, o.pass, function (o) {
+			AM.validateLoginKey(req.cookies.login, req.ip, function (e, o) 
+			{
+				if (o) 
+				{
+					AM.autoLogin(o.user, o.pass, function (o) 
+					{
 						req.session.user = o;
 						res.redirect('/user_settings');
 					});
-				} else {
-					res.render('login', {
-						title: 'Üdv, lépj be a felhasználóddal.'
-					});
+				} else 
+				{
+					res.render('login', {title: 'Üdv, lépj be a felhasználóddal.'});
 				}
 			});
 		}

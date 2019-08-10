@@ -23,16 +23,16 @@ $(document).ready(function(){
 	
 // customize the account signup form //
 	
-	$('#account-form h3').text('Signup');
-	$('#account-form #sub').text('Please tell us a little about yourself');
-	$('#account-form-btn1').html('Cancel');
-	$('#account-form-btn2').html('Submit');
+	$('#account-form h3').text('Fiók nyitása');
+	$('#account-form #sub').text('Kérlek töltsd ki az adataidat.');
+	$('#account-form-btn1').html('Mégsem');
+	$('#account-form-btn2').html('Tovább');
 	$('#account-form-btn2').addClass('btn-primary');
 	
 // setup the alert that displays when an account is successfully created //
 
 	$('.modal-alert').modal({ show:false, keyboard : false, backdrop : 'static' });
-	$('.modal-alert .modal-header h4').text('Account Created!');
-	$('.modal-alert .modal-body p').html('Your account has been created.</br>Click OK to return to the login page.');
+	$('.modal-alert .modal-header h4').text('Fiókod elkészült!');
+	$('.modal-alert .modal-body p').html('A felhasználói fiókod elkészült.</br>Kattints az OK gombra.');
 
 });
