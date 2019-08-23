@@ -333,7 +333,8 @@ var listIndexes = function()
 {
 	accounts.indexes(null, function(e, indexes)
 	{
-		for (var i = 0; i < indexes.length; i++) console.log('index:', i, indexes[i]);
+		for (var i = 0; i < indexes.length; i++) 
+			console.log('index:', i, indexes[i]);
 	});
 }
 

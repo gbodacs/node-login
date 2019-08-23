@@ -43,20 +43,8 @@ function ExcerciseValidator()
 ExcerciseValidator.prototype.showInvalidName = function()
 {
 	this.controlGroups[1].addClass('error');
-	this.showErrors(['Ez a gyakorlat-név már foglalt, adj meg másikat.']);
+	this.showErrors(['Ez a név már foglalt, adj meg másikat.']);
 }
-
-/*ExcerciseValidator.prototype.showInvalidMovieLink = function()
-{
-	this.controlGroups[2].addClass('error');
-	this.showErrors(['Hibás a YouTube link, minimum 3 karakter hosszú legyen']);
-}
-
-ExcerciseValidator.prototype.showInvalidUnit = function()
-{
-	this.controlGroups[2].addClass('error');
-	this.showErrors(['Hibás a mértékegység, minimum 1 karakter hosszú legyen']);
-}*/
 
 ExcerciseValidator.prototype.validateForm = function()
 {

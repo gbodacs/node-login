@@ -13,6 +13,19 @@ function ExcerciseController()
 // Add new excercise //
 	$('.modal-confirm .submit').click(function(){ that.addExcercise(); });
 
+	this.clearInput = function()
+	{
+		var w = document.getElementById("name-tf"); 
+		var q = document.getElementById("movielink-tf"); 
+		var e = document.getElementById("unit-tf"); 
+		var r = document.getElementById("comment-tf"); 
+
+		w.value = ""; 
+		q.value = ""; 
+		e.value = ""; 
+		r.value = ""; 
+	}
+
 	this.addExcercise = function()
 	{
 		$('.modal-confirm').modal('hide');

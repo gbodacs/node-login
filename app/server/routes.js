@@ -209,10 +209,10 @@ module.exports = function (app) {
 		} else 
 		{
 			AM.addNewBlock({
-				name		: req.body['name2'],
-				movielink	: req.body['movielink'],
-				unit		: req.body['unit'],
-				comment		: req.body['comment']
+				name		: req.body['name3'],
+				repeat		: req.body['repeat'],
+				excer_id	: req.body['excer_id3'],
+				excer_repeat: req.body['excer_repeat3']
 			}, function(e, o)
 			{
 				if (e)

@@ -13,6 +13,15 @@ function BlockController()
 // Add new Block //
 	$('.modal-confirm .submit').click(function(){ that.addBlock(); });
 
+	this.clearInput = function()
+	{
+		var name = document.getElementById("name_tf"); 
+		var repeat = document.getElementById("repeat_tf"); 
+
+		name.value = ""; 
+		//repeat.value = "cleared!"; 
+	}
+
 	this.addBlock = function()
 	{
 		$('.modal-confirm').modal('hide');

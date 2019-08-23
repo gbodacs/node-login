@@ -1,10 +1,10 @@
 
-function ExcerciseValidator()
+function BlockValidator()
 {
 // build array maps of the form inputs & control groups //
 
-	this.formFields = [$('#name-tf'), $('#movielink-tf'), $('#unit-tf'), $('#comment-tf')];
-	this.controlGroups = [$('#name-cg'), $('#movielink-cg'), $('#unit-cg'), $('#comment-cg')];
+	this.formFields = [$('#name_tf'), $('#repeat_tf'), $('#excer_id_tf'), $('#excer_rep_tf')];
+	this.controlGroups = [$('#name-cg'), $('#repeat-cg'), $('#excer_id-cg'), $('#excer_rep-cg')];
 	
 // bind the form-error modal window to this controller to display any errors //
 	
@@ -16,14 +16,19 @@ function ExcerciseValidator()
 		return s.length >= 3;
 	}
 	
-	this.validateMovieLink = function(s)
+	this.validateRepeat = function(s)
 	{
-		return s.length >= 3;
+		return ((s != "") && (s!=undefined));
 	}
 	
-	this.validateUnit = function(s)
+	this.validateExIds = function(s)
 	{
-		return s.length >= 1;
+		return s[0].length >= 1;
+	}
+
+	this.validateExRepeats = function(s)
+	{
+		return s[0].length >= 1;
 	}
 	
 	this.showErrors = function(a)
@@ -40,45 +45,61 @@ function ExcerciseValidator()
 
 }
 
-ExcerciseValidator.prototype.showInvalidName = function()
+BlockValidator.prototype.showInvalidName = function()
 {
 	this.controlGroups[1].addClass('error');
-	this.showErrors(['Ez a gyakorlat-név már foglalt, adj meg másikat.']);
+	this.showErrors(['Ez a név már foglalt, kérlek adj meg másikat.']);
 }
-
-/*ExcerciseValidator.prototype.showInvalidMovieLink = function()
+/*
+BlockValidator.prototype.showInvalidRepeat = function()
 {
 	this.controlGroups[2].addClass('error');
-	this.showErrors(['Hibás a YouTube link, minimum 3 karakter hosszú legyen']);
+	this.showErrors(['A blokk ismétlésszáma nem lehet üres.']);
 }
 
-ExcerciseValidator.prototype.showInvalidUnit = function()
+BlockValidator.prototype.showInvalidExIds = function()
 {
-	this.controlGroups[2].addClass('error');
-	this.showErrors(['Hibás a mértékegység, minimum 1 karakter hosszú legyen']);
+	this.controlGroups[3].addClass('error');
+	this.showErrors(['Leglább egy gyakorlat kell, hogy legyen egy blokkban.']);
+}
+
+BlockValidator.prototype.showInvalidExReps = function()
+{
+	this.controlGroups[4].addClass('error');
+	this.showErrors(['Legalább az első gyakorlatnak kell ismétlési alapbeállítás.']);
 }*/
 
-ExcerciseValidator.prototype.validateForm = function()
+BlockValidator.prototype.validateForm = function()
 {
 	var e = [];
-	for (var i=0; i < this.controlGroups.length; i++) 
+	for (var i=0; i < this.controlGroups.length; i++)
+	{
 		this.controlGroups[i].removeClass('error');
+	}
 
 	if (this.validateName(this.formFields[0].val()) == false) 
 	{
-		this.controlGroups[0].addClass('error'); e.push('Kérlek add meg a neved!');
+		this.controlGroups[0].addClass('error'); 
+		e.push('Kérlek adj meg egy hosszabb nevet!');
 	}
 
-	if (this.validateMovieLink(this.formFields[1].val()) == false) 
+	if (this.validateRepeat(this.formFields[1].val()) == false) 
 	{
-		this.controlGroups[1].addClass('error'); e.push('Kérlek adj meg egy YouTube URL-t!');
+		this.controlGroups[1].addClass('error'); 
+		e.push('A blokk ismétlésszáma nem lehet üres.');
 	}
 
-	if (this.validateUnit(this.formFields[2].val()) == false) 
+	if (this.validateExIds(this.formFields[2].val()) == false) 
 	{
-		this.controlGroups[2].addClass('error'); e.push('Kérlek adj meg egy mértékegységet!');
+		this.controlGroups[2].addClass('error'); 
+		e.push('Leglább egy gyakorlat kell, hogy legyen egy blokkban.');
 	}
-	
+
+	if (this.validateExRepeats(this.formFields[3].val()) == false) 
+	{
+		this.controlGroups[3].addClass('error'); 
+		e.push('Legalább az első gyakorlatnak kell ismétlési alapbeállítás.');
+	}
 
 	if (e.length) 
 		this.showErrors(e);
