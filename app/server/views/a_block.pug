@@ -31,23 +31,7 @@ input(type='hidden', value= block._id)#ExcerId
 					select.form-control#excer_id_tf(name='excer_id3')
 						- for (var i = 0; i < excers.length; i++)
 							option(value=excers[i]._id) #{excers[i].name}
-
-			.form-group.row
-				label.col-sm-3.col-form-label.col-form-label-sm Gyakorlat #{u+1} ismétlésszáma
-				.col-sm-8
-					select.form-control#excer_rep_tf(name='excer_repeat3')
-						option(value=1) egyszer
-						option(value=2) kétszer
-						option(value=3) háromszor
-						option(value=4) négyszer
-						option(value=5) ötször
-						option(value=6) hatszor
-						option(value=7) hétszer
-						option(value=8) nyolcszor
-						option(value=9) kilencszer
-						option(value=10) tízszer
-						option(value=20) húszszor
-
+		hr
 		.form-buttons
 			button(type='button')#block-form-btn1.btn.btn-outline-dark Törlés
 			button(type='submit')#block-form-btn2.btn.btn-primary Hozzáadás

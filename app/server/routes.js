@@ -212,7 +212,7 @@ module.exports = function (app) {
 				name		: req.body['name3'],
 				repeat		: req.body['repeat'],
 				excer_id	: req.body['excer_id3'],
-				excer_repeat: req.body['excer_repeat3']
+				excer_repeat: "1"
 			}, function(e, o)
 			{
 				if (e)
