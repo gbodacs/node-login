@@ -23,14 +23,12 @@ function BlockValidator()
 	
 	this.validateExIds = function(s)
 	{
-		return s[0].length >= 1;
+		if (s[0] == '0')
+			return false;
+
+		return s[0].length > 2;
 	}
 
-	this.validateExRepeats = function(s)
-	{
-		return s[0].length >= 1;
-	}
-	
 	this.showErrors = function(a)
 	{
 		$('.modal-form-errors .modal-body p').text('Kérlek javítsd az alábbi hibákat:');
@@ -92,13 +90,7 @@ BlockValidator.prototype.validateForm = function()
 	if (this.validateExIds(this.formFields[2].val()) == false) 
 	{
 		this.controlGroups[2].addClass('error'); 
-		e.push('Leglább egy gyakorlat kell, hogy legyen egy blokkban.');
-	}
-
-	if (this.validateExRepeats(this.formFields[3].val()) == false) 
-	{
-		this.controlGroups[3].addClass('error'); 
-		e.push('Legalább az első gyakorlatnak kell ismétlési alapbeállítás.');
+		e.push('Az első gyakorlat nem lehet üres.');
 	}
 
 	if (e.length) 

@@ -19,7 +19,7 @@ input(type='hidden', value= block._id)#ExcerId
 			label.col-sm-3.col-form-label.col-form-label-sm Blokk ismétlése
 			.col-sm-8
 				select.form-control#repeat_tf(name='repeat')
-					option(value="n1x") Naponta egyszer
+					option(value="n1x" selected) Naponta egyszer
 					option(value="n1xh3x") Naponta egyszer majd hetente háromszor
 					option(value="h3x") Hetente háromszor
 
@@ -29,6 +29,7 @@ input(type='hidden', value= block._id)#ExcerId
 				label.col-sm-3.col-form-label.col-form-label-sm Gyakorlat #{u+1} neve
 				.col-sm-8
 					select.form-control#excer_id_tf(name='excer_id3')
+						option(value=0 selected) Üres
 						- for (var i = 0; i < excers.length; i++)
 							option(value=excers[i]._id) #{excers[i].name}
 		hr
