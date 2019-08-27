@@ -1,12 +1,10 @@
-
-
 // preset form values if we receive an excercise object //
-- excercise = typeof(udata) != 'undefined' ? udata : { }
-// store the excercise ID on the client side in a hidden input field //
-input(type='hidden', value= excercise._id)#ExcerId
+- dailyplan = typeof(udata) != 'undefined' ? udata : { }
+// store the dailyplan ID on the client side in a hidden input field //
+input(type='hidden', value= dailyplan._id)#ExcerId
 
-#excercise-form-container.center-vertical.col-sm-10
-	form.card.card-body.bg-light(method='post')#excercise-form
+#dailyplan-form-container.center-vertical.col-sm-10
+	form.card.card-body.bg-light(method='post')#dailyplan-form
 		h3
 		h4#sub Itt tudsz egy ügyfélnek feladatot adni.
 		hr
@@ -19,40 +17,31 @@ input(type='hidden', value= excercise._id)#ExcerId
 		.form-group.row
 			label.col-sm-3.col-form-label.col-form-label-sm Dátum
 			.col-sm-8
-				input.form-control#movielink-tf(type='date', name='datum', value= excercise.movielink)
+				input.form-control#date-tf(type='date', name='date3', value= dailyplan.date)
 
 		.form-group.row
 			label.col-sm-3.col-form-label.col-form-label-sm Megjegyzés
 			.col-sm-8
-				input.form-control#movielink-tf(type='text', name='movielink', value= excercise.movielink)
+				input.form-control#comment-tf(type='text', name='comment', value= dailyplan.comment)
 
-		.form-group.row
-			label.col-sm-3.col-form-label.col-form-label-sm Megjegyzés
-			.col-sm-8
-				input.form-control#unit-tf(type='text', name='unit', value= excercise.unit)
-		.form-group.row
-					label.col-sm-3.col-form-label.col-form-label-sm Gyakorlat #{u+1} ismétlésszáma
-					.col-sm-8
-						select.form-control#excer_rep_tf(name='excer_repeat3')
-							option(value=1) egyszer
-							option(value=2) kétszer
-							option(value=3) háromszor
-							option(value=4) négyszer
-							option(value=5) ötször
-							option(value=6) hatszor
-							option(value=7) hétszer
-							option(value=8) nyolcszor
-							option(value=9) kilencszer
-							option(value=10) tízszer
-							option(value=20) húszszor
-		.form-group.row
-			label.col-sm-3.col-form-label.col-form-label-sm Megjegyzés
-			.col-sm-8
-				input.form-control#comment-tf(type='text', name='comment', value= excercise.comment)
+_Name	string	Ez a blokk neve
+_Unit	string	A blokk ismétlése (napi - heti3)
+_ExcerIds	objectId[]	Ezek a gyakorlatok vannak benne a tervben
+_ExcerRepeats	int32[]	Ennyiszer kell ismételni a gyakorlatokat (default érték)
+
+		- for (var u = 0; u < 3; u++)
+			.form-group.row
+				label.col-sm-3.col-form-label.col-form-label-sm Blokk #{u+1} neve
+				.col-sm-8
+					select.form-control#block_id_tf(name='block_id')
+						option(value=0 selected) Üres
+						- for (var i = 0; i < block.length; i++)
+							option(value=block[i]._id) #{block[i].name}
+
 		hr
 		.form-buttons
-			button(type='button')#excercise-form-btn1.btn.btn-outline-dark Törlés
-			button(type='submit')#excercise-form-btn2.btn.btn-primary Hozzáadás
+			button(type='button')#dailyplan-form-btn1.btn.btn-outline-dark Törlés
+			button(type='submit')#dailyplan-form-btn2.btn.btn-primary Hozzáadás
 
 // display form errors in a custom modal window //
 
