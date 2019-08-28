@@ -23,10 +23,10 @@ function BlockValidator()
 	
 	this.validateExIds = function(s)
 	{
-		if (s[0] == '0')
+		if (s == '0')
 			return false;
-
-		return s[0].length > 2;
+			
+		return true;
 	}
 
 	this.showErrors = function(a)
