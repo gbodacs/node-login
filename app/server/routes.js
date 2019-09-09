@@ -76,7 +76,8 @@ module.exports = function (app) {
 		if (req.session.user == null) {
 			res.redirect('/');
 		} else {
-			res.render('admin_dailyplan', {excers: excercise});
+			res.render('admin_dailyplan', {blo: block});
+			//res.render('admin_users', {excers: excercise});
 		}
 	});
 
@@ -212,7 +213,7 @@ module.exports = function (app) {
 				name		: req.body['name3'],
 				repeat		: req.body['repeat'],
 				excer_id	: req.body['excer_id3'],
-				excer_repeat: "1"
+				// No excercise repeat in block excer_repeat: "1"
 			}, function(e, o)
 			{
 				if (e)

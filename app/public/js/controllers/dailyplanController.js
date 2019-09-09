@@ -1,5 +1,5 @@
 
-function ExcerciseController()
+function DailyPlanController()
 {
 // bind event listeners to button clicks //
 	var that = this;

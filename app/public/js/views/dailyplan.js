@@ -1,8 +1,8 @@
 
 $(document).ready(function(){
 
-	var ec = new ExcerciseController();
-	var ev = new ExcerciseValidator();
+	var ec = new DailyPlanController();
+	var ev = new DailyPlanValidator();
 	
 	$('#excercise-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){

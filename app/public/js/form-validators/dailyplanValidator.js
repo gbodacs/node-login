@@ -1,5 +1,5 @@
 
-function BlockValidator()
+function DailyPlanValidator()
 {
 // build array maps of the form inputs & control groups //
 

@@ -4,6 +4,7 @@
 input(type='hidden', value= dailyplan._id)#ExcerId
 
 #dailyplan-form-container.center-vertical.col-sm-10
+	blah '#{blockArray.length}' sfsfgsdf
 	form.card.card-body.bg-light(method='post')#dailyplan-form
 		h3
 		h4#sub Itt tudsz egy ügyfélnek feladatot adni.
@@ -12,31 +13,25 @@ input(type='hidden', value= dailyplan._id)#ExcerId
 			label.col-sm-3.col-form-label.col-form-label-sm Dátum
 			.col-sm-8
 				input.form-control#date-tf(type='date', name='date3', value= dailyplan.date)
-
 		.form-group.row
 			label.col-sm-3.col-form-label.col-form-label-sm Megjegyzés
 			.col-sm-8
 				input.form-control#comment-tf(type='text', name='comment', value= dailyplan.comment)
-		- for (var u = 0; block.length < 0; u++)
+		- for (var u = 0; blo.length < 0; u++)
 			.form-group.row
 				label.col-sm-3.col-form-label.col-form-label-sm Blokk #{u+1} neve
 				.col-sm-8
 					select.form-control#block_id_tf(name='block_id')
 						option(value=0 selected) Üres
-						- for (var i = 0; i < block.length; i++)
-							option(value=block[i]._id) #{block[i].name}
+						- for (var i = 0; i < blo.length; i++)
+							option(value=blo[i]._id) #{blo[i].name}
 			.form-group.row
 				label.col-sm-3.col-form-label.col-form-label-sm Ismétlés
 				.col-sm-8
-					input.form-control#repeat-tf(type='text', name='repeat', value='#{block[i].repeat}')
+					input.form-control#repeat-tf(type='text', name='repeat', value='#{blo[i].repeat}')
 		hr
 		.form-buttons
 			button(type='button')#dailyplan-form-btn1.btn.btn-outline-dark Törlés
 			button(type='submit')#dailyplan-form-btn2.btn.btn-primary Hozzáadás
 
-// display form errors in a custom modal window //
-// _Name	string	Ez a blokk neve //
-// _Unit	string	A blokk ismétlése (napi - heti3) //
-// _ExcerIds	objectId[]	Ezek a gyakorlatok vannak benne a tervben //
-// _ExcerRepeats	int32[]	Ennyiszer kell ismételni a gyakorlatokat (default érték) //
 include modals/form-errors

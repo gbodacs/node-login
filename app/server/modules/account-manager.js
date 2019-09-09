@@ -266,6 +266,8 @@ exports.addNewBlock = function(newData, callback)
 		{
 			// append date stamp when record was created //
 			newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
+
+			//TODO Ures "0" gyakorlat nelkuli elemeket ki kell torolni a tomb vegerol!
 			block.insertOne(newData, callback);
 		}
 	});
