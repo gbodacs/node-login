@@ -33,26 +33,26 @@ module.exports = function (app) {
 			});
 		}
 	});
-//
-// 	app.post('/', function (req, res) {
-// 		AM.manualLogin(req.body['user'], req.body['pass'], function (e, o) {
-// 			if (!o) {
-// 				res.status(400).send(e);
-// 			} else {
-// 				req.session.user = o;
-// 				if (req.body['remember-me'] == 'false') {
-// 					res.status(200).send(o);
-// 				} else {
-// 					AM.generateLoginKey(o.user, req.ip, function (key) {
-// 						res.cookie('login', key, {
-// 							maxAge: 900000
-// 						});
-// 						res.status(200).send(o);
-// 					});
-// 				}
-// 			}
-// 		});
-// 	});
+
+	app.post('/login', (req, res) => {
+		AccountManager.manualLogin(req.body['user'], req.body['pass'], (error, user) => {
+			if (!user) {
+				res.status(400).json({ message: error });
+			} else {
+				req.session.user = user;
+				if (req.body['remember-me'] === 'false') {
+					res.status(200).json(user);
+				} else {
+					AccountManager.generateLoginKey(user.user, req.ip, (key) => {
+						res.cookie('login', key, {
+							maxAge: 900000
+						});
+						res.status(200).send(user);
+					});
+				}
+			}
+		});
+	});
 //
 // 	app.post('/logout', function (req, res) {
 // 		res.clearCookie('login');
