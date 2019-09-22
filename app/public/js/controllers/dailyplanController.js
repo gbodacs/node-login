@@ -8,34 +8,36 @@ function DailyPlanController()
 	$('#btn-logout').click(function(){ that.attemptLogout(); });
 
 // Clear input //
-	$('#excercise-form-btn1').click(function(){ that.clearInput(); });
+	$('#dailyplan-form-btn1').click(function(){ that.clearInput(); });
 
-// Add new excercise //
-	$('.modal-confirm .submit').click(function(){ that.addExcercise(); });
+// Add new dailyplan //
+	$('.modal-confirm .submit').click(function(){ that.addDailyPlan(); });
 
 	this.clearInput = function()
 	{
-		var w = document.getElementById("name-tf"); 
-		var q = document.getElementById("movielink-tf"); 
-		var e = document.getElementById("unit-tf"); 
-		var r = document.getElementById("comment-tf"); 
-
+		var w = document.getElementById("startdate-tf"); 
+		var q = document.getElementById("enddate-tf"); 
+		var e = document.getElementById("comment-tf"); 
+		var r = document.getElementById("block_id_tf"); 
+		var t = document.getElementById("repeat-tf"); 
+		
 		w.value = ""; 
 		q.value = ""; 
 		e.value = ""; 
 		r.value = ""; 
+		t.value = ""; 
 	}
 
-	this.addExcercise = function()
+	this.addDailyPlan = function()
 	{
 		$('.modal-confirm').modal('hide');
 		var that = this;
 		$.ajax({
-			url: '/admin_excercise',
+			url: '/admin_dailyplan',
 			type: 'POST',
 			success: function(data)
 			{
-	 			that.showLockedAlert('Gyakorlat az adatbázishoz hozzáadva.<br>blabla.');
+	 			that.showLockedAlert('Napi terv az adatbázishoz hozzáadva.');
 			},
 			error: function(jqXHR)
 			{
@@ -65,16 +67,16 @@ function DailyPlanController()
 		$('.modal-alert .modal-header h4').text('Sikerült!');
 		$('.modal-alert .modal-body p').html(msg);
 		$('.modal-alert').modal('show');
-		$('.modal-alert button').click(function(){window.location.href = '/admin_excercise';})
-		setTimeout(function(){window.location.href = '/admin_excercise';}, 3000);
+		$('.modal-alert button').click(function(){window.location.href = '/admin_dailyplan';})
+		setTimeout(function(){window.location.href = '/admin_dailyplan';}, 3000);
 	}
 }
 
-ExcerciseController.prototype.onUpdateSuccess = function()
+DailyPlanController.prototype.onUpdateSuccess = function()
 {
 	$('.modal-alert').modal({ show : false, keyboard : true, backdrop : true });
 	$('.modal-alert .modal-header h4').text('Sikerült!');
-	$('.modal-alert .modal-body p').html('Felvettél egy új gyakorlatot.');
+	$('.modal-alert .modal-body p').html('Felvettél egy új napi tervet.');
 	$('.modal-alert').modal('show');
 	$('.modal-alert button').off('click');
 }

@@ -76,8 +76,10 @@ module.exports = function (app) {
 		if (req.session.user == null) {
 			res.redirect('/');
 		} else {
-			res.render('admin_dailyplan', {blo: block});
-			//res.render('admin_users', {excers: excercise});
+			AM.getAllBlocks(function (e, blocks) 
+			{
+				res.render('admin_dailyplan', {blo: blocks});
+			})
 		}
 	});
 
@@ -88,22 +90,23 @@ module.exports = function (app) {
 			res.redirect('/');
 		} else 
 		{
-			/*AM.addNewExcercise({
-				name		: req.body['name2'],
-				movielink	: req.body['movielink'],
-				unit		: req.body['unit'],
-				comment		: req.body['comment']
+			AM.addNewDailyPlan({
+				block_ids	: req.body['block_id'],
+				repeats		: req.body['repeat'],
+				comment		: req.body['comment'],
+				startdate	: req.body['startdate3'],
+				enddate		: req.body['enddate3']
 			}, function(e, o)
 			{
 				if (e)
 				{
-					res.status(400).send('error-adding-excercise');
+					res.status(400).send('error-adding-dailyplan');
 				}	else
 				{
 					//req.session.user = o.value;
 					res.status(200).send('ok');
 				}
-			});*/
+			});
 		}
 	});
 

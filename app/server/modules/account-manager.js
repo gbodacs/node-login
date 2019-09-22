@@ -6,7 +6,8 @@ const MongoClient 	= require('mongodb').MongoClient;
 process.env.DB_URL = "mongodb://localhost:27017";
 process.env.DB_NAME = "brigi-terapia";
 
-var db, accounts;
+var db, accounts, blockdb, excercise, dailyplan;
+
 MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function(e, client) 
 {
 	if (e)
@@ -18,8 +19,8 @@ MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function(e, c
 		accounts = db.collection('accounts');
 		accounts.createIndex({user: 1, email: 1}); // index fields 'user' & 'email' for faster new account validation
 
-		block = db.collection('block');
-		block.createIndex({name: 1});
+		blockdb = db.collection('block');
+		blockdb.createIndex({name: 1});
 
 		excercise = db.collection('excercise');
 		excercise.createIndex({name: 1});
@@ -257,7 +258,7 @@ exports.deleteExcercise = function(id, callback)
 
 exports.addNewBlock = function(newData, callback)
 {
-	block.findOne({name:newData.name}, function(e, o) 
+	blockdb.findOne({name:newData.name}, function(e, o) 
 	{
 		if (o)
 		{
@@ -268,7 +269,7 @@ exports.addNewBlock = function(newData, callback)
 			newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
 
 			//TODO Ures "0" gyakorlat nelkuli elemeket ki kell torolni a tomb vegerol!
-			block.insertOne(newData, callback);
+			blockdb.insertOne(newData, callback);
 		}
 	});
 };
@@ -283,14 +284,67 @@ exports.updateblock = function(newData, callback)
 		done: newData.done
 	};
 
-	block.findOneAndUpdate({_id:getObjectId(newData.id)}, {$set:o}, {returnOriginal : false}, callback);
+	blockdb.findOneAndUpdate({_id:getObjectId(newData.id)}, {$set:o}, {returnOriginal : false}, callback);
 };
 
 exports.deleteBlock = function(id, callback)
 {
-	block.deleteOne({_id:getObjectId(id)}, callback);
+	blockdb.deleteOne({_id:getObjectId(id)}, callback);
 };
 
+exports.getAllBlocks = function(callback)
+{
+	blockdb.find().toArray(function(e, res) 
+	{
+		if (e) 
+			callback(e);
+		else 
+			callback(null, res);
+	});
+};
+
+/**********************************************
+	DailyPlan insertion, update & deletion methods
+ **********************************************/
+
+exports.addNewDailyPlan = function(newData, callback)
+{
+	//dailyplan.findOne({name:newData.name}, function(e, o)  //We don't need to find same blocks
+	
+	// append date stamp when record was created //
+	newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
+
+	dailyplan.insertOne(newData, callback);
+};
+
+/*exports.updateDailyPlan = function(newData, callback)
+{
+	var o = 
+	{
+		name : newData.name,
+		unit : newData.unit,
+		excercises: newData.excercises,
+		done: newData.done
+	};
+
+	blockdb.findOneAndUpdate({_id:getObjectId(newData.id)}, {$set:o}, {returnOriginal : false}, callback);
+};
+
+exports.deleteBlock = function(id, callback)
+{
+	blockdb.deleteOne({_id:getObjectId(id)}, callback);
+};*/
+
+exports.getAllDailyPlans = function(callback)
+{
+	dailyplan.find().toArray(function(e, res) 
+	{
+		if (e) 
+			callback(e);
+		else 
+			callback(null, res);
+	});
+};
 
 /**********************************************
 	private encryption & validation methods

@@ -4,13 +4,13 @@ $(document).ready(function(){
 	var ec = new DailyPlanController();
 	var ev = new DailyPlanValidator();
 	
-	$('#excercise-form').ajaxForm({
+	$('#dailyplan-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
 			if (ev.validateForm() == false){
 				return false;
 			} 	else{
 			// push the disabled username field onto the form data array //
-				formData.push({name:'name', value:$('#name-tf').val()})
+				//formData.push({name:'name', value:$('#name-tf').val()})
 				return true;
 			}
 		},
@@ -18,14 +18,14 @@ $(document).ready(function(){
 			if (status == 'success') ec.onUpdateSuccess();
 		},
 		error : function(e){
-			if (e.responseText == 'error-adding-excercise'){
-				ev.showInvalidName();
+			if (e.responseText == 'error-adding-dailyplan'){
+				ev.showInvalidStartDate();
 			}	/*else if (e.responseText == 'username-taken'){
 				ev.showInvalidUserName();
 			}*/
 		}
 	});
-	$('#name-tf').focus();
+	$('#startdate-tf').focus();
 
 // customize the account settings form //
 	/*
