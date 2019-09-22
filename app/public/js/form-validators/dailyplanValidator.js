@@ -28,7 +28,7 @@ function DailyPlanValidator()
 
 	this.validateRepeats = function(s)
 	{
-		return s.length >= 2;
+		return (s > 0);
 	}
 	
 	this.showErrors = function(a)
@@ -42,7 +42,6 @@ function DailyPlanValidator()
 
 		this.alert.modal('show');
 	}
-
 }
 
 DailyPlanValidator.prototype.showInvalidStartDate = function()
