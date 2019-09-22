@@ -28,7 +28,7 @@ MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function(e, c
 		dailyplan = db.collection('dailyplan');
 		dailyplan.createIndex({userid: 1});
 			
-		console.log('mongo :: connected to database :: "'+process.env.DB_NAME+'"');
+		console.log('Mongo :: connected to database :: "'+process.env.DB_NAME+'"');
 	}
 });
 

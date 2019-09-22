@@ -76,9 +76,14 @@ module.exports = function (app) {
 		if (req.session.user == null) {
 			res.redirect('/');
 		} else {
-			AM.getAllBlocks(function (e, blocks) 
+			var accer;
+			AM.getAllAccounts( function (e, accs) 
 			{
-				res.render('admin_dailyplan', {blo: blocks});
+				accer = accs;
+			})
+			AM.getAllBlocks( function (e, blocks) 
+			{
+				res.render('admin_dailyplan', {blo: blocks, acc: accer} );
 			})
 		}
 	});

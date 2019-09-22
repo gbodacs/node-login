@@ -15,12 +15,14 @@ function DailyPlanController()
 
 	this.clearInput = function()
 	{
+		var qa =document.getElementById("user_tf"); 
 		var w = document.getElementById("startdate-tf"); 
 		var q = document.getElementById("enddate-tf"); 
 		var e = document.getElementById("comment-tf"); 
 		var r = document.getElementById("block_id_tf"); 
 		var t = document.getElementById("repeat-tf"); 
 		
+		qa.value = ""; 
 		w.value = ""; 
 		q.value = ""; 
 		e.value = ""; 
