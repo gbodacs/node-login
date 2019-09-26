@@ -362,21 +362,21 @@ var generateSalt = function()
 	return salt;
 }
 
-var md5 = function(str) 
+var sha512 = function(str) 
 {
-	return crypto.createHash('md5').update(str).digest('hex');
+	return crypto.createHash('sha512').update(str).digest('hex');
 }
 
 var saltAndHash = function(pass, callback)
 {
 	var salt = generateSalt();
-	callback(salt + md5(pass + salt));
+	callback(salt + sha512(pass + salt));
 }
 
 var validatePassword = function(plainPass, hashedPass, callback)
 {
 	var salt = hashedPass.substr(0, 10);
-	var validHash = salt + md5(plainPass + salt);
+	var validHash = salt + sha512(plainPass + salt);
 	callback(null, hashedPass === validHash);
 }
 
