@@ -1,36 +1,10 @@
 
 const crypto 		= require('crypto');
 const moment 		= require('moment');
-const MongoClient 	= require('mongodb').MongoClient;
 
-process.env.DB_URL = "mongodb://localhost:27017";
-process.env.DB_NAME = "brigi-terapia";
+// var db, accounts, blockdb, excercise, dailyplan;
 
-var db, accounts, blockdb, excercise, dailyplan;
-
-MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function(e, client)
-{
-	if (e)
-	{
-		console.log(e);
-	}	else
-	{
-		db = client.db(process.env.DB_NAME);
-		accounts = db.collection('accounts');
-		accounts.createIndex({user: 1, email: 1}); // index fields 'user' & 'email' for faster new account validation
-
-		blockdb = db.collection('block');
-		blockdb.createIndex({name: 1});
-
-		excercise = db.collection('excercise');
-		excercise.createIndex({name: 1});
-
-		dailyplan = db.collection('dailyplan');
-		dailyplan.createIndex({userid: 1});
-
-		console.log('Mongo :: connected to database :: "'+process.env.DB_NAME+'"');
-	}
-});
+const Account = require('../models/account');
 
 const guid = function(){return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {var r = Math.random()*16|0,v=c=='x'?r:r&0x3|0x8;return v.toString(16);});}
 
@@ -54,7 +28,7 @@ exports.autoLogin = function(user, pass, callback)
 
 exports.manualLogin = function(user, pass, callback)
 {
-	accounts.findOne({user:user}, function(e, o) {
+	Account.findOne({user:user}, function(e, o) {
 		if (o == null)
 		{
 			callback('No such user was found in the database');
@@ -116,14 +90,14 @@ exports.validatePasswordKey = function(passKey, ipAddress, callback)
 
 exports.addNewAccount = function(newData, callback)
 {
-	accounts.findOne({user:newData.user}, function(e, o)
+	Account.findOne({user:newData.user}, function(e, o)
 	{
 		if (o)
 		{
 			callback('username-taken');
 		}	else
 		{
-			accounts.findOne({email:newData.email}, function(e, o)
+			Account.findOne({email:newData.email}, function(e, o)
 			{
 				if (o)
 				{
@@ -135,7 +109,8 @@ exports.addNewAccount = function(newData, callback)
 						newData.pass = hash;
 					// append date stamp when record was created //
 						newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
-						accounts.insertOne(newData, callback);
+						let account = new Account(newData);
+            account.save();
 					});
 				}
 			});
