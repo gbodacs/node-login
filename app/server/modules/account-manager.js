@@ -8,7 +8,7 @@ process.env.DB_NAME = "brigi-terapia";
 
 var db, accounts, blockdb, excercise, dailyplan;
 
-MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function(e, client) 
+MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function(e, client)
 {
 	if (e)
 	{
@@ -27,7 +27,7 @@ MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function(e, c
 
 		dailyplan = db.collection('dailyplan');
 		dailyplan.createIndex({userid: 1});
-			
+
 		console.log('Mongo :: connected to database :: "'+process.env.DB_NAME+'"');
 	}
 });
@@ -57,10 +57,10 @@ exports.manualLogin = function(user, pass, callback)
 	accounts.findOne({user:user}, function(e, o) {
 		if (o == null)
 		{
-			callback('user-not-found');
+			callback('No such user was found in the database');
 		}	else
 		{
-			validatePassword(pass, o.pass, function(err, res) 
+			validatePassword(pass, o.pass, function(err, res)
 			{
 				if (res)
 				{
@@ -78,7 +78,7 @@ exports.generateLoginKey = function(user, ipAddress, callback)
 {
 	let cookie = guid();
 	accounts.findOneAndUpdate({user:user}, {$set:{ ip : ipAddress, cookie : cookie}}, {returnOriginal : false}, function(e, o)
-	{ 
+	{
 		callback(cookie);
 	});
 }
@@ -106,7 +106,7 @@ exports.generatePasswordKey = function(email, ipAddress, callback)
 
 exports.validatePasswordKey = function(passKey, ipAddress, callback)
 {
-// ensure the passKey maps to the user's last recorded ip address 
+// ensure the passKey maps to the user's last recorded ip address
 	accounts.findOne({passKey:passKey, ip:ipAddress}, callback);
 };
 
@@ -116,14 +116,14 @@ exports.validatePasswordKey = function(passKey, ipAddress, callback)
 
 exports.addNewAccount = function(newData, callback)
 {
-	accounts.findOne({user:newData.user}, function(e, o) 
+	accounts.findOne({user:newData.user}, function(e, o)
 	{
 		if (o)
 		{
 			callback('username-taken');
 		}	else
 		{
-			accounts.findOne({email:newData.email}, function(e, o) 
+			accounts.findOne({email:newData.email}, function(e, o)
 			{
 				if (o)
 				{
@@ -147,13 +147,13 @@ exports.updateAccount = function(newData, callback)
 {
 	let findOneAndUpdate = function(data)
 	{
-		var o = 
+		var o =
 		{
 			name : data.name,
 			email : data.email,
 			country : data.country
 		}
-		if (data.pass) 
+		if (data.pass)
 			o.pass = data.pass;
 
 		accounts.findOneAndUpdate({_id:getObjectId(data.id)}, {$set:o}, {returnOriginal : false}, callback);
@@ -161,7 +161,7 @@ exports.updateAccount = function(newData, callback)
 	if (newData.pass == '')
 	{
 		findOneAndUpdate(newData);
-	}	else 
+	}	else
 	{
 		saltAndHash( newData.pass, function(hash){newData.pass = hash;findOneAndUpdate(newData);} );
 	}
@@ -183,11 +183,11 @@ exports.updatePassword = function(passKey, newPass, callback)
 exports.getAllAccounts = function(callback)
 {
 	accounts.find().toArray(
-		function(e, res) 
+		function(e, res)
 		{
-		if (e) 
+		if (e)
 			callback(e);
-		else 
+		else
 			callback(null, res);
 	});
 };
@@ -208,7 +208,7 @@ exports.deleteAllAccounts = function(callback)
 
 exports.addNewExcercise = function(newData, callback)
 {
-	excercise.findOne({name:newData.name}, function(e, o) 
+	excercise.findOne({name:newData.name}, function(e, o)
 	{
 		if (o)
 		{
@@ -225,7 +225,7 @@ exports.addNewExcercise = function(newData, callback)
 
 exports.updateExcercise = function(newData, callback)
 {
-	var o = 
+	var o =
 	{
 		name : newData.name2,
 		movielink : newData.movielink,
@@ -238,11 +238,11 @@ exports.updateExcercise = function(newData, callback)
 
 exports.getAllExcercise = function(callback)
 {
-	excercise.find().toArray(function(e, res) 
+	excercise.find().toArray(function(e, res)
 	{
-		if (e) 
+		if (e)
 			callback(e);
-		else 
+		else
 			callback(null, res);
 	});
 };
@@ -258,7 +258,7 @@ exports.deleteExcercise = function(id, callback)
 
 exports.addNewBlock = function(newData, callback)
 {
-	blockdb.findOne({name:newData.name}, function(e, o) 
+	blockdb.findOne({name:newData.name}, function(e, o)
 	{
 		if (o)
 		{
@@ -276,7 +276,7 @@ exports.addNewBlock = function(newData, callback)
 
 exports.updateblock = function(newData, callback)
 {
-	var o = 
+	var o =
 	{
 		name : newData.name,
 		unit : newData.unit,
@@ -294,11 +294,11 @@ exports.deleteBlock = function(id, callback)
 
 exports.getAllBlocks = function(callback)
 {
-	blockdb.find().toArray(function(e, res) 
+	blockdb.find().toArray(function(e, res)
 	{
-		if (e) 
+		if (e)
 			callback(e);
-		else 
+		else
 			callback(null, res);
 	});
 };
@@ -310,7 +310,7 @@ exports.getAllBlocks = function(callback)
 exports.addNewDailyPlan = function(newData, callback)
 {
 	//dailyplan.findOne({name:newData.name}, function(e, o)  //We don't need to find same blocks
-	
+
 	// append date stamp when record was created //
 	newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
 
@@ -319,7 +319,7 @@ exports.addNewDailyPlan = function(newData, callback)
 
 /*exports.updateDailyPlan = function(newData, callback)
 {
-	var o = 
+	var o =
 	{
 		name : newData.name,
 		unit : newData.unit,
@@ -337,11 +337,11 @@ exports.deleteBlock = function(id, callback)
 
 exports.getAllDailyPlans = function(callback)
 {
-	dailyplan.find().toArray(function(e, res) 
+	dailyplan.find().toArray(function(e, res)
 	{
-		if (e) 
+		if (e)
 			callback(e);
-		else 
+		else
 			callback(null, res);
 	});
 };
@@ -354,7 +354,7 @@ var generateSalt = function()
 {
 	var set = '0123456789abcdefghijklmnopqurstuvwxyzABCDEFGHIJKLMNOPQURSTUVWXYZ';
 	var salt = '';
-	for (var i = 0; i < 10; i++) 
+	for (var i = 0; i < 10; i++)
 	{
 		var p = Math.floor(Math.random() * set.length);
 		salt += set[p];
@@ -362,7 +362,7 @@ var generateSalt = function()
 	return salt;
 }
 
-var sha512 = function(str) 
+var sha512 = function(str)
 {
 	return crypto.createHash('sha512').update(str).digest('hex');
 }
@@ -389,8 +389,7 @@ var listIndexes = function()
 {
 	accounts.indexes(null, function(e, indexes)
 	{
-		for (var i = 0; i < indexes.length; i++) 
+		for (var i = 0; i < indexes.length; i++)
 			console.log('index:', i, indexes[i]);
 	});
 }
-

@@ -29,6 +29,12 @@
     "node": "10.4.0"
   },
   "scripts": {
-    "start": "node app.js"
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "nodemon app.js",
+    "client": "node start-client.js"
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.2",
+    "nodemon": "^1.19.3"
   }
 }

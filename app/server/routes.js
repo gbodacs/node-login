@@ -40,14 +40,14 @@ module.exports = function (app) {
 				res.status(400).json({ message: error });
 			} else {
 				req.session.user = user;
-				if (req.body['remember-me'] === 'false') {
+				if (req.body['remember-me'] === false) {
 					res.status(200).json(user);
 				} else {
 					AccountManager.generateLoginKey(user.user, req.ip, (key) => {
 						res.cookie('login', key, {
 							maxAge: 900000
 						});
-						res.status(200).send(user);
+						res.status(200).json(user);
 					});
 				}
 			}
