@@ -95,12 +95,15 @@ module.exports = function (app) {
 			res.redirect('/');
 		} else 
 		{
+			var sd = new Date(req.body['startdate3']);
+			var ed = new Date(req.body['enddate3']);
+
 			AM.addNewDailyPlan({
 				block_ids	: req.body['block_id'],
 				repeats		: req.body['repeat'],
 				comment		: req.body['comment'],
-				startdate	: req.body['startdate3'],
-				enddate		: req.body['enddate3']
+				startdate	: sd.toDateString(),
+				enddate		: ed.toDateString()
 			}, function(e, o)
 			{
 				if (e)
