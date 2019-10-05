@@ -21,14 +21,14 @@ module.exports = function (app) {
 		{
 			// attempt automatic login //
 			AccountManager.validateLoginKey(req.cookies.login, req.ip, (error, userByCookie) => {
-				if (userByCookie) {
+        if (userByCookie) {
 					AccountManager.autoLogin(userByCookie.user, userByCookie.pass, (userByName) => {
 						req.session.user = userByName;
-						res.status(200).send(userByName)
+						res.status(200).json({cookie: userByName.cookie});
 					});
 				} else
 				{
-          res.status(500).json({ message: `Database error` });
+          res.status(500).json({ message: `Database error valami` });
 				}
 			});
 		}

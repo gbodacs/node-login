@@ -14,7 +14,7 @@ const guid = function(){return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[
 
 exports.autoLogin = function(user, pass, callback)
 {
-	accounts.findOne({user:user}, function(e, o)
+	Account.findOne({user:user}, function(e, o)
 	{
 		if (o)
 		{
@@ -51,7 +51,7 @@ exports.manualLogin = function(user, pass, callback)
 exports.generateLoginKey = function(user, ipAddress, callback)
 {
 	let cookie = guid();
-	accounts.findOneAndUpdate({user:user}, {$set:{ ip : ipAddress, cookie : cookie}}, {returnOriginal : false}, function(e, o)
+	Account.findOneAndUpdate({user: user}, {$set: {ip: ipAddress, cookie: cookie}}, {new: true}, function(e, o)
 	{
 		callback(cookie);
 	});
@@ -60,13 +60,13 @@ exports.generateLoginKey = function(user, ipAddress, callback)
 exports.validateLoginKey = function(cookie, ipAddress, callback)
 {
 // ensure the cookie maps to the user's last recorded ip address
-	accounts.findOne({cookie:cookie, ip:ipAddress}, callback);
+	Account.findOne({cookie: cookie, ip: ipAddress}, callback);
 }
 
 exports.generatePasswordKey = function(email, ipAddress, callback)
 {
 	let passKey = guid();
-	accounts.findOneAndUpdate({email:email}, {$set:{ip : ipAddress,passKey : passKey }, $unset:{cookie:''}}, {returnOriginal : false}, function(e, o)
+	Account.findOneAndUpdate({email: email}, {$set: {ip: ipAddress, passKey: passKey}, $unset: {cookie: ''}}, {new : true}, function(e, o)
 	{
 		if (o.value != null)
 		{
