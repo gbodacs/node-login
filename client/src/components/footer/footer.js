@@ -3,10 +3,6 @@ import './footer.scss';
 import Card from 'react-bootstrap/Card';
 
 class Footer extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
 
     return (<Card bg="light">
@@ -29,9 +25,12 @@ class Footer extends React.Component {
               <Card.Text>
                 <small>Itt is követhetsz:</small>
               </Card.Text>
-              <Card.Link href="#"><small>FACEBOOK</small></Card.Link>
-              <Card.Link href="#"><small>YOUTUBE</small></Card.Link>
-              <Card.Link href="#"><small>& BLOGOMON</small></Card.Link>
+              <i class="fab fa-facebook-square"></i>
+              <Card.Link href="#"><small> FACEBOOK </small></Card.Link>
+              <i class="fab fa-youtube"></i>
+              <Card.Link href="#"><small> YOUTUBE </small></Card.Link>
+              <i class="fab fa-blogger"></i>
+              <Card.Link href="#"><small> BLOG </small></Card.Link>
             </div>
           </Card.Body>
         </blockquote>
