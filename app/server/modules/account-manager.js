@@ -41,7 +41,7 @@ exports.manualLogin = function(user, pass, callback)
 					callback(null, o);
 				}	else
 				{
-					callback('invalid-password');
+					callback('Incorrect password');
 				}
 			});
 		}
@@ -51,10 +51,7 @@ exports.manualLogin = function(user, pass, callback)
 exports.generateLoginKey = function(user, ipAddress, callback)
 {
 	let cookie = guid();
-	Account.findOneAndUpdate({user: user}, {$set: {ip: ipAddress, cookie: cookie}}, {new: true}, function(e, o)
-	{
-		callback(cookie);
-	});
+	Account.findOneAndUpdate({user: user}, {ip: ipAddress, cookie: cookie}, {new: true}, callback);
 }
 
 exports.validateLoginKey = function(cookie, ipAddress, callback)
@@ -192,7 +189,6 @@ exports.addNewExcercise = function(newData, callback)
 		{
 			// append date stamp when record was created //
 			newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
-			//console.log(newData);
 			excercise.insertOne(newData, callback);
 		}
 	});

@@ -41,14 +41,16 @@ module.exports = function (app) {
 			} else {
 				req.session.user = user;
 				if (req.body['remember-me'] === false) {
-					res.status(200).json(user);
+					res.status(200).json({message: 'ok'});
 				} else {
-					AccountManager.generateLoginKey(user.user, req.ip, (key) => {
-						res.cookie('login', key, {
-							maxAge: 900000
-						});
-						res.status(200).json(user);
-					});
+					AccountManager.generateLoginKey(user.user, req.ip, (error, updatedUser) => {
+            if (!updatedUser) {
+      				res.status(400).json({ message: error });
+      			} else {
+              res.cookie('login', updatedUser.cookie, {maxAge: 900000});
+              res.status(200).json(updatedUser);
+            }
+          });
 				}
 			}
 		});

@@ -16,24 +16,26 @@ class Login extends React.Component {
       checkbox: false
     };
     this.loginFormChange = this.loginFormChange.bind(this);
-    this.checkBoxChange = this.checkBoxChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.userInput.focus();
 
     const request = new Request('http://localhost:3001/login', {credentials: 'include'});
 
-    const response = await fetch(request);
-    const status = await response.status;
-
-    if (status === 200) {
-      this.props.history.push('/home');
-    } else if (status !== 400) {
-      const serverError = await response.json();
-      alert(response.status + '\n' + serverError.message);
-    }
+    fetch(request)
+      .then(response => {
+        const status = response.status;
+        if (status === 200) {
+          this.props.history.push('/home');
+        } else if (status !== 400) {
+          response.json()
+            .then(serverError => {
+              alert(response.status + '\n' + serverError.message);
+            });
+        }
+      });
   }
 
   loginFormChange(event) {
@@ -42,17 +44,13 @@ class Login extends React.Component {
     });
   }
 
-  checkBoxChange(event) {
-    this.setState({checkbox: this.checkBoxInput.checked});
-  }
-
-  async handleSubmit(event) {
+  handleSubmit(event) {
     event.preventDefault()
 
     const loginData = {
       'user': this.state.username,
       'pass': this.state.password,
-      'remember-me': this.state.checkbox
+      'remember-me': this.checkBoxInput.checked
     }
 
     const headers = new Headers();
@@ -66,21 +64,27 @@ class Login extends React.Component {
 
     const request = new Request('http://localhost:3001/login', options);
 
-    const response = await fetch(request);
-    const status = await response.status;
+    fetch(request)
+      .then(response => {
+        const status = response.status;
+        if (status === 200) {
+          this.loginForm.reset();
+          response.json()
+            .then(userDataFromServer => {
+              if (userDataFromServer.cookie) {
+                cookies.set('login', userDataFromServer.cookie, {domain: 'localhost', path: '/'});
+              }
+              this.props.history.push('/home');
+            });
+        } else {
+          this.loginForm.reset();
+          response.json()
+            .then(serverError => {
+              alert(response.status + '\n' + serverError.message);
+            });
+        }
+      });
 
-    if (status === 200) {
-      this.loginForm.reset();
-      this.props.history.push('/home');
-      const userDataFromServer = await response.json();
-      if (userDataFromServer.cookie) {
-        cookies.set('login', userDataFromServer.cookie, {path: '/'});
-      }
-    } else {
-      this.loginForm.reset();
-      const serverError = await response.json();
-      alert(response.status + '\n' + serverError.message);
-    }
   }
 
   render() {
@@ -107,7 +111,7 @@ class Login extends React.Component {
             <Form.Group controlId="formBasicCheckbox">
               <Form.Check ref={(check) => {
                   this.checkBoxInput = check;
-                }} name="checkbox" type="checkbox" label="Emlékezz rám" onChange={this.checkBoxChange}/>
+                }} name="checkbox" type="checkbox" label="Emlékezz rám"/>
             </Form.Group>
             <Button variant="primary" type="submit">
               Belépés
