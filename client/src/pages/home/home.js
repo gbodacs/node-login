@@ -1,6 +1,7 @@
 import React from 'react';
 import './home.scss';
 import Header from '../../components/header/header';
+import Footer from '../../components/footer/footer';
 
 class Home extends React.Component {
   constructor(props) {
@@ -27,7 +28,9 @@ class Home extends React.Component {
             Learn React
           </a>
         </div>
+        <Footer />
       </div>
+
     );
   }
 }
