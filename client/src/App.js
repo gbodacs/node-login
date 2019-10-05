@@ -9,14 +9,12 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <div>
-          <Switch>
-            <Route path="/" exact component={Login} />
-            <Route path="/login" component={Login} />
-            <Route path="/home" component={Home} />
-            <Route component={NoPage} />
-          </Switch>
-        </div>
+        <Switch>
+          <Route path="/" exact component={Login} />
+          <Route path="/login" component={Login} />
+          <Route path="/home" component={Home} />
+          <Route component={NoPage} />
+        </Switch>
       </div>
     </Router>
   );

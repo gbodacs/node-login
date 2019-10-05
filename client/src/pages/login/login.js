@@ -95,6 +95,7 @@ class Login extends React.Component {
         <Card.Body className="card-body">
           <h3>Üdv újra itt!</h3>
           <h6>Kérlek, lépj be ha már van fiókod!</h6>
+          <hr/>
           <Form ref={(form) => {
               this.loginForm = form;
             }} onSubmit={this.handleSubmit}>

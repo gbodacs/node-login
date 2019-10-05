@@ -1,15 +1,11 @@
 import React from 'react';
 import './header.scss';
+import { LinkContainer } from 'react-router-bootstrap';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Nav from 'react-bootstrap/Nav';
-import Button from 'react-bootstrap/Button';
 
 class Header extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const isAdmin = this.props.isAdmin;
     let header;
@@ -18,13 +14,23 @@ class Header extends React.Component {
       header = (
         <Nav className="mr-auto">
           <NavDropdown title="Felhasználók" id="basic-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Hozzáadás</NavDropdown.Item>
+            <LinkContainer to="/home/admin_adduser">
+              <NavDropdown.Item>Hozzáadás</NavDropdown.Item>
+            </LinkContainer>
             <NavDropdown.Divider />
-            <NavDropdown.Item href="#action/3.2">Megtekintés</NavDropdown.Item>
+            <LinkContainer to="/home/admin_getusers">
+              <NavDropdown.Item>Megtekintés</NavDropdown.Item>
+            </LinkContainer>
           </NavDropdown>
-          <Nav.Link href="#home">Napi tervek</Nav.Link>
-          <Nav.Link href="#link">Gyakorlatok</Nav.Link>
-          <Nav.Link href="#link">Blokkok</Nav.Link>
+          <LinkContainer to="/home/admin_dailyplan">
+            <Nav.Link>Napi tervek</Nav.Link>
+          </LinkContainer>
+          <LinkContainer to="/home/admin_exercises">
+            <Nav.Link>Gyakorlatok</Nav.Link>
+          </LinkContainer>
+          <LinkContainer to="/home/admin_blocks">
+            <Nav.Link>Blokkok</Nav.Link>
+          </LinkContainer>
         </Nav>
       );
     } else {
