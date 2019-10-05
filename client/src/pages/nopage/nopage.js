@@ -10,7 +10,7 @@ class NoPage extends React.Component {
   }
 
   redirectToHomePage() {
-    this.props.history.push('/');
+    this.props.history.push('/home');
   }
 
   render() {
