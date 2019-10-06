@@ -56,6 +56,13 @@ module.exports = function (app) {
 		});
 	});
 
+	app.get('/logout', function (req, res) {
+		res.clearCookie('login');
+		req.session.destroy(function (e) {
+			res.status(200).send('ok');
+		});
+	})
+
 	/*
 		new accounts
 	*/
@@ -89,21 +96,6 @@ module.exports = function (app) {
 		});
 	});
 
-//
-// 	app.post('/logout', function (req, res) {
-// 		res.clearCookie('login');
-// 		req.session.destroy(function (e) {
-// 			res.status(200).send('ok');
-// 		});
-// 	})
-//
-// 	app.get('/logout', function (req, res) {
-// 		res.clearCookie('login');
-// 		req.session.destroy(function (e) {
-// 			//res.status(200).send('ok');
-// 			res.redirect('/');
-// 		});
-// 	})
 //
 // 	/*
 // 		ADMIN - DailyPlan

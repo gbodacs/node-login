@@ -20,7 +20,7 @@ class Home extends React.Component {
   render() {
     return (
       <div className="Home">
-        <Header isAdmin={this.state.isAdmin} />
+        <Header isAdmin={this.state.isAdmin} history={this.props.history} />
         <Switch>
           <Route path="/home" exact component={ AdminDailyPlan } />
           <Route path="/home/admin_adduser" exact component={ AdminAddUser } />

@@ -4,8 +4,29 @@ import { LinkContainer } from 'react-router-bootstrap';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Nav from 'react-bootstrap/Nav';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 class Header extends React.Component {
+  constructor(props) {
+    super(props);
+    this.logoutUser = this.logoutUser.bind(this);
+  }
+
+  logoutUser() {
+    const request = new Request('http://localhost:3001/logout');
+
+    fetch(request)
+      .then(response => {
+        const status = response.status;
+        if (status === 200) {
+          cookies.remove('login', {domain: 'localhost', path: '/'});
+          this.props.history.push('/');
+        }
+      });
+  }
+
   render() {
     const isAdmin = this.props.isAdmin;
     let header;
@@ -48,7 +69,7 @@ class Header extends React.Component {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav" className="mx-5">
             {header}
-            <Nav.Link href="#link">Kilépés</Nav.Link>
+            <Nav.Link onClick={this.logoutUser} >Kilépés</Nav.Link>
           </Navbar.Collapse>
         </Navbar>
       </div>
