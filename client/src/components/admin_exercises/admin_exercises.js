@@ -10,10 +10,10 @@ class AdminExercises extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      url: '',
-      unit: '',
-      comment: ''
+      exerciseName: '',
+      exerciseUrl: '',
+      exerciseUnit: '',
+      exerciseComment: ''
     }
     this.exerciseFormChange = this.exerciseFormChange.bind(this);
   }
@@ -40,31 +40,31 @@ class AdminExercises extends React.Component {
           <Form ref={(form) => {
               this.exerciseForm = form;
             }} onSubmit={this.handleSubmit}>
-            <Form.Group as={Row} controlId="name">
+            <Form.Group as={Row} controlId="exerciseName">
               <Form.Label column="column" sm="2">Név</Form.Label>
               <Col sm="10">
                 <Form.Control ref={(exercise) => {
                     this.nameInput = exercise;
-                  }} name="name" type="text" onChange={this.exerciseFormChange}/>
+                  }} name="exerciseName" type="text" onChange={this.exerciseFormChange}/>
               </Col>
             </Form.Group>
-            <Form.Group as={Row} controlId="url">
+            <Form.Group as={Row} controlId="exerciseUrl">
               <Form.Label column="column" sm="2">Youtube URL</Form.Label>
               <Col sm="10">
-                <Form.Control name="url" type="text" onChange={this.exerciseFormChange}/>
+                <Form.Control name="exerciseUrl" type="text" onChange={this.exerciseFormChange}/>
               </Col>
             </Form.Group>
             <hr/>
-            <Form.Group as={Row} controlId="unit">
+            <Form.Group as={Row} controlId="exerciseUnit">
               <Form.Label column="column" sm="2">Mértékegység</Form.Label>
               <Col sm="10">
-                <Form.Control name="unit" type="teyt" onChange={this.exerciseFormChange}/>
+                <Form.Control name="exerciseUnit" type="text" onChange={this.exerciseFormChange}/>
               </Col>
             </Form.Group>
-            <Form.Group as={Row} controlId="comment">
+            <Form.Group as={Row} controlId="exerciseComment">
               <Form.Label column="column" sm="2">Megjegyzés</Form.Label>
               <Col sm="10">
-                <Form.Control name="comment" type="text" onChange={this.exerciseFormChange}/>
+                <Form.Control name="exerciseComment" type="text" onChange={this.exerciseFormChange}/>
               </Col>
             </Form.Group>
             <hr/>
