@@ -75,7 +75,7 @@ class AdminGetUsers extends React.Component {
     );
     return (
       <div className="AdminGetUsers my-5 mx-auto">
-        <Card className={`p-4 bg-light text-center`}>
+        <Card className={`p-4 bg-light`}>
           <Card.Body className="card-body">
             <Table striped bordered hover>
               <thead>

@@ -6,21 +6,34 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
+class NewExercise extends React.Component {
+  render() {
+    return (
+      <Form.Group as={Row} controlId="blockExerciseItems">
+        <Form.Label column="column" sm="2">Gyakorlat neve</Form.Label>
+        <Col sm="10">
+          <Form.Control name={`blockExerciseItem_${this.props.index}`} type="text"/>
+        </Col>
+      </Form.Group>
+    );
+  }
+}
+
 class AdminBlocks extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       blockName: '',
       blockRepetition: '',
-      blockExerciseList: '[]',
-      blockExerciseItems: ''
-
+      blockExerciseItem_0: '',
+      blockExerciseList: [],
     }
     this.blockFormChange = this.blockFormChange.bind(this);
+    this.addExercise = this.addExercise.bind(this);
   }
 
   componentDidMount() {
-    this.nameInput.focus();
+    this.blockNameInput.focus();
   }
 
   blockFormChange(event) {
@@ -29,25 +42,20 @@ class AdminBlocks extends React.Component {
     });
   }
 
-  handleBlockExerciseList(list) {
-    let blockExerciseList = this.state.blockExerciseList;
-    list.push(blockExerciseList);
-    let name = list;
-    this.setState({lists: blockExerciseList})
+  addExercise() {
+    const exercises = this.state.blockExerciseList.concat(NewExercise);
+    this.setState({blockExerciseList: exercises});
   }
 
-  handleAddItem(item) {
-     let blockExerciseItems = this.state;
-      this.setState({
-      items: blockExerciseItems
-      })
-  }
+  handleSubmit() {}
 
   render() {
-    return (<div className="AdminBlocks my-5">
-      <Card style={{
-          width: '90%'
-        }} className="mx-auto p-4 bg-light text-left">
+    const exercises = this.state.blockExerciseList.map((Element, index) => {
+      return <Element key={ index + 1} index={ index + 1 } />
+    });
+
+    return (<div className="AdminBlocks my-5 mx-auto">
+      <Card className="p-4 bg-light text-left">
         <Card.Body className="card-body">
           <h3>Blokk felvétele</h3>
           <h6>Vegyél fel egy új blokk sablont:</h6>
@@ -58,8 +66,8 @@ class AdminBlocks extends React.Component {
             <Form.Group as={Row} controlId="blockName">
               <Form.Label column="column" sm="2">Blokk sablon neve</Form.Label>
               <Col sm="10">
-                <Form.Control ref={(exercise) => {
-                    this.nameInput = exercise;
+                <Form.Control ref={(name) => {
+                    this.blockNameInput = name;
                   }} name="blockName" type="text" onChange={this.blockFormChange}/>
               </Col>
             </Form.Group>
@@ -69,25 +77,19 @@ class AdminBlocks extends React.Component {
                 <Form.Control name="blockRepetition" type="text" onChange={this.blockFormChange}/>
               </Col>
             </Form.Group>
-            <hr/>
-
             <Form.Group as={Row} controlId="blockExerciseItems">
               <Form.Label column="column" sm="2">Gyakorlat neve {}</Form.Label>
               <Col sm="10">
-                <Form.Control name="blockExerciseItems" type="text" onChange={this.blockFormChange}/>
+                <Form.Control name="blockExerciseItem_0" type="text" onChange={this.blockFormChange}/>
               </Col>
             </Form.Group>
+            {exercises}
+            <div className="d-flex justify-content-sm-center">
+              <Button variant="info" className="align-center" type="button" onClick={this.addExercise}><i className="fas fa-plus-circle mr-2"></i>Gyakorlat hozzáadása</Button>
+            </div>
             <hr/>
-            <Form.Group as={Row} controlId="blockExerciseItems">
-              <Form.Label column="column" sm="2">Gyakorlat neve {}</Form.Label>
-              <Col sm="10">
-                <Form.Control name="blockExerciseItems" type="text" onChange={this.blockFormChange}/>
-              </Col>
-            </Form.Group>
-            <hr/>
-
             <div className="buttons d-flex justify-content-sm-end">
-              <Button variant="outline-secondary" type="reset" value="Reset" className="mr-3">
+              <Button variant="outline-dark" type="reset" value="Reset" className="mr-3">
                 Törlés
               </Button>
               <Button variant="primary" type="submit" value="Submit">
