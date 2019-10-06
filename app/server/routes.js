@@ -64,7 +64,7 @@ module.exports = function (app) {
 	})
 
 	/*
-		new accounts
+		ADMIN - Accounts
 	*/
 
 	app.get('/signup', (req, res) => {
@@ -93,6 +93,28 @@ module.exports = function (app) {
 			} else {
 				res.status(201).send('ok');
 			}
+		});
+	});
+
+	app.get('/user_print', function (req, res)
+	{
+		AccountManager.getAllAccounts((error, accounts) => {
+			if (error) {
+        res.status(500).json({message: error});
+      } else {
+        res.status(200).json({accounts})
+      }
+		})
+	});
+
+	app.delete('/user_delete/:id', function (req, res)
+	{
+		AccountManager.deleteAccount(req.params.id, function (error, obj)
+		{
+			if (!error)
+				res.status(204).send('ok');
+			else
+				res.status(400).send('record not found');
 		});
 	});
 
@@ -427,39 +449,6 @@ module.exports = function (app) {
 // 				res.status(400).send('unable to update password');
 // 			}
 // 		})
-// 	});
-//
-// 	/*
-// 		view, delete & reset accounts
-// 	*/
-//
-// 	app.get('/user_print', function (req, res)
-// 	{
-// 		AM.getAllAccounts(function (e, accounts)
-// 		{
-// 			res.render('user_print', {
-// 				title: 'Account List',
-// 				accts: accounts
-// 			});
-// 		})
-// 	});
-//
-// 	app.post('/delete', function (req, res)
-// 	{
-// 		AM.deleteAccount(req.session.user._id, function (e, obj)
-// 		{
-// 			if (!e)
-// 			{
-// 				res.clearCookie('login');
-// 				req.session.destroy(function (e)
-// 				{
-// 					res.status(200).send('ok');
-// 				});
-// 			} else
-// 			{
-// 				res.status(400).send('record not found');
-// 			}
-// 		});
 // 	});
 
 	app.get('*', (req, res) => {

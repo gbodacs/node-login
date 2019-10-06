@@ -169,19 +169,17 @@ exports.updatePassword = function(passKey, newPass, callback)
 
 exports.getAllAccounts = function(callback)
 {
-	accounts.find().toArray(
-		function(e, res)
-		{
-		if (e)
-			callback(e);
+	Account.find({}, (error, accounts) => {
+		if (error)
+			callback(error);
 		else
-			callback(null, res);
+			callback(null, accounts);
 	});
 };
 
 exports.deleteAccount = function(id, callback)
 {
-	accounts.deleteOne({_id: getObjectId(id)}, callback);
+	Account.findOneAndDelete({_id: id}, callback);
 };
 
 exports.deleteAllAccounts = function(callback)
@@ -366,10 +364,10 @@ var validatePassword = function(plainPass, hashedPass, callback)
 	callback(null, hashedPass === validHash);
 }
 
-var getObjectId = function(id)
-{
-	return new require('mongodb').ObjectID(id);
-}
+// var getObjectId = function(id)
+// {
+// 	return new require('mongodb').ObjectID(id);
+// }
 
 var listIndexes = function()
 {
