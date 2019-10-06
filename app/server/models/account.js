@@ -8,7 +8,8 @@ const accountSchema = mongoose.Schema({
   country: { type: String, required: true},
   date: { type: String, required: true},
   cookie: { type: String, required: false},
-  ip: { type: String, required: false}
+  ip: { type: String, required: false},
+  isAdmin: { type: Boolean, required: true}
 });
 
 module.exports = mongoose.model('Account', accountSchema);

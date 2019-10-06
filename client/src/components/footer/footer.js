@@ -25,11 +25,11 @@ class Footer extends React.Component {
               <Card.Text>
                 <small>Itt is követhetsz:</small>
               </Card.Text>
-              <i class="fab fa-facebook-square"></i>
+              <i className="fab fa-facebook-square"></i>
               <Card.Link href="#"><small> FACEBOOK </small></Card.Link>
-              <i class="fab fa-youtube"></i>
+              <i className="fab fa-youtube"></i>
               <Card.Link href="#"><small> YOUTUBE </small></Card.Link>
-              <i class="fab fa-blogger"></i>
+              <i className="fab fa-blogger"></i>
               <Card.Link href="#"><small> BLOG </small></Card.Link>
             </div>
           </Card.Body>

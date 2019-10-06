@@ -1,4 +1,4 @@
-// var CT = require('./modules/country-list');
+const CountryList = require('./modules/country-list');
 const AccountManager = require('./modules/account-manager');
 // var EM = require('./modules/email-dispatcher');
 
@@ -55,6 +55,40 @@ module.exports = function (app) {
 			}
 		});
 	});
+
+	/*
+		new accounts
+	*/
+
+	app.get('/signup', (req, res) => {
+    AccountManager.validateAdmin(req.cookies.login, (error, valid) => {
+      if (!valid && error === 'not an admin') {
+        res.status(403).json({message: 'Not an admin user'});
+      } else if (!valid) {
+        res.status(500).json({message: 'Internal server error'});
+      } else {
+        res.status(200).json({countryList: CountryList});
+      }
+    })
+	});
+
+	app.post('/signup', (req, res) => {
+		AccountManager.addNewAccount({
+			name: req.body['name'],
+			email: req.body['email'],
+			user: req.body['user'],
+			pass: req.body['pass'],
+			country: req.body['country'],
+      isAdmin: req.body['isAdmin']
+		}, function (error) {
+			if (error) {
+				res.status(400).send({message: error});
+			} else {
+				res.status(201).send('ok');
+			}
+		});
+	});
+
 //
 // 	app.post('/logout', function (req, res) {
 // 		res.clearCookie('login');
@@ -351,34 +385,7 @@ module.exports = function (app) {
 // 		}
 // 	});
 //
-// 	/*
-// 		new accounts
-// 	*/
-//
-// 	app.get('/signup', function (req, res) {
-// 		res.render('signup', {
-// 			title: 'Signup',
-// 			countries: CT
-// 		});
-// 	});
-//
-// 	app.post('/signup', function (req, res) {
-// 		AM.addNewAccount({
-// 			name: req.body['name'],
-// 			email: req.body['email'],
-// 			user: req.body['user'],
-// 			pass: req.body['pass'],
-// 			country: req.body['country']
-// 		}, function (e) {
-// 			if (e) {
-// 				res.status(400).send(e);
-// 			} else {
-//
-// 				res.status(200).send('ok');
-// 			}
-// 		});
-// 		console.log(req.body['name']);
-// 	});
+
 //
 // 	/*
 // 		password reset

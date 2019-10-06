@@ -81,6 +81,18 @@ exports.validatePasswordKey = function(passKey, ipAddress, callback)
 	accounts.findOne({passKey:passKey, ip:ipAddress}, callback);
 };
 
+exports.validateAdmin = function(cookie, callback) {
+  Account.findOne({cookie: cookie}, function(error, account) {
+    if (error) {
+      callback(error);
+    } else if (account.isAdmin) {
+      callback(null, 'ok');
+    } else {
+      callback('not an admin');
+    }
+  });
+};
+
 /**********************************************
 	account insertion, update & deletion methods
  **********************************************/
@@ -107,7 +119,10 @@ exports.addNewAccount = function(newData, callback)
 					// append date stamp when record was created //
 						newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
 						let account = new Account(newData);
-            account.save();
+            account.save()
+              .then(newAccount => {
+                callback(null);
+              })
 					});
 				}
 			});
