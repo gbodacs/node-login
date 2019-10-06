@@ -46,7 +46,7 @@ class Header extends React.Component {
       <div className="Header">
         <Navbar bg="light" expand="lg">
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
+          <Navbar.Collapse id="basic-navbar-nav" className="mx-5">
             {header}
             <Nav.Link href="#link">Kilépés</Nav.Link>
           </Navbar.Collapse>
