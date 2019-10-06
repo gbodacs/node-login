@@ -5,6 +5,7 @@ const moment 		= require('moment');
 // var db, accounts, blockdb, excercise, dailyplan;
 
 const Account = require('../models/account');
+const Exercise = require('../models/exercise');
 
 const guid = function(){return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {var r = Math.random()*16|0,v=c=='x'?r:r&0x3|0x8;return v.toString(16);});}
 
@@ -193,16 +194,18 @@ exports.deleteAllAccounts = function(callback)
 
 exports.addNewExcercise = function(newData, callback)
 {
-	excercise.findOne({name:newData.name}, function(e, o)
+	Exercise.findOne({name:newData.name}, function(error, exercise)
 	{
-		if (o)
-		{
+		if (exercise)
 			callback('excercise-name-taken');
-		}	else
-		{
+		else {
 			// append date stamp when record was created //
 			newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
-			excercise.insertOne(newData, callback);
+      const exercise = new Exercise(newData);
+      exercise.save()
+        .then(newExercise => {
+          callback(null);
+        })
 		}
 	});
 };

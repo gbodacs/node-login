@@ -16,16 +16,53 @@ class AdminExercises extends React.Component {
       exerciseComment: ''
     }
     this.exerciseFormChange = this.exerciseFormChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
-    this.nameInput.focus();
+    this.exerciseNameInput.focus();
   }
 
   exerciseFormChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    const exerciseData = {
+      name: this.state.exerciseName,
+      movielink: this.state.exerciseUrl,
+      unit: this.state.exerciseUnit,
+      comment: this.state.exerciseComment
+    }
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    const options = {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(exerciseData)
+    }
+
+    const request = new Request('http://localhost:3001/admin_exercise', options);
+
+    fetch(request)
+      .then(response => {
+        const status = response.status;
+        if (status === 201) {
+          this.exerciseForm.reset();
+          alert('Sikeresen felvettél egy gyakorlatot!');
+        } else {
+          response.json()
+            .then(serverError => {
+              alert(response.status + '\n' + serverError.message);
+            });
+        }
+      });
   }
 
   render() {
@@ -44,7 +81,7 @@ class AdminExercises extends React.Component {
               <Form.Label column="column" sm="2">Név</Form.Label>
               <Col sm="10">
                 <Form.Control ref={(exercise) => {
-                    this.nameInput = exercise;
+                    this.exerciseNameInput = exercise;
                   }} name="exerciseName" type="text" onChange={this.exerciseFormChange}/>
               </Col>
             </Form.Group>
@@ -54,7 +91,6 @@ class AdminExercises extends React.Component {
                 <Form.Control name="exerciseUrl" type="text" onChange={this.exerciseFormChange}/>
               </Col>
             </Form.Group>
-            <hr/>
             <Form.Group as={Row} controlId="exerciseUnit">
               <Form.Label column="column" sm="2">Mértékegység</Form.Label>
               <Col sm="10">

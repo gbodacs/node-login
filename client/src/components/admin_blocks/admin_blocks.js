@@ -12,7 +12,7 @@ class NewExercise extends React.Component {
       <Form.Group as={Row} controlId="blockExerciseItems">
         <Form.Label column="column" sm="2">Gyakorlat neve</Form.Label>
         <Col sm="10">
-          <Form.Control name={`blockExerciseItem_${this.props.index}`} type="text"/>
+          <Form.Control name={`blockExerciseItem_${this.props.index}`} type="text" onChange={this.props.onChangeValue}/>
         </Col>
       </Form.Group>
     );
@@ -30,6 +30,7 @@ class AdminBlocks extends React.Component {
     }
     this.blockFormChange = this.blockFormChange.bind(this);
     this.addExercise = this.addExercise.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -47,11 +48,14 @@ class AdminBlocks extends React.Component {
     this.setState({blockExerciseList: exercises});
   }
 
-  handleSubmit() {}
+  handleSubmit(event) {
+    event.preventDefault();
+    console.log(this.state);
+  }
 
   render() {
     const exercises = this.state.blockExerciseList.map((Element, index) => {
-      return <Element key={ index + 1} index={ index + 1 } />
+      return <Element key={ index + 1} index={index + 1} onChangeValue={this.blockFormChange}/>
     });
 
     return (<div className="AdminBlocks my-5 mx-auto">
@@ -89,7 +93,7 @@ class AdminBlocks extends React.Component {
             </div>
             <hr/>
             <div className="buttons d-flex justify-content-sm-end">
-              <Button variant="outline-dark" type="reset" value="Reset" className="mr-3">
+              <Button variant="outline-secondary" type="reset" value="Reset" className="mr-3">
                 Törlés
               </Button>
               <Button variant="primary" type="submit" value="Submit">

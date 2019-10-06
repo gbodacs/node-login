@@ -202,45 +202,24 @@ module.exports = function (app) {
 // 		}
 // 	});
 //
-// 	/*
-// 		ADMIN - Excercise
-// 	*/
-// 	app.get('/admin_excercise', function (req, res) {
-// 		if (req.session.user == null) {
-// 			res.redirect('/');
-// 		} else {
-// 			res.render('admin_excercise', {
-// 				countries: CT,
-// 				//			udata : req.session.user
-// 			});
-// 		}
-// 	});
-//
-// 	app.post('/admin_excercise', function (req, res)
-// 	{
-// 		if (req.session.user == null)
-// 		{
-// 			res.redirect('/');
-// 		} else
-// 		{
-// 			AM.addNewExcercise({
-// 				name		: req.body['name2'],
-// 				movielink	: req.body['movielink'],
-// 				unit		: req.body['unit'],
-// 				comment		: req.body['comment']
-// 			}, function(e, o)
-// 			{
-// 				if (e)
-// 				{
-// 					res.status(400).send('error-adding-excercise');
-// 				}	else
-// 				{
-// 					//req.session.user = o.value;
-// 					res.status(200).send('ok');
-// 				}
-// 			});
-// 		}
-// 	});
+	/*
+		ADMIN - Excercise
+	*/
+
+  app.post('/admin_exercise', (req, res) => {
+    AccountManager.addNewExcercise({
+      name: req.body.name,
+      movielink: req.body.movielink,
+      unit: req.body.unit,
+      comment: req.body.comment
+    }, (error, exercise) => {
+      if (error) {
+        res.status(400).json({message: 'error-adding-excercise'});
+      } else {
+        res.status(201).send('ok');
+      }
+    });
+  });
 //
 // 	/*
 // 		ADMIN - Block
