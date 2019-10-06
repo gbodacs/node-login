@@ -34,7 +34,7 @@ class AdminAddUser extends React.Component {
     return (
       <div className="AdminAddUser my-5">
         <Card style={{
-            width: '60%'
+            width: '90%'
           }} className="mx-auto p-4 bg-light text-left">
           <Card.Body className="card-body">
             <h3>Fiók nyitása</h3>
