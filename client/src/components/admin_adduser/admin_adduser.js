@@ -103,8 +103,8 @@ class AdminAddUser extends React.Component {
     );
 
     return (
-      <div className="AdminAddUser my-5">
-        <Card className="mx-auto p-4 bg-light text-left w-75">
+      <div className="AdminAddUser my-5 mx-auto">
+        <Card className="p-4 bg-light text-left">
           <Card.Body className="card-body">
             <h3>Fiók nyitása</h3>
             <h6>Kérlek, töltsd ki az adatokat</h6>
