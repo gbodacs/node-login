@@ -69,9 +69,9 @@ class AdminExercises extends React.Component {
     return (<div className="AdminExercises my-5">
       <Card style={{
           width: '90%'
-        }} className="mx-auto p-4 bg-light text-left">
+        }} className="mx-auto p-4 bg-white text-left">
         <Card.Body className="card-body">
-          <h3>Feladatsor felvétele</h3>
+          <h3>Gyakorlat felvétele</h3>
           <h6>Itt tudsz új gyakorlatot felvenni:</h6>
           <hr/>
           <Form ref={(form) => {

@@ -1,6 +1,7 @@
 .App {
   /*create by https://mycolor.space/gradient :) */
   min-height: 100vh;
-  background-image: linear-gradient(to right top, #fefefe, #f7faff, #eaf7ff, #daf5ff, #c9f4fc, #c1f2f9, #b9f0f5, #b2eef0, #b0eaf3, #b0e7f5, #b1e2f7, #b4def7);
-
+  background-color: white;
+  /*background-image: linear-gradient(to right top, #fefefe, #f7faff, #eaf7ff, #daf5ff, #c9f4fc, #c1f2f9, #b9f0f5, #b2eef0, #b0eaf3, #b0e7f5, #b1e2f7, #b4def7);
+*/
 }

@@ -39,7 +39,7 @@ class Footer extends React.Component {
     );
 
     return (
-      <Card bg="light" className="footer fixed-bottom font-italic">
+      <Card bg="white" className="footer fixed-bottom font-italic">
         <Card.Footer>
           © 2019 Minden jog fenntartva | Az oldalt a TEAM működteti
         </Card.Footer>

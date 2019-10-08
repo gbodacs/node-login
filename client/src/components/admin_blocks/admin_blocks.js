@@ -59,7 +59,7 @@ class AdminBlocks extends React.Component {
     });
 
     return (<div className="AdminBlocks my-5 mx-auto">
-      <Card className="p-4 bg-light text-left">
+      <Card className="p-4 bg-white text-left">
         <Card.Body className="card-body">
           <h3>Blokk felvétele</h3>
           <h6>Vegyél fel egy új blokk sablont:</h6>

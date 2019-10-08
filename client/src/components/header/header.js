@@ -65,11 +65,11 @@ class Header extends React.Component {
     }
     return (
       <div className="Header">
-        <Navbar bg="light" expand="lg">
+        <Navbar bg="dark" variant="dark" expand="lg">
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav" className="mx-5">
             {header}
-            <Nav.Link onClick={this.logoutUser} >Kilépés</Nav.Link>
+            <Nav.Link className="logout" onClick={this.logoutUser} >Kilépés</Nav.Link>
           </Navbar.Collapse>
         </Navbar>
       </div>

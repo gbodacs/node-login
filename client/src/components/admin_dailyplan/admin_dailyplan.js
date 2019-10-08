@@ -51,9 +51,9 @@ changeEndDate() {
 
     render() {
       return (<div className="AdminDailyPlan my-5 mx-auto">
-        <Card className="p-4 bg-light text-left">
+        <Card className="p-4 bg-white text-left">
           <Card.Body className="card-body">
-            <h3>Feladatsor felvétele</h3>
+            <h3>Napiterv felvétele</h3>
             <h6>Itt tudsz új időszakot felvenni:</h6>
             <hr/>
             <Form ref={(form) => {
