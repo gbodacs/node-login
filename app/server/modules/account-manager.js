@@ -6,6 +6,7 @@ const moment 		= require('moment');
 
 const Account = require('../models/account');
 const Exercise = require('../models/exercise');
+const Block = require('../models/block');
 
 const guid = function(){return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {var r = Math.random()*16|0,v=c=='x'?r:r&0x3|0x8;return v.toString(16);});}
 
@@ -124,6 +125,9 @@ exports.addNewAccount = function(newData, callback)
               .then(newAccount => {
                 callback(null);
               })
+							.catch(error => {
+								callback(error);
+							});
 					});
 				}
 			});
@@ -206,6 +210,9 @@ exports.addNewExcercise = function(newData, callback)
         .then(newExercise => {
           callback(null);
         })
+				.catch(error => {
+					callback(error);
+				});
 		}
 	});
 };
@@ -225,12 +232,11 @@ exports.updateExcercise = function(newData, callback)
 
 exports.getAllExcercise = function(callback)
 {
-	excercise.find().toArray(function(e, res)
-	{
-		if (e)
-			callback(e);
+	Exercise.find({}, (error, exercises) => {
+		if (error)
+			callback(error);
 		else
-			callback(null, res);
+			callback(null, exercises);
 	});
 };
 
@@ -245,18 +251,20 @@ exports.deleteExcercise = function(id, callback)
 
 exports.addNewBlock = function(newData, callback)
 {
-	blockdb.findOne({name:newData.name}, function(e, o)
-	{
-		if (o)
-		{
+	Block.findOne({name:newData.name}, (error, block) => {
+		if (block) {
 			callback('block-name-taken');
-		}	else
-		{
+		}	else {
 			// append date stamp when record was created //
 			newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
-
-			//TODO Ures "0" gyakorlat nelkuli elemeket ki kell torolni a tomb vegerol!
-			blockdb.insertOne(newData, callback);
+			const newBlock = new Block(newData);
+      newBlock.save()
+        .then(newBlock => {
+          callback(null);
+        })
+				.catch(error => {
+					callback(error);
+				});
 		}
 	});
 };

@@ -220,52 +220,38 @@ module.exports = function (app) {
       }
     });
   });
-//
-// 	/*
-// 		ADMIN - Block
-// 	*/
-//
-// 	app.get('/admin_block', function (req, res)
-// 	{
-// 		if (req.session.user == null)
-// 		{
-// 			res.redirect('/');
-// 		} else
-// 		{
-// 			AM.getAllExcercise(function (e, excercise)
-// 			{
-// 				res.render('admin_block', {excers: excercise});
-// 			})
-// 		}
-// 	});
-//
-// 	app.post('/admin_block', function (req, res)
-// 	{
-// 		if (req.session.user == null)
-// 		{
-// 			res.redirect('/');
-// 		} else
-// 		{
-// 			AM.addNewBlock({
-// 				name		: req.body['name3'],
-// 				repeat		: req.body['repeat'],
-// 				excer_id	: req.body['excer_id3'],
-// 				// No excercise repeat in block excer_repeat: "1"
-// 			}, function(e, o)
-// 			{
-// 				if (e)
-// 				{
-// 					res.status(400).send('error-adding-block');
-// 				}	else
-// 				{
-// 					//req.session.user = o.value;
-// 					res.status(200).send('ok');
-// 				}
-// 			});
-// 		}
-// 	});
-//
-//
+
+	/*
+		ADMIN - Block
+	*/
+
+	app.get('/admin_block', function (req, res)
+	{
+		AccountManager.getAllExcercise(function (error, exercises)
+		{
+			if (!error) {
+        res.status(200).json({exercises});
+      } else {
+        res.status(500).json({message: error});
+      }
+		})
+	});
+
+	app.post('/admin_block', function (req, res)
+	{
+		AccountManager.addNewBlock({
+			name: req.body.name,
+			repeat: req.body.repeat,
+			exerciseList: req.body.exerciseIdList,
+			// No excercise repeat in block excer_repeat: "1"
+		}, (error, block) => {
+			if (error) {
+				res.status(400).json({message: 'error-adding-block'});
+			}	else {
+				res.status(200).send('ok');
+			}
+		});
+	});
 //
 // 	/*
 // 		Settings
