@@ -57,9 +57,15 @@ class Header extends React.Component {
     } else {
       header = (
         <Nav className="mr-auto">
-          <Nav.Link href="#link">Beállítások</Nav.Link>
-          <Nav.Link href="#home">Napi tervek</Nav.Link>
-          <Nav.Link href="#link">Történelem</Nav.Link>
+          <LinkContainer to="/home/user_dailyplan">
+            <Nav.Link>Napi gyakorlatok</Nav.Link>
+          </LinkContainer>
+          <LinkContainer to="/home/user-history">
+            <Nav.Link>Előzmények</Nav.Link>
+          </LinkContainer>
+          <LinkContainer to="/home/video_viewer">
+            <Nav.Link>Demo</Nav.Link>
+          </LinkContainer>
         </Nav>
       );
     }
