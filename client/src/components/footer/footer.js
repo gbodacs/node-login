@@ -5,7 +5,7 @@ import CardLink from 'react-bootstrap/Card';
 
 class Footer extends React.Component {
   render() {
-    return (<Card bg="white" className="footer fixed-bottom font-bold">
+    return (<Card bg="white" className="footer fixed-bottom font-bold text-center">
       <Card.Footer>
         <Card.Link>Copyright © 2019 | Az oldalt a TEAM működteti</Card.Link>
         <Card.Link>Kapcsolat</Card.Link>

@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Cookies from 'universal-cookie';
+import Footer from '../../components/footer/footer';
 
 const cookies = new Cookies();
 
@@ -88,41 +89,46 @@ class Login extends React.Component {
   }
 
   render() {
-    return (<div className="Login">
-      <Card style={{
-          width: '50%'
-        }} className={`mx-auto position-relative p-4 bg-light`}>
-        <Card.Body className="card-body">
-          <h3>Üdv újra itt!</h3>
-          <h6>Kérlek, lépj be ha már van fiókod!</h6>
-          <hr/>
-          <Form ref={(form) => {
-              this.loginForm = form;
-            }} onSubmit={this.handleSubmit}>
-            <Form.Group controlId="formBasicEmail">
-              <Form.Label>Felhasználó</Form.Label>
-              <Form.Control ref={(input) => {
-                  this.userInput = input;
-                }} name="username" type="text" onChange={this.loginFormChange}/>
-            </Form.Group>
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label>Jelszó</Form.Label>
-              <Form.Control name="password" type="password" onChange={this.loginFormChange}/>
-            </Form.Group>
-            <Form.Group controlId="formBasicCheckbox">
-              <Form.Check ref={(check) => {
-                  this.checkBoxInput = check;
-                }} name="checkbox" type="checkbox" label="Emlékezz rám"/>
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Belépés
-            </Button>
-          </Form>
-          <hr/>
-          <a href="#">Elfelejtettem a jelszavam</a>
-        </Card.Body>
-      </Card>
-    </div>);
+    return (
+      <div>
+        <div className="Login">
+          <Card style={{
+              width: '50%'
+            }} className={`mx-auto position-relative p-4 bg-light`}>
+            <Card.Body className="card-body">
+              <h3>Üdv újra itt!</h3>
+              <h6>Kérlek, lépj be ha már van fiókod!</h6>
+              <hr/>
+              <Form ref={(form) => {
+                  this.loginForm = form;
+                }} onSubmit={this.handleSubmit}>
+                <Form.Group controlId="formBasicEmail">
+                  <Form.Label>Felhasználó</Form.Label>
+                  <Form.Control ref={(input) => {
+                      this.userInput = input;
+                    }} name="username" type="text" onChange={this.loginFormChange}/>
+                  </Form.Group>
+                  <Form.Group controlId="formBasicPassword">
+                    <Form.Label>Jelszó</Form.Label>
+                    <Form.Control name="password" type="password" onChange={this.loginFormChange}/>
+                  </Form.Group>
+                  <Form.Group controlId="formBasicCheckbox">
+                    <Form.Check ref={(check) => {
+                        this.checkBoxInput = check;
+                      }} name="checkbox" type="checkbox" label="Emlékezz rám"/>
+                    </Form.Group>
+                    <Button variant="primary" type="submit">
+                      Belépés
+                    </Button>
+                  </Form>
+                  <hr/>
+                  <a href="#">Elfelejtettem a jelszavam</a>
+                </Card.Body>
+              </Card>
+            </div>
+            <Footer/>
+      </div>
+    );
   }
 }
 
