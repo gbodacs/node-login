@@ -1,6 +1,7 @@
 import React from 'react';
 import './footer.scss';
 import Card from 'react-bootstrap/Card';
+import CardLink from 'react-bootstrap/Card';
 
 class Footer extends React.Component {
   render() {
@@ -17,15 +18,15 @@ class Footer extends React.Component {
 
 export default Footer;
 
-/*
-import React from "react";
+
+/*import React from "react";
 import './footer.scss';
 import { MDBCol, MDBContainer, MDBRow, MDBFooter } from "mdbreact";
 
 class Footer extends React.Component {
   render() {
     return (
-    <MDBFooter bg="white" className="footer font-bold pt-4 mt-4">
+    <MDBFooter bg="white" className="footer font-bold pt-0 mt-0">
       <MDBContainer fluid className="text-center text-md-left">
         <MDBRow>
           <MDBCol md="6">
