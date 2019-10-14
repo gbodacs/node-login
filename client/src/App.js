@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './pages/home/home';
 import Login from './pages/login/login';
 import NoPage from './pages/nopage/nopage';
+import Terms from './pages/terms_cookies/terms_cookies';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" exact component={Login} />
           <Route path="/login" component={Login} />
           <Route path="/home" component={Home} />
+          <Route path="/terms" component={Terms} />
           <Route component={NoPage} />
         </Switch>
       </div>

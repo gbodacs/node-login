@@ -25,16 +25,16 @@ class Home extends React.Component {
       <Header isAdmin={this.state.isAdmin} history={this.props.history}/>
       <Switch>
         //Admin pages
-        <Route path="/home" exact="exact" component={AdminDailyPlan}/>
-        <Route path="/home/admin_adduser" exact="exact" component={AdminAddUser}/>
-        <Route path="/home/admin_getusers" exact="exact" component={AdminGetUsers}/>
-        <Route path="/home/admin_dailyplan" exact="exact" component={AdminDailyPlan}/>
-        <Route path="/home/admin_exercises" exact="exact" component={AdminExercises}/>
-        <Route path="/home/admin_blocks" exact="exact" component={AdminBlocks}/>
+        <Route path="/home" exact component={AdminDailyPlan}/>
+        <Route path="/home/admin_adduser" exact component={AdminAddUser}/>
+        <Route path="/home/admin_getusers" exact component={AdminGetUsers}/>
+        <Route path="/home/admin_dailyplan" exact component={AdminDailyPlan}/>
+        <Route path="/home/admin_exercises" exact component={AdminExercises}/>
+        <Route path="/home/admin_blocks" exact component={AdminBlocks}/>
         //User pages
-        <Route path="/home/user_dailyplan" exact="exact" component={UserDailyplan}/>
-        <Route path="/home/user_history" exact="exact" component={UserHistory}/>
-        <Route path="/home/video_viewer" exact="exact" component={VideoViewer}/>
+        <Route path="/home/user_dailyplan" exact component={UserDailyplan}/>
+        <Route path="/home/user_history" exact component={UserHistory}/>
+        <Route path="/home/video_viewer" exact component={VideoViewer}/>
       </Switch>
       <Footer/>
     </div>);

@@ -1,7 +1,6 @@
 import React from 'react';
 import './footer.scss';
 import Card from 'react-bootstrap/Card';
-import CardLink from 'react-bootstrap/Card';
 
 class Footer extends React.Component {
   render() {
@@ -9,7 +8,7 @@ class Footer extends React.Component {
       <Card.Footer>
         <Card.Link>Copyright © 2019 | Az oldalt a TEAM működteti</Card.Link>
         <Card.Link>Kapcsolat</Card.Link>
-        <Card.Link>Adatvédelmi elvek</Card.Link>
+        <Card.Link href="/terms">Adatvédelmi elvek</Card.Link>
         <Card.Link>Süti szabályzat</Card.Link>
       </Card.Footer>
     </Card>);
