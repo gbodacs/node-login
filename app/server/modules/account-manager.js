@@ -1,36 +1,12 @@
 
 const crypto 		= require('crypto');
 const moment 		= require('moment');
-const MongoClient 	= require('mongodb').MongoClient;
 
-process.env.DB_URL = "mongodb://localhost:27017";
-process.env.DB_NAME = "brigi-terapia";
+// var db, accounts, blockdb, excercise, dailyplan;
 
-var db, accounts, blockdb, excercise, dailyplan;
-
-MongoClient.connect(process.env.DB_URL, { useNewUrlParser: true }, function(e, client) 
-{
-	if (e)
-	{
-		console.log(e);
-	}	else
-	{
-		db = client.db(process.env.DB_NAME);
-		accounts = db.collection('accounts');
-		accounts.createIndex({user: 1, email: 1}); // index fields 'user' & 'email' for faster new account validation
-
-		blockdb = db.collection('block');
-		blockdb.createIndex({name: 1});
-
-		excercise = db.collection('excercise');
-		excercise.createIndex({name: 1});
-
-		dailyplan = db.collection('dailyplan');
-		dailyplan.createIndex({userid: 1});
-			
-		console.log('Mongo :: connected to database :: "'+process.env.DB_NAME+'"');
-	}
-});
+const Account = require('../models/account');
+const Exercise = require('../models/exercise');
+const Block = require('../models/block');
 
 const guid = function(){return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {var r = Math.random()*16|0,v=c=='x'?r:r&0x3|0x8;return v.toString(16);});}
 
@@ -40,7 +16,7 @@ const guid = function(){return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[
 
 exports.autoLogin = function(user, pass, callback)
 {
-	accounts.findOne({user:user}, function(e, o)
+	Account.findOne({user:user}, function(e, o)
 	{
 		if (o)
 		{
@@ -54,20 +30,20 @@ exports.autoLogin = function(user, pass, callback)
 
 exports.manualLogin = function(user, pass, callback)
 {
-	accounts.findOne({user:user}, function(e, o) {
+	Account.findOne({user:user}, function(e, o) {
 		if (o == null)
 		{
-			callback('user-not-found');
+			callback('No such user was found in the database');
 		}	else
 		{
-			validatePassword(pass, o.pass, function(err, res) 
+			validatePassword(pass, o.pass, function(err, res)
 			{
 				if (res)
 				{
 					callback(null, o);
 				}	else
 				{
-					callback('invalid-password');
+					callback('Incorrect password');
 				}
 			});
 		}
@@ -77,22 +53,19 @@ exports.manualLogin = function(user, pass, callback)
 exports.generateLoginKey = function(user, ipAddress, callback)
 {
 	let cookie = guid();
-	accounts.findOneAndUpdate({user:user}, {$set:{ ip : ipAddress, cookie : cookie}}, {returnOriginal : false}, function(e, o)
-	{ 
-		callback(cookie);
-	});
+	Account.findOneAndUpdate({user: user}, {ip: ipAddress, cookie: cookie}, {new: true}, callback);
 }
 
 exports.validateLoginKey = function(cookie, ipAddress, callback)
 {
 // ensure the cookie maps to the user's last recorded ip address
-	accounts.findOne({cookie:cookie, ip:ipAddress}, callback);
+	Account.findOne({cookie: cookie, ip: ipAddress}, callback);
 }
 
 exports.generatePasswordKey = function(email, ipAddress, callback)
 {
 	let passKey = guid();
-	accounts.findOneAndUpdate({email:email}, {$set:{ip : ipAddress,passKey : passKey }, $unset:{cookie:''}}, {returnOriginal : false}, function(e, o)
+	Account.findOneAndUpdate({email: email}, {$set: {ip: ipAddress, passKey: passKey}, $unset: {cookie: ''}}, {new : true}, function(e, o)
 	{
 		if (o.value != null)
 		{
@@ -106,8 +79,20 @@ exports.generatePasswordKey = function(email, ipAddress, callback)
 
 exports.validatePasswordKey = function(passKey, ipAddress, callback)
 {
-// ensure the passKey maps to the user's last recorded ip address 
+// ensure the passKey maps to the user's last recorded ip address
 	accounts.findOne({passKey:passKey, ip:ipAddress}, callback);
+};
+
+exports.validateAdmin = function(cookie, callback) {
+  Account.findOne({cookie: cookie}, function(error, account) {
+    if (error) {
+      callback(error);
+    } else if (account.isAdmin) {
+      callback(null, 'ok');
+    } else {
+      callback('not an admin');
+    }
+  });
 };
 
 /**********************************************
@@ -116,14 +101,14 @@ exports.validatePasswordKey = function(passKey, ipAddress, callback)
 
 exports.addNewAccount = function(newData, callback)
 {
-	accounts.findOne({user:newData.user}, function(e, o) 
+	Account.findOne({user:newData.user}, function(e, o)
 	{
 		if (o)
 		{
 			callback('username-taken');
 		}	else
 		{
-			accounts.findOne({email:newData.email}, function(e, o) 
+			Account.findOne({email:newData.email}, function(e, o)
 			{
 				if (o)
 				{
@@ -135,7 +120,14 @@ exports.addNewAccount = function(newData, callback)
 						newData.pass = hash;
 					// append date stamp when record was created //
 						newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
-						accounts.insertOne(newData, callback);
+						let account = new Account(newData);
+            account.save()
+              .then(newAccount => {
+                callback(null);
+              })
+							.catch(error => {
+								callback(error);
+							});
 					});
 				}
 			});
@@ -147,13 +139,13 @@ exports.updateAccount = function(newData, callback)
 {
 	let findOneAndUpdate = function(data)
 	{
-		var o = 
+		var o =
 		{
 			name : data.name,
 			email : data.email,
 			country : data.country
 		}
-		if (data.pass) 
+		if (data.pass)
 			o.pass = data.pass;
 
 		accounts.findOneAndUpdate({_id:getObjectId(data.id)}, {$set:o}, {returnOriginal : false}, callback);
@@ -161,7 +153,7 @@ exports.updateAccount = function(newData, callback)
 	if (newData.pass == '')
 	{
 		findOneAndUpdate(newData);
-	}	else 
+	}	else
 	{
 		saltAndHash( newData.pass, function(hash){newData.pass = hash;findOneAndUpdate(newData);} );
 	}
@@ -182,19 +174,17 @@ exports.updatePassword = function(passKey, newPass, callback)
 
 exports.getAllAccounts = function(callback)
 {
-	accounts.find().toArray(
-		function(e, res) 
-		{
-		if (e) 
-			callback(e);
-		else 
-			callback(null, res);
+	Account.find({}, (error, accounts) => {
+		if (error)
+			callback(error);
+		else
+			callback(null, accounts);
 	});
 };
 
 exports.deleteAccount = function(id, callback)
 {
-	accounts.deleteOne({_id: getObjectId(id)}, callback);
+	Account.findOneAndDelete({_id: id}, callback);
 };
 
 exports.deleteAllAccounts = function(callback)
@@ -208,24 +198,28 @@ exports.deleteAllAccounts = function(callback)
 
 exports.addNewExcercise = function(newData, callback)
 {
-	excercise.findOne({name:newData.name}, function(e, o) 
+	Exercise.findOne({name:newData.name}, function(error, exercise)
 	{
-		if (o)
-		{
+		if (exercise)
 			callback('excercise-name-taken');
-		}	else
-		{
+		else {
 			// append date stamp when record was created //
 			newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
-			//console.log(newData);
-			excercise.insertOne(newData, callback);
+      const exercise = new Exercise(newData);
+      exercise.save()
+        .then(newExercise => {
+          callback(null);
+        })
+				.catch(error => {
+					callback(error);
+				});
 		}
 	});
 };
 
 exports.updateExcercise = function(newData, callback)
 {
-	var o = 
+	var o =
 	{
 		name : newData.name2,
 		movielink : newData.movielink,
@@ -238,12 +232,11 @@ exports.updateExcercise = function(newData, callback)
 
 exports.getAllExcercise = function(callback)
 {
-	excercise.find().toArray(function(e, res) 
-	{
-		if (e) 
-			callback(e);
-		else 
-			callback(null, res);
+	Exercise.find({}, (error, exercises) => {
+		if (error)
+			callback(error);
+		else
+			callback(null, exercises);
 	});
 };
 
@@ -258,25 +251,27 @@ exports.deleteExcercise = function(id, callback)
 
 exports.addNewBlock = function(newData, callback)
 {
-	blockdb.findOne({name:newData.name}, function(e, o) 
-	{
-		if (o)
-		{
+	Block.findOne({name:newData.name}, (error, block) => {
+		if (block) {
 			callback('block-name-taken');
-		}	else
-		{
+		}	else {
 			// append date stamp when record was created //
 			newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
-
-			//TODO Ures "0" gyakorlat nelkuli elemeket ki kell torolni a tomb vegerol!
-			blockdb.insertOne(newData, callback);
+			const newBlock = new Block(newData);
+      newBlock.save()
+        .then(newBlock => {
+          callback(null);
+        })
+				.catch(error => {
+					callback(error);
+				});
 		}
 	});
 };
 
 exports.updateblock = function(newData, callback)
 {
-	var o = 
+	var o =
 	{
 		name : newData.name,
 		unit : newData.unit,
@@ -294,11 +289,11 @@ exports.deleteBlock = function(id, callback)
 
 exports.getAllBlocks = function(callback)
 {
-	blockdb.find().toArray(function(e, res) 
+	blockdb.find().toArray(function(e, res)
 	{
-		if (e) 
+		if (e)
 			callback(e);
-		else 
+		else
 			callback(null, res);
 	});
 };
@@ -310,7 +305,7 @@ exports.getAllBlocks = function(callback)
 exports.addNewDailyPlan = function(newData, callback)
 {
 	//dailyplan.findOne({name:newData.name}, function(e, o)  //We don't need to find same blocks
-	
+
 	// append date stamp when record was created //
 	newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
 
@@ -319,7 +314,7 @@ exports.addNewDailyPlan = function(newData, callback)
 
 /*exports.updateDailyPlan = function(newData, callback)
 {
-	var o = 
+	var o =
 	{
 		name : newData.name,
 		unit : newData.unit,
@@ -337,11 +332,11 @@ exports.deleteBlock = function(id, callback)
 
 exports.getAllDailyPlans = function(callback)
 {
-	dailyplan.find().toArray(function(e, res) 
+	dailyplan.find().toArray(function(e, res)
 	{
-		if (e) 
+		if (e)
 			callback(e);
-		else 
+		else
 			callback(null, res);
 	});
 };
@@ -354,7 +349,7 @@ var generateSalt = function()
 {
 	var set = '0123456789abcdefghijklmnopqurstuvwxyzABCDEFGHIJKLMNOPQURSTUVWXYZ';
 	var salt = '';
-	for (var i = 0; i < 10; i++) 
+	for (var i = 0; i < 10; i++)
 	{
 		var p = Math.floor(Math.random() * set.length);
 		salt += set[p];
@@ -362,7 +357,7 @@ var generateSalt = function()
 	return salt;
 }
 
-var sha512 = function(str) 
+var sha512 = function(str)
 {
 	return crypto.createHash('sha512').update(str).digest('hex');
 }
@@ -380,17 +375,16 @@ var validatePassword = function(plainPass, hashedPass, callback)
 	callback(null, hashedPass === validHash);
 }
 
-var getObjectId = function(id)
-{
-	return new require('mongodb').ObjectID(id);
-}
+// var getObjectId = function(id)
+// {
+// 	return new require('mongodb').ObjectID(id);
+// }
 
 var listIndexes = function()
 {
 	accounts.indexes(null, function(e, indexes)
 	{
-		for (var i = 0; i < indexes.length; i++) 
+		for (var i = 0; i < indexes.length; i++)
 			console.log('index:', i, indexes[i]);
 	});
 }
-
