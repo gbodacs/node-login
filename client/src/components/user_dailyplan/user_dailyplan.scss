@@ -1,0 +1,19 @@
+.youtubeButton{
+  color: red;
+  font-size: 4rem;
+  border: none;
+  background: transparent;
+  outline: none;
+  &:focus {
+    outline: none;
+  }
+}
+
+.youtubeClose {
+  color: red;
+  border: none;
+  background: transparent;
+  &:focus {
+    outline: none;
+  }
+}

@@ -58,13 +58,7 @@ class Header extends React.Component {
       header = (
         <Nav className="mr-auto">
           <LinkContainer to="/home/user_dailyplan">
-            <Nav.Link>Napi gyakorlatok</Nav.Link>
-          </LinkContainer>
-          <LinkContainer to="/home/user-history">
-            <Nav.Link>Előzmények</Nav.Link>
-          </LinkContainer>
-          <LinkContainer to="/home/video_viewer">
-            <Nav.Link>Demo</Nav.Link>
+            <Nav.Link>Napi gyakorlataim</Nav.Link>
           </LinkContainer>
         </Nav>
       );

@@ -9,8 +9,6 @@ import AdminDailyPlan from '../../components/admin_dailyplan/admin_dailyplan';
 import AdminExercises from '../../components/admin_exercises/admin_exercises';
 import AdminBlocks from '../../components/admin_blocks/admin_blocks';
 import UserDailyplan from '../../components/user_dailyplan/user_dailyplan';
-import UserHistory from '../../components/user_history/user_history';
-import VideoViewer from '../../components/video_viewer/video_viewer';
 
 class Home extends React.Component {
   constructor(props) {
@@ -33,8 +31,6 @@ class Home extends React.Component {
         <Route path="/home/admin_blocks" component={AdminBlocks}/>
         //User pages
         <Route path="/home/user_dailyplan" component={UserDailyplan}/>
-        <Route path="/home/user_history" component={UserHistory}/>
-        <Route path="/home/video_viewer" component={VideoViewer}/>
       </Switch>
       <Footer/>
     </div>);
