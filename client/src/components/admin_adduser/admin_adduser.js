@@ -26,27 +26,29 @@ class AdminAddUser extends React.Component {
   componentDidMount() {
     this.nameInput.focus();
 
-    const request = new Request('http://localhost:3001/signup', {credentials: 'include'});
+    console.log(process.env.REACT_APP_BACKEND_SERVER);
 
-    fetch(request)
-      .then(response => {
-        const status = response.status;
-        if (status === 200) {
-          response.json()
-            .then(data => {
-              this.setState({
-                countryList: data.countryList
-              })
-            })
-        } else {
-          response.json()
-            .then(serverError => {
-              alert(response.status + '\n' + serverError.message);
-              this.props.history.push('/home');
-            });
-
-        }
-      });
+    // const request = new Request(`${process.env.BACKEND_SERVER}/signup` , {credentials: 'include'});
+    //
+    // fetch(request)
+    //   .then(response => {
+    //     const status = response.status;
+    //     if (status === 200) {
+    //       response.json()
+    //         .then(data => {
+    //           this.setState({
+    //             countryList: data.countryList
+    //           })
+    //         })
+    //     } else {
+    //       response.json()
+    //         .then(serverError => {
+    //           alert(response.status + '\n' + serverError.message);
+    //           this.props.history.push('/home');
+    //         });
+    //
+    //     }
+    //   });
   }
 
   registerFormChange(event) {
@@ -80,7 +82,7 @@ class AdminAddUser extends React.Component {
       body: JSON.stringify(registerData)
     }
 
-    const request = new Request('http://localhost:3001/signup', options);
+    const request = new Request(`${process.env.BACKEND_SERVER}/signup`, options);
 
     fetch(request)
       .then(response => {
