@@ -7,6 +7,7 @@ const moment 		= require('moment');
 const Account = require('../models/account');
 const Exercise = require('../models/exercise');
 const Block = require('../models/block');
+const Dailyplan = require('../models/dailyplan');
 
 const guid = function(){return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {var r = Math.random()*16|0,v=c=='x'?r:r&0x3|0x8;return v.toString(16);});}
 
@@ -289,12 +290,11 @@ exports.deleteBlock = function(id, callback)
 
 exports.getAllBlocks = function(callback)
 {
-	blockdb.find().toArray(function(e, res)
-	{
-		if (e)
-			callback(e);
+	Block.find({}, (error, blocks) => {
+		if (error)
+			callback(error);
 		else
-			callback(null, res);
+			callback(null, blocks);
 	});
 };
 
@@ -304,12 +304,23 @@ exports.getAllBlocks = function(callback)
 
 exports.addNewDailyPlan = function(newData, callback)
 {
-	//dailyplan.findOne({name:newData.name}, function(e, o)  //We don't need to find same blocks
-
-	// append date stamp when record was created //
-	newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
-
-	dailyplan.insertOne(newData, callback);
+	//this query should be refactored to select for user and date
+	Dailyplan.findOne({userId:newData.userId}, (error, dailyplan) => {
+		if (dailyplan) {
+			callback('already have a dailyplan for this user');
+		}	else {
+			// append date stamp when record was created //
+			newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
+			const newDailyplan = new Dailyplan(newData);
+      newDailyplan.save()
+        .then(newDailyplan => {
+          callback(null);
+        })
+				.catch(error => {
+					callback(error);
+				});
+		}
+	});
 };
 
 /*exports.updateDailyPlan = function(newData, callback)

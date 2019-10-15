@@ -16,7 +16,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isAdmin: false
+      isAdmin: true
     }
   }
 
@@ -32,9 +32,9 @@ class Home extends React.Component {
         <Route path="/home/admin_exercises" component={AdminExercises}/>
         <Route path="/home/admin_blocks" component={AdminBlocks}/>
         //User pages
-        <Route path="/home/user_dailyplan" exact component={UserDailyplan}/>
-        <Route path="/home/user_history" exact component={UserHistory}/>
-        <Route path="/home/video_viewer" exact component={VideoViewer}/>
+        <Route path="/home/user_dailyplan" component={UserDailyplan}/>
+        <Route path="/home/user_history" component={UserHistory}/>
+        <Route path="/home/video_viewer" component={VideoViewer}/>
       </Switch>
       <Footer/>
     </div>);

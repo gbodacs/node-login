@@ -29,24 +29,23 @@ class AdminAddUser extends React.Component {
     const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/signup` , {credentials: 'include'});
 
     fetch(request)
-      .then(response => {
-        const status = response.status;
-        if (status === 200) {
-          response.json()
-            .then(data => {
-              this.setState({
-                countryList: data.countryList
-              })
-            })
-        } else {
-          response.json()
-            .then(serverError => {
-              alert(response.status + '\n' + serverError.message);
-              this.props.history.push('/home');
-            });
-
-        }
-      });
+       .then(response => {
+         const status = response.status;
+         if (status === 200) {
+           response.json()
+             .then(data => {
+               this.setState({
+                 countryList: data.countryList
+               })
+             })
+         } else {
+           response.json()
+             .then(serverError => {
+               alert(response.status + '\n' + serverError.message);
+               this.props.history.push('/home');
+             });
+         }
+       });
   }
 
   registerFormChange(event) {
