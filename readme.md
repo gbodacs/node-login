@@ -20,34 +20,20 @@ For testing purposes you can view a [database dump of all accounts here](https:/
 ## Installation & Setup
 1. Install [Node.js](https://nodejs.org/) & [MongoDB](https://www.mongodb.org/) if you haven't already.
 2. Clone this repository and install its dependencies.
-		
+
 		> git clone git://github.com/braitsch/node-login.git node-login
 		> cd node-login
 		> npm install
-		
+
 3. In a separate shell start MongoDB.
 
-		> mongod
+		> npm start
 
-4. From within the node-login directory start the server.
+## .env File Contents
 
-		> node app
-		
-5. Open a browser window and navigate to: [http://localhost:3000](http://localhost:3000)
-
-## Password Retrieval
-
-To enable the password retrieval feature it is recommended that you create environment variables for your credentials instead of hard coding them into the [email dispatcher module](https://github.com/braitsch/node-login/blob/master/app/server/modules/email-dispatcher.js).
-
-To do this on OSX you can simply add them to your .profile or .bashrc file.
-
-	export NL_EMAIL_HOST='smtp.gmail.com'
-	export NL_EMAIL_USER='your.email@gmail.com'
-	export NL_EMAIL_PASS='1234'
-
-[![node-login](./readme.img/retrieve-password.jpg?raw=true)](https://nodejs-login.herokuapp.com)
-
-
-## Contributing
-
-Questions and suggestions for improvement are welcome.
+	`PORT=`
+	`MONGO_HOST=`
+	`MONGO_USER=`
+	`MONGO_PASS=`
+	`MONGO_DB=`
+	`FRONT_END_URL=`

@@ -118,52 +118,42 @@ module.exports = function (app) {
 		});
 	});
 
-//
-// 	/*
-// 		ADMIN - DailyPlan
-// 	*/
-// 	app.get('/admin_dailyplan', function (req, res) {
-// 		if (req.session.user == null) {
-// 			res.redirect('/');
-// 		} else {
-// 			var accer;
-//			AM.getAllAccounts( function (e, accs)
-//			{
-//				accer = accs;
-//			})
-//			AM.getAllBlocks( function (e, blocks)
-//			{
-//				res.render('admin_dailyplan', {blo: blocks, acc: accer} );
-//			})
-// 		}
-// 	});
-//
-// 	app.post('/admin_dailyplan', function (req, res)
-// 	{
-// 		if (req.session.user == null)
-// 		{
-// 			res.redirect('/');
-// 		} else
-// 		{
-// 			AM.addNewDailyPlan({
-//				block_ids	: req.body['block_id'],
-//				repeats		: req.body['repeat'],
-//				comment		: req.body['comment'],
-//				startdate	: req.body['startdate3'],
-//				enddate		: req.body['enddate3']
-//			}, function(e, o)
-//			{
-//				if (e)
-//			{
-//				res.status(400).send('error-adding-dailyplan');
-//			}	else
-//			{
-//				//req.session.user = o.value;
-//				res.status(200).send('ok');
-//			}
-//		});
-// 		}
-// 	});
+	/*
+		ADMIN - DailyPlan
+	*/
+
+	app.get('/admin_dailyplan', function (req, res) {
+		let users;
+		AccountManager.getAllAccounts((error, accounts) => {
+      if (!error)
+			  users = accounts;
+      else
+        res.status(500).json({message: error})
+		});
+		AccountManager.getAllBlocks((error, blocks) => {
+      if (!error)
+			  res.status(200).json({users, blocks})
+      else
+        res.status(500).json({message: error})
+		});
+	});
+
+	app.post('/admin_dailyplan', function (req, res)
+	{
+		AccountManager.addNewDailyPlan({
+      userId: req.body.userId,
+			blocks: req.body.blocks,
+			comment: req.body.comment,
+			startDate: req.body.startDate,
+			endDate: req.body.endDate
+		}, (error, dailyplan) => {
+      if (error) {
+        res.status(500).json({message: error});
+      } else {
+        res.status(201).send('ok')
+      }
+    });
+	});
 //
 // 	/*
 // 		ADMIN - Users
