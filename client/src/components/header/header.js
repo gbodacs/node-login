@@ -15,13 +15,13 @@ class Header extends React.Component {
   }
 
   logoutUser() {
-    const request = new Request('http://localhost:3001/logout');
+    const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/logout`);
 
     fetch(request)
       .then(response => {
         const status = response.status;
         if (status === 200) {
-          cookies.remove('login', {domain: 'localhost', path: '/'});
+          cookies.remove('login', {path: '/'});
           this.props.history.push('/');
         }
       });

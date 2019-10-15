@@ -48,7 +48,7 @@ class AdminExercises extends React.Component {
       body: JSON.stringify(exerciseData)
     }
 
-    const request = new Request('http://localhost:3001/admin_exercise', options);
+    const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/admin_exercise`, options);
 
     fetch(request)
       .then(response => {

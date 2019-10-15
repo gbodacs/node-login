@@ -14,7 +14,7 @@ class AdminGetUsers extends React.Component {
   }
 
   componentDidMount() {
-    const request = new Request('http://localhost:3001/user_print');
+    const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/user_print`);
 
     fetch(request)
       .then(response => {
@@ -39,7 +39,7 @@ class AdminGetUsers extends React.Component {
     const idOfAccount = event.target.name.split(':')[0];
     const indexOfAccount = event.target.name.split(':')[1];
 
-    const request = new Request(`http://localhost:3001/user_delete/${idOfAccount}`, {method: 'DELETE'})
+    const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/user_delete/${idOfAccount}`, {method: 'DELETE'})
 
     fetch(request)
       .then(response => {

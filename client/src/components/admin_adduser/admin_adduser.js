@@ -26,7 +26,7 @@ class AdminAddUser extends React.Component {
   componentDidMount() {
     this.nameInput.focus();
 
-    const request = new Request('http://localhost:3001/signup', {credentials: 'include'});
+    const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/signup` , {credentials: 'include'});
 
     fetch(request)
       .then(response => {
@@ -80,7 +80,7 @@ class AdminAddUser extends React.Component {
       body: JSON.stringify(registerData)
     }
 
-    const request = new Request('http://localhost:3001/signup', options);
+    const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/signup`, options);
 
     fetch(request)
       .then(response => {

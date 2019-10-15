@@ -26,11 +26,11 @@ class Home extends React.Component {
       <Switch>
         //Admin pages
         <Route path="/home" exact component={AdminDailyPlan}/>
-        <Route path="/home/admin_adduser" exact component={AdminAddUser}/>
-        <Route path="/home/admin_getusers" exact component={AdminGetUsers}/>
-        <Route path="/home/admin_dailyplan" exact component={AdminDailyPlan}/>
-        <Route path="/home/admin_exercises" exact component={AdminExercises}/>
-        <Route path="/home/admin_blocks" exact component={AdminBlocks}/>
+        <Route path="/home/admin_adduser" component={AdminAddUser}/>
+        <Route path="/home/admin_getusers" component={AdminGetUsers}/>
+        <Route path="/home/admin_dailyplan" component={AdminDailyPlan}/>
+        <Route path="/home/admin_exercises" component={AdminExercises}/>
+        <Route path="/home/admin_blocks" component={AdminBlocks}/>
         //User pages
         <Route path="/home/user_dailyplan" exact component={UserDailyplan}/>
         <Route path="/home/user_history" exact component={UserHistory}/>

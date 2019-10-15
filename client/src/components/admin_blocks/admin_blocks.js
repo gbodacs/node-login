@@ -50,7 +50,7 @@ class AdminBlocks extends React.Component {
   componentDidMount() {
     this.blockNameInput.focus();
 
-    const request = new Request('http://localhost:3001/admin_block', {credentials: 'include'});
+    const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/admin_block`, {credentials: 'include'});
 
     fetch(request)
       .then(response => {
@@ -122,7 +122,7 @@ class AdminBlocks extends React.Component {
       body: JSON.stringify(blockData)
     }
 
-    const request = new Request('http://localhost:3001/admin_block', options);
+    const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/admin_block`, options);
 
     fetch(request)
       .then(response => {

@@ -23,7 +23,7 @@ class Login extends React.Component {
   componentDidMount() {
     this.userInput.focus();
 
-    const request = new Request('http://localhost:3001/login', {credentials: 'include'});
+    const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/login`, {credentials: 'include'});
 
     fetch(request)
       .then(response => {
@@ -63,7 +63,7 @@ class Login extends React.Component {
       body: JSON.stringify(loginData)
     }
 
-    const request = new Request('http://localhost:3001/login', options);
+    const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/login`, options);
 
     fetch(request)
       .then(response => {
@@ -73,7 +73,7 @@ class Login extends React.Component {
           response.json()
             .then(userDataFromServer => {
               if (userDataFromServer.cookie) {
-                cookies.set('login', userDataFromServer.cookie, {domain: 'localhost', path: '/'});
+                cookies.set('login', userDataFromServer.cookie, {path: '/'});
               }
               this.props.history.push('/home');
             });
