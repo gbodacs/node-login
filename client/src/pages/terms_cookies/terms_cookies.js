@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Footer from '../../components/footer/footer';
 
 class Terms extends React.Component {
   constructor(props) {
@@ -64,6 +65,7 @@ class Terms extends React.Component {
           <Button variant="primary" type="button" onClick={this.redirectToHomePage} className={`mt-4`}>Vissza a főoldalra</Button>
         </Card.Footer>
       </Card>
+      <Footer/>
       </Paper>
     );
   }
