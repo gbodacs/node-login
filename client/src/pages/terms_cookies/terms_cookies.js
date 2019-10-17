@@ -94,8 +94,7 @@ class Terms extends React.Component {
           onChange={this.handleChange}
           indicatorColor="primary"
           textColor="primary"
-          centered
-        >
+          centered>
           <Tab label="Adatvédelmi elvek" value = "data"/>
           <Tab label="Süti szabályzat" value = "cookie"/>
         </Tabs>
