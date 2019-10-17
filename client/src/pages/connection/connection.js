@@ -23,6 +23,12 @@ class Connection extends React.Component {
             }} className={`mx-auto position-relative p-4 bg-light`}>
             <Card.Body className="card-body">
               <h3>Kapcsolat</h3>
+              Elérhetőségeink:
+              Telefonszám:
+              Email cím:
+              Általános céginformációk:
+              Közösségi média linkek:
+              Weboldalt készítette:
               <hr/>
             </Card.Body>
             <Card.Footer>
