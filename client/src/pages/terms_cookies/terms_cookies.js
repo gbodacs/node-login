@@ -101,8 +101,7 @@ class Terms extends React.Component {
         <Card className="Terms p-2 mx-auto my-5">
         <Card.Body>
           <Card.Title className="text-center">{this.state.title}</Card.Title>
-          <Card.Text>
-          <p className='new-line'>{this.state.text}</p>
+          <Card.Text className='new-line'>{this.state.text}
           </Card.Text>
         </Card.Body>
         <Card.Footer>
