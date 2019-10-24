@@ -159,8 +159,8 @@ class AdminDailyPlan extends React.Component {
       userId: this.state.userId,
       blocks: this.getBlockIDs(),
       comment: this.state.dailyPlanComment,
-      startDate: this.state.startDate,
-      endDate: this.state.endDate
+      startDate: new Date(this.state.startDate),
+      endDate: new Date(this.state.endDate)
     }
 
     const headers = new Headers();

@@ -341,15 +341,29 @@ exports.deleteBlock = function(id, callback)
 	blockdb.deleteOne({_id:getObjectId(id)}, callback);
 };*/
 
-exports.getAllDailyPlans = function(callback)
-{
-	dailyplan.find().toArray(function(e, res)
-	{
-		if (e)
-			callback(e);
-		else
-			callback(null, res);
-	});
+exports.getUserDailyPlan = function(userData, callback) {
+	// Dailyplan.findOne({ startDate: { $lte: new Date(userData.date)}, endDate: { $gte: new Date(userData.date)}, userId: userData.id})
+	// 	.populate({path: 'blocks', model: Block, select: 'id'})
+	// 	.exec(function (error, dailyplan) {
+	// 		if (error) {
+	// 			callback(error);
+	// 		} else {
+	// 			callback(null, dailyplan);
+	// 		}
+	// 	});
+
+	Dailyplan.aggregate([
+		{ $match: { startDate: { $lte: new Date(userData.date)}, endDate: { $gte: new Date(userData.date)}, userId: userData.id}},
+		{ $lookup: { from: 'blocks', localField: 'id', foreignField: '_id', as: 'blocks'}},
+		{ $unwind: '$blocks'},
+		{ $replaceRoot: { newRoot: '$blocks'}}
+	], function(error, dailyplan) {
+		if (error) {
+			callback(error);
+		} else {
+			callback(null, dailyplan);
+		}
+	})
 };
 
 /**********************************************

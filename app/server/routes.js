@@ -316,22 +316,23 @@ module.exports = function (app) {
 // 			});*/
 // 		}
 // 	});
-//
-// 	/*
-// 		User dailyplan
-// 	*/
-//
-// 	app.get('/user_dailyplan', function (req, res) {
-// 		if (req.session.user == null) {
-// 			res.redirect('/');
-// 		} else {
-// 			res.render('user_dailyplan', {
-// 				title: 'Napi terved',
-// 				countries: CT,
-// 				udata: req.session.user
-// 			});
-// 		}
-// 	});
+
+	/*
+		User dailyplan
+	*/
+
+	app.post('/user_dailyplan', function (req, res) {
+    AccountManager.getUserDailyPlan({
+			id: req.body.id,
+      date: req.body.date
+		}, (error, dailyplan) => {
+			if (error) {
+				res.status(400).json({message: error});
+			}	else {
+				res.status(200).send(dailyplan);
+			}
+		});
+	});
 //
 // 	app.post('/user_dailyplan', function (req, res) {
 // 		if (req.session.user == null) {

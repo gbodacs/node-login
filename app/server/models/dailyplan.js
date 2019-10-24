@@ -4,8 +4,8 @@ const dailyplanSchema = mongoose.Schema({
   userId: { type: String, required: true},
   blocks: [{id: String, repeat: String, completed: Boolean}],
   comment: { type: String, required: true},
-  startDate: { type: String, required: true},
-  endDate: { type: String, required: true},
+  startDate: { type: Date, required: true},
+  endDate: { type: Date, required: true},
   date: { type: String, required: true}
 });
 
