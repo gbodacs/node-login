@@ -19,17 +19,20 @@ class Connection extends React.Component {
       <div>
         <div className="Login">
           <Card style={{
-              width: '50%'
-            }} className={`mx-auto position-relative p-4 bg-light`}>
-            <Card.Body className="card-body">
-              <h3>Kapcsolat</h3>
-              Elérhetőségeink:
-              Telefonszám:
-              Email cím:
-              Általános céginformációk:
-              Közösségi média linkek:
-              Weboldalt készítette:
-              <hr/>
+                  width: '50%'
+                }} 
+                className={`mx-auto position-relative p-4 bg-light`}>
+            <Card.Body 
+              variant="primary"
+              className="Connec card-body">
+                <h3>Kapcsolat</h3>
+                Elérhetőségeink:
+                Telefonszám:
+                Email cím:
+                Általános céginformációk:
+                Közösségi média linkek:
+                Weboldalt készítette:
+                <hr/>
             </Card.Body>
             <Card.Footer>
               <Button variant="primary" type="button" onClick={this.redirectToHomePage} className={`mt-4`}>Vissza a főoldalra</Button>
