@@ -351,7 +351,7 @@ module.exports = function (app) {
 // 					req.session.user = o.value;
 // 					res.status(200).send('ok');
 // 				}
-// 			});*/
+// 			});
 // 		}
 // 	});
 //
