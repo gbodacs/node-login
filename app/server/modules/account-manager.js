@@ -342,28 +342,32 @@ exports.deleteBlock = function(id, callback)
 };*/
 
 exports.getUserDailyPlan = function(userData, callback) {
-	// Dailyplan.findOne({ startDate: { $lte: new Date(userData.date)}, endDate: { $gte: new Date(userData.date)}, userId: userData.id})
-	// 	.populate({path: 'blocks', model: Block, select: 'id'})
-	// 	.exec(function (error, dailyplan) {
-	// 		if (error) {
-	// 			callback(error);
-	// 		} else {
-	// 			callback(null, dailyplan);
-	// 		}
-	// 	});
-
 	Dailyplan.aggregate([
-		{ $match: { startDate: { $lte: new Date(userData.date)}, endDate: { $gte: new Date(userData.date)}, userId: userData.id}},
-		{ $lookup: { from: 'blocks', localField: 'id', foreignField: '_id', as: 'blocks'}},
-		{ $unwind: '$blocks'},
-		{ $replaceRoot: { newRoot: '$blocks'}}
-	], function(error, dailyplan) {
+		{$match: { startDate: { $lte: new Date(userData.date)}, endDate: { $gte: new Date(userData.date)}, userId: userData.id}},
+		{
+			"$lookup": {
+				"from": "blocks",
+				"localField": "id",
+				"foreignField": "id",
+				"as": "allBlocks"
+			}
+		},
+		{
+			"$lookup": {
+				"from": "exercises",
+				"localField": "exerciseList",
+				"foreignField": "id",
+				"as": "allExercises"
+			}
+		}
+	])
+	.exec(function(error, dailyplan) {
 		if (error) {
 			callback(error);
 		} else {
 			callback(null, dailyplan);
 		}
-	})
+	});
 };
 
 /**********************************************
