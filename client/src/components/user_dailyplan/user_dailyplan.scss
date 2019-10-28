@@ -30,3 +30,7 @@ button {
 .font {
 font-size: 20px;
 }
+
+.font:focus{
+  outline: none
+}
