@@ -23,6 +23,7 @@
     "mongodb": "^3.2.7",
     "mongoose": "^5.7.1",
     "pug": "^2.0.4",
+    "react-bootstrap-date-picker": "^5.1.0",
     "stylus": "^0.54.5"
   },
   "engines": {

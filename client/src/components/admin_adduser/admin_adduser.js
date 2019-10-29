@@ -116,19 +116,19 @@ class AdminAddUser extends React.Component {
                 <Col sm="10">
                   <Form.Control ref={(name) => {
                       this.nameInput = name;
-                    }} name="name" type="text" onChange={this.registerFormChange}/>
+                    }} name="name" type="text" required onChange={this.registerFormChange}/>
                 </Col>
               </Form.Group>
               <Form.Group as={Row} controlId="email">
                 <Form.Label column sm="2">Email</Form.Label>
                 <Col sm="10">
-                  <Form.Control name="email" type="email" onChange={this.registerFormChange}/>
+                  <Form.Control name="email" type="email" required onChange={this.registerFormChange}/>
                 </Col>
               </Form.Group>
               <Form.Group as={Row} controlId="selectCountry">
                 <Form.Label column sm="2">Ország</Form.Label>
                 <Col sm="10">
-                  <Form.Control name="country" as="select" onChange={this.registerFormChange}>
+                  <Form.Control name="country" as="select" required onChange={this.registerFormChange}>
                     {listCountries}
                   </Form.Control>
                 </Col>
@@ -137,13 +137,13 @@ class AdminAddUser extends React.Component {
               <Form.Group as={Row} controlId="username">
                 <Form.Label column sm="2">Felhasználó</Form.Label>
                 <Col sm="10">
-                  <Form.Control name="username" type="text" onChange={this.registerFormChange}/>
+                  <Form.Control name="username" type="text" required onChange={this.registerFormChange}/>
                 </Col>
               </Form.Group>
               <Form.Group as={Row} controlId="password">
                 <Form.Label column sm="2">Jelszó</Form.Label>
                 <Col sm="10">
-                  <Form.Control name="password" type="text" onChange={this.registerFormChange}/>
+                  <Form.Control name="password" type="text" required onChange={this.registerFormChange}/>
                 </Col>
               </Form.Group>
               <hr/>
