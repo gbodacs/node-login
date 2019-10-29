@@ -8,7 +8,6 @@ import YouTube from 'react-youtube';
 class BlockElement extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       showModal: false,
       i: 0
@@ -42,7 +41,7 @@ class BlockElement extends React.Component {
 
   render() {
     const exercises = this.props.exercises.map((exercise, index) => {
-      return <ListGroup.Item key={index}>{exercise.name}</ListGroup.Item>
+      return <ListGroup.Item className="bg-dark" key={index}><h6>{exercise.name}</h6><br></br><small>{exercise.comment}</small></ListGroup.Item>
     });
 
     const opts = {
@@ -55,25 +54,23 @@ class BlockElement extends React.Component {
 
     return (
       <Card>
-        <Card.Title>{this.props.title}</Card.Title>
-        <Card.Body>
+        <Card.Title className="text-align-center p-3">{this.props.title}</Card.Title>
+        <Card.Body className="bg-dark block-card-body" onClick={this.handleOpenModal}>
           <ListGroup>
             {exercises}
           </ListGroup>
-          <div>
-            <button className="youtubeButton" onClick={this.handleOpenModal}>
-              <i className="fab fa-youtube"></i>
-            </button>
-            <Modal isOpen={this.state.showModal} contentLabel="OPEN">
-              <button className="youtubeClose rounded-circle" onClick={this.handleCloseModal}>
-                <i className="fas fa-times"></i>
-              </button>
-              <div className="d-flex justify-content-center">
-                <YouTube videoId={this.state.videoId} opts={opts} onEnd={this.onEnd}/>
-              </div>
-            </Modal>
-          </div>
+          <button className="position-relative youtubeButton" >
+            <i className="fab fa-youtube"></i>
+          </button>
         </Card.Body>
+        <Modal isOpen={this.state.showModal} contentLabel="OPEN">
+          <button className="youtubeClose rounded-circle" onClick={this.handleCloseModal}>
+            <i className="fas fa-times"></i>
+          </button>
+          <div className="d-flex justify-content-center">
+            <YouTube videoId={this.state.videoId} opts={opts} onEnd={this.onEnd}/>
+          </div>
+        </Modal>
       </Card>
     );
   }
@@ -85,8 +82,8 @@ class UserDailyplan extends React.Component {
 
     this.state = {
       date: new Date(),
-      userId: '5d910929615fbd829df9a763',
-      userName: 'Pisti',
+      userId: sessionStorage.getItem('userId'),
+      userName: sessionStorage.getItem('userName'),
       dailyPlanBlocks: [],
       dailyPlanComment: '',
       allBlocks: [],
@@ -119,12 +116,16 @@ class UserDailyplan extends React.Component {
        if (status === 200) {
          response.json()
            .then(data => {
-             this.setState({
-               dailyPlanBlocks: data[0].blocks,
-               dailyPlanComment: data[0].comment,
-               allBlocks: data[0].allBlocks,
-               allExercises: data[0].allExercises
-             })
+             try{
+               this.setState({
+                 dailyPlanBlocks: data[0].blocks,
+                 dailyPlanComment: data[0].comment,
+                 allBlocks: data[0].allBlocks,
+                 allExercises: data[0].allExercises
+               });
+             } catch(error) {
+               this.setState({noDailyPlan: true});
+             }
            })
        } else {
          response.json()
@@ -169,28 +170,32 @@ class UserDailyplan extends React.Component {
         let originalExercise = this.state.allExercises.filter(exercise => exercise['_id'] === blockExerciseId)
         let obj = {};
         obj.name = originalExercise[0].name;
+        obj.comment = originalExercise[0].comment;
         exercises.push(obj);
         videoIdList.push(originalExercise[0].movielink.split('?v=')[1]);
       })
       return <BlockElement key={ index + 1} title={originalBlock[0].name} exercises={exercises} videoIdList={videoIdList}></BlockElement>
     });
 
+    let message;
+    if (this.state.noDailyPlan) {
+      message = <div>Kedves <b>{this.state.userName}</b>, erre a napra nincs gyakorlatod!</div>
+    } else {
+      message = <div></div>
+    }
+
     return (<div className="UserDailyplan my-5">
-      <Card style={{
-          width: '90%'
-        }} className="mx-auto p-4 bg-white text-left">
-        <Card.Body className="card-body">
+      <div style={{width: '90%'}} className="mx-auto p-4 bg-white text-left">
           <h3>Napi gyakorlataim</h3>
           <div className="d-flex align-items-center">
               <button className="font" onClick={this.decreaseDate}>&#8249;</button>
               <span className="text-center">{date}</span>
               <button className="font" onClick={this.increaseDate}>&#8250;</button>
           </div>
-          <hr/>
-          {blocks}
-        </Card.Body>
-      </Card>
-    </div>);
+        </div>
+        <div className="mx-auto card-grid-view">{blocks}</div>
+        {message}
+      </div>);
   }
 }
 

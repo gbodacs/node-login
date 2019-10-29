@@ -1,9 +1,12 @@
 .youtubeButton{
+  visibility: hidden;
   color: red;
-  font-size: 4rem;
+  font-size: 6rem;
   border: none;
   background: transparent;
   outline: none;
+  bottom: 0;
+  right: 0;
   &:focus {
     outline: none;
   }
@@ -33,4 +36,29 @@ font-size: 20px;
 
 .font:focus{
   outline: none
+}
+
+.card-grid-view {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 1rem;
+  width: 90%;
+}
+
+.block-card-body {
+  min-width: 15rem;
+  border-radius: 4px;
+  color: #fff;
+  margin: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+}
+
+.block-card-body:hover {
+  box-shadow: 0 0 4em 0px rgba(0, 0, 0, 0.4);
+  transform: scale(1.01);
+}
+.block-card-body:active {
+  transform: scale(1.01) translateY(0.2rem);
 }
