@@ -24,7 +24,7 @@ module.exports = function (app) {
         if (userByCookie) {
 					AccountManager.autoLogin(userByCookie.user, userByCookie.pass, (userByName) => {
 						req.session.user = userByName;
-						res.status(200).json({cookie: userByName.cookie});
+						res.status(200).json({cookie: userByName.cookie, '_id': userByName['_id'], name: userByName.name, isAdmin: userByName.isAdmin});
 					});
 				} else
 				{
@@ -41,7 +41,7 @@ module.exports = function (app) {
 			} else {
 				req.session.user = user;
 				if (req.body['remember-me'] === false) {
-					res.status(200).json({message: 'ok'});
+					res.status(200).json({'_id': user['_id'], name: user.name, isAdmin: user.isAdmin});
 				} else {
 					AccountManager.generateLoginKey(user.user, req.ip, (error, updatedUser) => {
             if (!updatedUser) {

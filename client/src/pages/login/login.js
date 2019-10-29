@@ -29,7 +29,16 @@ class Login extends React.Component {
       .then(response => {
         const status = response.status;
         if (status === 200) {
-          this.props.history.push('/home');
+          response.json()
+            .then(userDataFromServer => {
+              if (userDataFromServer.cookie) {
+                cookies.set('login', userDataFromServer.cookie, {path: '/'});
+              }
+              sessionStorage.setItem('userId', userDataFromServer['_id']);
+              sessionStorage.setItem('userName', userDataFromServer['name']);
+              sessionStorage.setItem('isAdmin', userDataFromServer['isAdmin']);
+              this.props.history.push('/home');
+            });
         } else if (status !== 400) {
           response.json()
             .then(serverError => {
@@ -75,6 +84,9 @@ class Login extends React.Component {
               if (userDataFromServer.cookie) {
                 cookies.set('login', userDataFromServer.cookie, {path: '/'});
               }
+              sessionStorage.setItem('userId', userDataFromServer['_id']);
+              sessionStorage.setItem('userName', userDataFromServer['name']);
+              sessionStorage.setItem('isAdmin', userDataFromServer['isAdmin']);
               this.props.history.push('/home');
             });
         } else {

@@ -15,6 +15,10 @@ class Header extends React.Component {
   }
 
   logoutUser() {
+    sessionStorage.removeItem('userId');
+    sessionStorage.removeItem('userName');
+    sessionStorage.removeItem('isAdmin');
+
     const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/logout`);
 
     fetch(request)
@@ -22,7 +26,7 @@ class Header extends React.Component {
         const status = response.status;
         if (status === 200) {
           cookies.remove('login', {path: '/'});
-          this.props.history.push('/');
+          this.props.history.push('/login');
         }
       });
   }
@@ -31,7 +35,7 @@ class Header extends React.Component {
     const isAdmin = this.props.isAdmin;
     let header;
 
-    if (isAdmin) {
+    if (isAdmin === 'true') {
       header = (
         <Nav className="mr-auto">
           <NavDropdown title="Felhasználók" id="basic-nav-dropdown">
