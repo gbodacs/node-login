@@ -17,9 +17,8 @@ class Connection extends React.Component {
   render() {
     return (
       <div>
-        <div className="Login">
-          <Card style={{width: '60%'}} 
-                className={`mx-auto position-relative p-4 bg-light`}>
+        <div className="Connection">
+          <Card>
             <Card.Body 
               variant="primary"
               className="Connec card-body">
@@ -43,7 +42,7 @@ class Connection extends React.Component {
                 <h6>Weboldalt készítette: TEAM</h6>
             </Card.Body>
             <Card.Footer>
-              <Button variant="primary" type="button" onClick={this.redirectToHomePage} className={`mt-4 mb-4 ml-4`}>Vissza a főoldalra</Button>
+              <Button variant="primary" type="button" onClick={this.redirectToHomePage} className={`my-4 ml-4`}>Vissza a főoldalra</Button>
             </Card.Footer>
           </Card>
         </div>

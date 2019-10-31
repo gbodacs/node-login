@@ -104,7 +104,7 @@ class Terms extends React.Component {
                 <hr/>
             </Card.Body>
             <Card.Footer>
-              <Button variant="primary" type="button" onClick={this.redirectToHomePage} className={`mt-4 mb-4 ml-4`}>Vissza a főoldalra</Button>
+              <Button variant="primary" type="button" onClick={this.redirectToHomePage} className={`my-4 ml-4`}>Vissza a főoldalra</Button>
             </Card.Footer>
           </Card>
         </div>
