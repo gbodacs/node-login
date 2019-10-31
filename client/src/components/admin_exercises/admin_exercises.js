@@ -72,7 +72,7 @@ class AdminExercises extends React.Component {
         }} className="mx-auto p-4 bg-white text-left">
         <Card.Body className="card-body">
           <h3>Gyakorlat felvétele</h3>
-          <h6>Itt tudsz új gyakorlatot felvenni:</h6>
+          <h6>Itt tudsz új gyakorlatot felvenni</h6>
           <hr/>
           <Form ref={(form) => {
               this.exerciseForm = form;

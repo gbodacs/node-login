@@ -153,7 +153,7 @@ class AdminBlocks extends React.Component {
       <Card className="p-4 bg-white text-left">
         <Card.Body className="card-body">
           <h3>Blokk felvétele</h3>
-          <h6>Vegyél fel egy új blokk sablont:</h6>
+          <h6>Itt tudsz felvenni egy új blokk sablont</h6>
           <hr/>
           <Form ref={(form) => {
               this.blockForm = form;

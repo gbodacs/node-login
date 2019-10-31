@@ -192,6 +192,7 @@ class AdminDailyPlan extends React.Component {
 
   render() {
     const listUsers = this.state.users.map(user => {
+      console.log(user);
       return <option key={user._id} value={user._id}>{user.name}</option>
     });
 
@@ -204,7 +205,7 @@ class AdminDailyPlan extends React.Component {
         <Card className="p-4 bg-white text-left">
           <Card.Body className="card-body">
             <h3>Napiterv felvétele</h3>
-            <h6>Itt tudsz új időszakot felvenni:</h6>
+            <h6>Itt tudsz új napi tervet felvenni</h6>
             <hr/>
             <Form ref={(form) => {
                 this.dailyplanForm = form;
@@ -243,6 +244,7 @@ class AdminDailyPlan extends React.Component {
               <div className="d-flex justify-content-sm-center">
                 <Button variant="info" className="align-center" type="button" onClick={this.addBlock}><i className="fas fa-plus-circle mr-2"></i>Blokk hozzáadása</Button>
               </div>
+              <hr/>
               <div className="buttons d-flex justify-content-sm-end">
                 <Button variant="outline-secondary" type="reset" value="Reset" className="mr-3">
                   Törlés
