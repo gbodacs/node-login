@@ -85,7 +85,7 @@ class AdminGetUsers extends React.Component {
                   <th>Felhasználónév</th>
                   <th>Email</th>
                   <th>Ország</th>
-                  <th>Admin</th>
+                  <th>Jogosultság</th>
                   <th>Törlés</th>
                 </tr>
               </thead>
