@@ -9,7 +9,8 @@ import Tab from 'react-bootstrap/Tab'
 
 class Terms extends React.Component {
   dataTitle = `Adatvédelmi és Adatkezelési szabályzat`;
-  dataText = `  Adatkezelő: Spuriga-Molnár Brigitta (székhely: 1048 Budapest. Bőröndös utca 12), amely önállóan az adatok kezelésének célját meghatározza, az adatkezelésre vonatkozó döntéseket meghozza, végrehajtja, vagy az általa megbízott adatfeldolgozóval végrehajtatja.
+  dataText = `  
+  Adatkezelő: Spuriga-Molnár Brigitta (székhely: 1048 Budapest. Bőröndös utca 12), amely önállóan az adatok kezelésének célját meghatározza, az adatkezelésre vonatkozó döntéseket meghozza, végrehajtja, vagy az általa megbízott adatfeldolgozóval végrehajtatja.
   Adatkezelés: az alkalmazott eljárástól függetlenül az adatokon végzett bármely művelet vagy a műveletek összessége, így különösen gyűjtése, felvétele, rögzítése, rendszerezése, tárolása, megváltoztatása, felhasználása, lekérdezése, továbbítása, nyilvánosságra hozatala, összehangolása vagy összekapcsolása, zárolása, törlése és megsemmisítése, valamint az adatok további felhasználásának megakadályozása.
   Adatfeldolgozó: Spuriga-Molnár Brigitta (székhely: 1048 Budapest. Bőröndös utca 12).
   Adatfeldolgozás: az adatkezelési műveletekhez kapcsolódó technikai feladatok elvégzése, függetlenül a műveletek végrehajtásához alkalmazott módszertől és eszköztől, valamint az alkalmazás helyétől, feltéve hogy a technikai feladatot az adatokon végzik;
@@ -48,7 +49,8 @@ class Terms extends React.Component {
   Budapest, 2019.10.17.`;
 
   cookieTitle = `Cookie (süti) kezelési szabályzat`;
-  cookieText = `  A cookie-k („sütik”) olyan rövid szöveges fájlok, amelyeket a megtekintett honlapok helyeznek el a számítógép böngészőjében. A cookie-k nem csatlakoznak az Ön rendszeréhez, és nem károsítják az Ön fájljait.
+  cookieText = `  
+  A cookie-k („sütik”) olyan rövid szöveges fájlok, amelyeket a megtekintett honlapok helyeznek el a számítógép böngészőjében. A cookie-k nem csatlakoznak az Ön rendszeréhez, és nem károsítják az Ön fájljait.
 
   A cookie-k lehetnek „állandó” vagy „ideiglenes” cookie-k. Az állandó cookie-t a böngésző egy meghatározott időpontig tárolja, feltéve, hogy azt a felhasználó korábban nem törli, az ideiglenes cookie-t azonban a böngésző nem tárolja, az a böngésző becsukásával automatikusan törlődik.
 
@@ -102,7 +104,7 @@ class Terms extends React.Component {
                 <hr/>
             </Card.Body>
             <Card.Footer>
-              <Button variant="primary" type="button" onClick={this.redirectToHomePage} className={`mt-4`}>Vissza a főoldalra</Button>
+              <Button variant="primary" type="button" onClick={this.redirectToHomePage} className={`mt-4 mb-4 ml-4`}>Vissza a főoldalra</Button>
             </Card.Footer>
           </Card>
         </div>
