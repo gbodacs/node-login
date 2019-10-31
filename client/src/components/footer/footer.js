@@ -10,6 +10,7 @@ class Footer extends React.Component {
         <Card.Link href="/connection">Kapcsolat</Card.Link>
         <Card.Link href="/terms">Adatvédelmi elvek</Card.Link>
         <Card.Link href="/terms">Süti szabályzat</Card.Link>
+        <Card.Link href="/login">Belépés</Card.Link>
       </Card.Footer>
     </Card>);
   }
