@@ -25,7 +25,7 @@ class Terms extends React.Component {
   A fenti adatokat az Adatkezelő elektronikus formában tárol el. Az adatokat csak a terápia céljából használja, hogy személyre szabott szolgáltatást biztosítson.
 
   2. Mi az adatkezelés célja, jogalapja?
-    Az adatkezelés jogalapja: ************
+    Az adatkezelés jogalapja: az érintett hozzájárulását adta személyes adatainak egy konkrét célból történő kezeléséhez.
     Az adatkezelés célja: a szolgáltatás biztosítása.
     A Felhasználó személyes adatait az Adatkezelő bizalmasan kezeli, a Felhasználó tudta és hozzájárulása nélkül információt nem továbbít illetéktelen harmadik személy részére.
 
