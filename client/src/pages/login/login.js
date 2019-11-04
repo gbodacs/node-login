@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Cookies from 'universal-cookie';
 import Footer from '../../components/footer/footer';
+import { getIsAdminFromStorage } from '../../helpers/is-admin';
 
 const cookies = new Cookies();
 
@@ -23,29 +24,34 @@ class Login extends React.Component {
   componentDidMount() {
     this.userInput.focus();
 
-    const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/login`, {credentials: 'include'});
+    if(getIsAdminFromStorage()) {
+      this.props.history.push('/home');
+    } else {
+      const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/login`, {credentials: 'include'});
 
-    fetch(request)
+      fetch(request)
       .then(response => {
         const status = response.status;
         if (status === 200) {
           response.json()
-            .then(userDataFromServer => {
-              if (userDataFromServer.cookie) {
-                cookies.set('login', userDataFromServer.cookie, {path: '/'});
-              }
-              sessionStorage.setItem('userId', userDataFromServer['_id']);
-              sessionStorage.setItem('userName', userDataFromServer['name']);
-              sessionStorage.setItem('isAdmin', userDataFromServer['isAdmin']);
-              this.props.history.push('/home');
-            });
+          .then(userDataFromServer => {
+            if (userDataFromServer.cookie) {
+              cookies.set('login', userDataFromServer.cookie, {path: '/'});
+            }
+            sessionStorage.setItem('userId', userDataFromServer['_id']);
+            sessionStorage.setItem('userName', userDataFromServer['name']);
+            sessionStorage.setItem('isAdmin', userDataFromServer['isAdmin']);
+            this.props.history.push('/home');
+          });
         } else if (status !== 400) {
           response.json()
-            .then(serverError => {
-              alert(response.status + '\n' + serverError.message);
-            });
+          .then(serverError => {
+            alert(response.status + '\n' + serverError.message);
+          });
         }
       });
+    }
+
   }
 
   loginFormChange(event) {

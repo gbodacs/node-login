@@ -1,5 +1,5 @@
 import React from 'react';
-import './connection.scss'; 
+import './connection.scss';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Footer from '../../components/footer/footer';
@@ -11,7 +11,7 @@ class Connection extends React.Component {
   }
 
   redirectToHomePage() {
-    this.props.history.push('/home');
+    this.props.history.push('/login');
   }
 
   render() {
@@ -19,7 +19,7 @@ class Connection extends React.Component {
       <div>
         <div className="Connection">
           <Card>
-            <Card.Body 
+            <Card.Body
               variant="primary"
               className="Connec card-body">
                 <h3>Kapcsolat</h3>

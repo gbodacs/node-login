@@ -192,8 +192,7 @@ class AdminDailyPlan extends React.Component {
 
   render() {
     const listUsers = this.state.users.map(user => {
-      console.log(user);
-      return <option key={user._id} value={user._id}>{user.name}</option>
+      return <option key={user['_id']} value={user['_id']}>{user.name}</option>
     });
 
     const blocks = this.state.blockElementList.map((Element, index) => {
