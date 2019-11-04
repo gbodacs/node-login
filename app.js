@@ -16,10 +16,10 @@ const app = express();
 
 mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@${process.env.MONGO_HOST}/${process.env.MONGO_DB}?retryWrites=true&w=majority`, {useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false })
   .then(() => {
-    console.log('Connection established to DB');
+    console.log('Connection established to host:'+process.env.MONGO_HOST+' db:'+process.env.MONGO_DB);
   })
   .catch(() => {
-    console.log('Connection failed!');
+    console.log('Connection failed to host:'+process.env.MONGO_HOST+' db:'+process.env.MONGO_DB);
   });
 
 app.set('port', process.env.PORT || 3001);
