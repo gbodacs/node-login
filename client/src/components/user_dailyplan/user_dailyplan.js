@@ -91,64 +91,70 @@ class UserDailyplan extends React.Component {
     };
     this.decreaseDate = this.decreaseDate.bind(this);
     this.increaseDate = this.increaseDate.bind(this);
+    this.getUserDailyplanData = this.getUserDailyplanData.bind(this);
   }
 
- componentDidMount () {
-   const blockData = {
-     id: this.state.userId, //get.Localstorage.userId
-     date: this.state.date
-   }
+  componentDidMount () {
+     this.getUserDailyplanData();
+  }
 
-   const headers = new Headers();
-   headers.append('Content-Type', 'application/json');
+  getUserDailyplanData() {
+    const blockData = {
+      id: this.state.userId,
+      date: this.state.date
+    }
 
-   const options = {
-     method: 'POST',
-     headers,
-     body: JSON.stringify(blockData)
-   }
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
 
-   const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/user_dailyplan`, options);
+    const options = {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(blockData)
+    }
 
-   fetch(request)
-     .then(response => {
-       const status = response.status;
-       if (status === 200) {
-         response.json()
-           .then(data => {
-             try{
-               this.setState({
-                 dailyPlanBlocks: data[0].blocks,
-                 dailyPlanComment: data[0].comment,
-                 allBlocks: data[0].allBlocks,
-                 allExercises: data[0].allExercises
-               });
-             } catch(error) {
-               this.setState({noDailyPlan: true});
-             }
-           })
-       } else {
-         response.json()
-           .then(serverError => {
-             alert(response.status + '\n' + serverError.message);
-           });
-       }
-     })
-     .catch(error => {
-       console.error(error);
-     })
- }
+    const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/user_dailyplan`, options);
 
-
+    fetch(request)
+      .then(response => {
+        const status = response.status;
+        if (status === 200) {
+          response.json()
+            .then(data => {
+              try{
+                this.setState({
+                  dailyPlanBlocks: data[0].blocks,
+                  dailyPlanComment: data[0].comment,
+                  allBlocks: data[0].allBlocks,
+                  allExercises: data[0].allExercises,
+                  noDailyPlan: false
+                });
+              } catch(error) {
+                this.setState({noDailyPlan: true});
+              }
+            })
+        } else {
+          response.json()
+            .then(serverError => {
+              alert(response.status + '\n' + serverError.message);
+            });
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      })
+  }
 
   decreaseDate() {
     let yesterday = this.state.date.setDate(this.state.date.getDate() - 1);
     this.setState({date: new Date(yesterday)});
+    this.getUserDailyplanData();
   }
 
   increaseDate() {
     let tomorrow = this.state.date.setDate(this.state.date.getDate() + 1);
     this.setState({date: new Date(tomorrow)});
+    this.getUserDailyplanData();
   }
 
   render() {
@@ -161,30 +167,32 @@ class UserDailyplan extends React.Component {
 
     const date = this.state.date.toLocaleDateString("hu-HU", options);
 
-    const blocks = this.state.dailyPlanBlocks.map((planBlock, index) => {
-      let originalBlock = this.state.allBlocks.filter(block => block['_id'] === planBlock.id)
-      let exerciseList = originalBlock[0].exerciseList;
-      let exercises = [];
-      let videoIdList = [];
-      exerciseList.map(blockExerciseId => {
-        let originalExercise = this.state.allExercises.filter(exercise => exercise['_id'] === blockExerciseId)
-        let obj = {};
-        obj.name = originalExercise[0].name;
-        obj.comment = originalExercise[0].comment;
-        exercises.push(obj);
-        videoIdList.push(originalExercise[0].movielink.split('?v=')[1]);
-      })
-      return <BlockElement key={ index + 1} title={originalBlock[0].name} exercises={exercises} videoIdList={videoIdList}></BlockElement>
-    });
-
     let message;
+    let blocks;
     if (this.state.noDailyPlan) {
       message = <div>Kedves <b>{this.state.userName}</b>, erre a napra nincs gyakorlatod!</div>
+      blocks = <div></div>
     } else {
       message = <div></div>
+      blocks = this.state.dailyPlanBlocks.map((planBlock, index) => {
+        let originalBlock = this.state.allBlocks.filter(block => block['_id'] === planBlock.id)
+        let exerciseList = originalBlock[0].exerciseList;
+        let exercises = [];
+        let videoIdList = [];
+        exerciseList.map(blockExerciseId => {
+          let originalExercise = this.state.allExercises.filter(exercise => exercise['_id'] === blockExerciseId)
+          let obj = {};
+          obj.name = originalExercise[0].name;
+          obj.comment = originalExercise[0].comment;
+          exercises.push(obj);
+          videoIdList.push(originalExercise[0].movielink.split('?v=')[1]);
+        })
+        return <BlockElement key={ index + 1} title={originalBlock[0].name} exercises={exercises} videoIdList={videoIdList}></BlockElement>
+      });
     }
 
-    return (<div className="UserDailyplan my-5">
+    return (
+      <div className="UserDailyplan my-5">
       <div style={{width: '90%'}} className="mx-auto p-4 bg-white text-left">
           <h3>Napi gyakorlataim</h3>
           <div className="d-flex align-items-center">
@@ -195,7 +203,8 @@ class UserDailyplan extends React.Component {
         </div>
         <div className="mx-auto card-grid-view">{blocks}</div>
         {message}
-      </div>);
+      </div>
+    );
   }
 }
 
