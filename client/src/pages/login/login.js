@@ -140,7 +140,7 @@ class Login extends React.Component {
                     </Button>
                   </Form>
                   <hr/>
-                  <a href="#">Elfelejtettem a jelszavam</a>
+                  <a href="/connection">Elfelejtettem a jelszavam</a>
                 </Card.Body>
               </Card>
             </div>

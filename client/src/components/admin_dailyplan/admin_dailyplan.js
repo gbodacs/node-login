@@ -121,12 +121,12 @@ class AdminDailyPlan extends React.Component {
     const blockIdNames = stateItems.filter(item => item.match('block_name') !== null)
     const blockIdRepeats = stateItems.filter(item => item.match('block_repeat') !== null)
     let blockIds = [];
-    blockIdNames.map(item => {
+    blockIdNames.forEach(item => {
       if (this.state[item] !== null)
         blockIds.push(this.state[item])
     });
     let blockObjectList = [];
-    blockIds.map((blockID, index) => {
+    blockIds.forEach((blockID, index) => {
       let block = {};
       block.id = blockID;
       if (blockIdRepeats[index]) {

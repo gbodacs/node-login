@@ -33,7 +33,9 @@ class BlockElement extends React.Component {
   }
 
   onEnd() {
-    this.setState({videoId: this.state.videoIdList[++this.state.i]});
+    let newI = this.state.i + 1
+    this.setState({i: newI});
+    this.setState({videoId: this.state.videoIdList[newI]});
     if (this.state.i === this.state.videoIdList.length) {
       this.handleCloseModal();
     }
@@ -179,7 +181,7 @@ class UserDailyplan extends React.Component {
         let exerciseList = originalBlock[0].exerciseList;
         let exercises = [];
         let videoIdList = [];
-        exerciseList.map(blockExerciseId => {
+        exerciseList.forEach(blockExerciseId => {
           let originalExercise = this.state.allExercises.filter(exercise => exercise['_id'] === blockExerciseId)
           let obj = {};
           obj.name = originalExercise[0].name;
