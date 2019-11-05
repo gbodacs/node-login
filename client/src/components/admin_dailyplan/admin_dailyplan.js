@@ -71,7 +71,7 @@ class AdminDailyPlan extends React.Component {
   componentDidMount() {
     this.nameInput.focus();
 
-    const request = new Request('http://localhost:3001/admin_dailyplan', {credentials: 'include'});
+    const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/admin_dailyplan`, {credentials: 'include'});
 
     fetch(request)
       .then(response => {
@@ -172,7 +172,7 @@ class AdminDailyPlan extends React.Component {
       body: JSON.stringify(dailyplanData)
     }
 
-    const request = new Request('http://localhost:3001/admin_dailyplan', options);
+    const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/admin_dailyplan`, options);
 
     fetch(request)
       .then(response => {
