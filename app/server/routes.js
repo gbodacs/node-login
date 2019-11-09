@@ -123,18 +123,18 @@ module.exports = function (app) {
 	*/
 
 	app.get('/admin_dailyplan', function (req, res) {
-		let users;
 		AccountManager.getAllAccounts((error, accounts) => {
-      if (!error)
-			  users = accounts;
-      else
-        res.status(500).json({message: error})
-		});
-		AccountManager.getAllBlocks((error, blocks) => {
-      if (!error)
-			  res.status(200).json({users, blocks})
-      else
-        res.status(500).json({message: error})
+      if (!error) {
+			  let users = accounts;
+        AccountManager.getAllBlocks((err, blocks) => {
+          if (!err)
+          res.status(200).json({users, blocks})
+          else
+          res.status(500).json({message: err})
+        });
+      } else {
+        res.status(500).json({message: error});
+      }
 		});
 	});
 

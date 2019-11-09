@@ -345,7 +345,7 @@ exports.getUserDailyPlan = function(userData, callback) {
 	Dailyplan.aggregate([
 		{$match: { startDate: { $lte: new Date(userData.date)}, endDate: { $gte: new Date(userData.date)}, userId: userData.id}},
 		{
-			"$lookup": {
+			$lookup: {
 				"from": "blocks",
 				"localField": "id",
 				"foreignField": "id",
@@ -353,7 +353,7 @@ exports.getUserDailyPlan = function(userData, callback) {
 			}
 		},
 		{
-			"$lookup": {
+			$lookup: {
 				"from": "exercises",
 				"localField": "exerciseList",
 				"foreignField": "id",

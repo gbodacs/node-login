@@ -33,8 +33,9 @@ class BlockElement extends React.Component {
   }
 
   onEnd() {
-    let newI = this.state.i + 1
+    let newI = this.state.i + 1;
     this.setState({i: newI});
+    this.setState({videoId: 'played'});
     this.setState({videoId: this.state.videoIdList[newI]});
     if (this.state.i === this.state.videoIdList.length) {
       this.handleCloseModal();

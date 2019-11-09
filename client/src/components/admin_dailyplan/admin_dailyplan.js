@@ -89,6 +89,9 @@ class AdminDailyPlan extends React.Component {
               alert(response.status + '\n' + serverError.message);
             });
         }
+      })
+      .catch(error => {
+        console.log(error);
       });
   }
 
