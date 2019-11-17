@@ -1,3 +1,9 @@
-.footer {
+.footer, .card-link {
   font-size: .75rem;
+  color: rgba(0, 0, 0, 0.5);
+  text-decoration: none;
+}
+
+.card-link:hover, .card-link:focus {
+  color: rgba(0, 0, 0, 0.9);
 }

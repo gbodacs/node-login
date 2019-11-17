@@ -139,8 +139,6 @@ class Login extends React.Component {
                       Belépés
                     </Button>
                   </Form>
-                  <hr/>
-                  <a href="/connection">Elfelejtettem a jelszavam</a>
                 </Card.Body>
               </Card>
             </div>

@@ -9,3 +9,41 @@
   width: 100%;
   white-space: pre-line;
 }
+
+.connect-container {
+  font-size: 26px;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.fa-home{
+  font-size: 26px;
+}
+
+.social-container {
+  padding: 25px 50px;
+  font-size: 40px;
+}
+
+a.social {
+  display: inline-block;
+  margin: 0 0.5em;
+  color: #000;
+  transition: transform 250ms;
+}
+
+a.social:hover {
+  transform: translateY(-2px);
+  color: black;
+}
+
+a.youtube {
+  color: #eb3223;
+}
+
+a.facebook {
+  color: #3A559F;
+}
+
+a.blog {
+  color: #4EA6EA;
+}

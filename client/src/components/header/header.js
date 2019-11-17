@@ -61,6 +61,7 @@ class Header extends React.Component {
     } else {
       header = (
         <Nav className="mr-auto">
+          <img alt="" src="/image/logoW.png" width="120" height="50" className="d-inline-block align-top mr-3" />
           <LinkContainer to="/home/user_dailyplan">
             <Nav.Link>Napi gyakorlataim</Nav.Link>
           </LinkContainer>
@@ -69,7 +70,7 @@ class Header extends React.Component {
     }
     return (
       <div className="Header">
-        <Navbar bg="light" variant="light" expand="lg">
+        <Navbar bg="light" variant="light" expand="lg" fixed="top">
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav" className="mx-5">
             {header}
