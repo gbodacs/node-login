@@ -25,22 +25,22 @@ class Connection extends React.Component {
                 <h3>Kapcsolat</h3>
                 <hr/>
 
-                <span className="connect-container pr-3"><i class="fas fa-phone-square"></i></span><strong > +36 2o / 248 9 86o</strong>
+                <span className="connect-container pr-3"><i className="fas fa-phone-square"></i></span><strong > +36 2o / 248 9 86o</strong>
                 <br/>
-                <span className="connect-container pr-3"><i class="fas fa-envelope"></i></span><strong>testtartasterapia<i> @ gmail . c0m </i></strong>
+                <span className="connect-container pr-3"><i className="fas fa-envelope"></i></span><strong>testtartasterapia<i> @ gmail . c0m </i></strong>
                 <br/>
-                <span className="connect-container pr-3"><i class="fas fa-address-card"></i></span><strong>Nyilvántartási szám: 54050291</strong>
+                <span className="connect-container pr-3"><i className="fas fa-address-card"></i></span><strong>Nyilvántartási szám: 54050291</strong>
                 <br/>
-                <span className="connect-container pr-3"><i class="fas fa-map"></i></span><strong> 1048 - Budapest, Bőröndös utca 12.</strong>
+                <span className="connect-container pr-3"><i className="fas fa-map"></i></span><strong> 1048 - Budapest, Bőröndös utca 12.</strong>
                 <hr/>
 
 
                 <div className="social-container d-flex justify-content-center">
-                <a href="https://www.facebook.com/testtartasterapia/" className="facebook social"><i class="fab fa-facebook-square"></i></a>
-                <a href="https://testtartasterapia.hu/" className="blog social"><i class="fab fa-blogger"></i></a>
-                <a href="https://www.youtube.com/channel/UCWP8aMtneWxm8bFH9l1dxyQ" className="youtube social"><i class="fab fa-youtube-square"></i></a>
+                <a href="https://www.facebook.com/testtartasterapia/" className="facebook social"><i className="fab fa-facebook-square"></i></a>
+                <a href="https://testtartasterapia.hu/" className="blog social"><i className="fab fa-blogger"></i></a>
+                <a href="https://www.youtube.com/channel/UCWP8aMtneWxm8bFH9l1dxyQ" className="youtube social"><i className="fab fa-youtube-square"></i></a>
                 </div>
-                <Button variant="primary" type="button" onClick={this.redirectToHomePage}><span className="pr-3"><i class="fas fa-home"></i></span>Vissza a főoldalra</Button>
+                <Button variant="primary" type="button" onClick={this.redirectToHomePage}><span className="pr-3"><i className="fas fa-home"></i></span>Vissza a főoldalra</Button>
             </Card.Body>
           </Card>
         </div>

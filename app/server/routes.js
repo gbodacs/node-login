@@ -68,15 +68,7 @@ module.exports = function (app) {
 	*/
 
 	app.get('/signup', (req, res) => {
-    AccountManager.validateAdmin(req.cookies.login, (error, valid) => {
-      if (!valid && error === 'not an admin') {
-        res.status(403).json({message: 'Not an admin user'});
-      } else if (!valid) {
-        res.status(500).json({message: 'Internal server error'});
-      } else {
-        res.status(200).json({countryList: CountryList});
-      }
-    })
+    res.status(200).json({countryList: CountryList});
 	});
 
 	app.post('/signup', (req, res) => {

@@ -199,9 +199,9 @@ class UserDailyplan extends React.Component {
       <div style={{width: '90%'}} className="mx-auto p-4 bg-white text-left">
           <h3>Napi gyakorlataim</h3>
           <div className="d-flex align-items-center">
-              <button className="arrow" onClick={this.decreaseDate}><i class="fas fa-chevron-left"></i></button>
+              <button className="arrow" onClick={this.decreaseDate}><i className="fas fa-chevron-left"></i></button>
               <span className="date text-center">{date}</span>
-              <button className="arrow" onClick={this.increaseDate}><i class="fas fa-chevron-right"></i></button>
+              <button className="arrow" onClick={this.increaseDate}><i className="fas fa-chevron-right"></i></button>
           </div>
         </div>
         <div className="blocks mx-auto d-flex flex-wrap">{blocks}</div>

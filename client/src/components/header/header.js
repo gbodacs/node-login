@@ -38,7 +38,7 @@ class Header extends React.Component {
     if (isAdmin === 'true') {
       header = (
         <Nav className="mr-auto">
-          <NavDropdown title="Felhasználók" id="basic-nav-dropdown">
+          <NavDropdown className="my-auto" title="Felhasználók" id="basic-nav-dropdown">
             <LinkContainer to="/home/admin_adduser">
               <NavDropdown.Item>Hozzáadás</NavDropdown.Item>
             </LinkContainer>
@@ -48,13 +48,13 @@ class Header extends React.Component {
             </LinkContainer>
           </NavDropdown>
           <LinkContainer to="/home/admin_dailyplan">
-            <Nav.Link>Napi tervek</Nav.Link>
+            <Nav.Link className="my-auto">Napi tervek</Nav.Link>
           </LinkContainer>
           <LinkContainer to="/home/admin_exercises">
-            <Nav.Link>Gyakorlatok</Nav.Link>
+            <Nav.Link className="my-auto">Gyakorlatok</Nav.Link>
           </LinkContainer>
           <LinkContainer to="/home/admin_blocks">
-            <Nav.Link>Blokkok</Nav.Link>
+            <Nav.Link className="my-auto">Blokkok</Nav.Link>
           </LinkContainer>
         </Nav>
       );
@@ -63,7 +63,7 @@ class Header extends React.Component {
         <Nav className="mr-auto">
           <img alt="" src="/image/logoW.png" width="120" height="50" className="d-inline-block align-top mr-3" />
           <LinkContainer to="/home/user_dailyplan">
-            <Nav.Link>Napi gyakorlataim</Nav.Link>
+            <Nav.Link className="my-auto">Napi gyakorlataim</Nav.Link>
           </LinkContainer>
         </Nav>
       );
