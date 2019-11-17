@@ -304,11 +304,28 @@ exports.getAllBlocks = function(callback)
 
 exports.addNewDailyPlan = function(newData, callback)
 {
-	//this query should be refactored to select for user and date
-	Dailyplan.findOne({userId:newData.userId}, (error, dailyplan) => {
+	Dailyplan.findOne(
+		// { startDate: { $lte: new Date(newData.startDate)}, endDate: { $gte: new Date(newData.endDate)}, userId: newData.userId}
+		{
+		$and: [
+			{
+				$or: [
+					{$and: [{startDate: {$lte: new Date(newData.startDate)}}, {endDate: {$gte: new Date(newData.startDate)}}]},
+					{$and: [{startDate: {$lte: new Date(newData.endDate)}}, {endDate: {$gte: new Date(newData.endDate)}}]},
+					{$and: [{startDate: {$lte: new Date(newData.startDate)}}, {endDate: {$gte: new Date(newData.endDate)}}]},
+					{$and: [{startDate: {$gte: new Date(newData.startDate)}}, {endDate: {$lte: new Date(newData.endDate)}}]}
+				]
+			},
+			{userId: newData.userId}
+		]
+	}
+	, (error, dailyplan) => {
 		if (dailyplan) {
-			callback('already have a dailyplan for this user');
-		}	else {
+			console.log(dailyplan)
+			callback('This user already have a dailyplan for the selected date!');
+		}	else if (error) {
+			callback(error.message.message);
+		} else {
 			// append date stamp when record was created //
 			newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
 			const newDailyplan = new Dailyplan(newData);
