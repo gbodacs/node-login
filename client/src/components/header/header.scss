@@ -1,3 +1,17 @@
+.Header .navbar {
+  padding: 0 1rem;
+}
+
 .logout{
-  color: white;
+  color: rgba(0, 0, 0, 0.5);
+  text-decoration: none;
+}
+
+.logout:hover, .logout:focus {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.navbar-nav .active {
+  border-bottom: 2px solid black;
+  padding: .5rem 1rem;
 }

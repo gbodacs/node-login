@@ -69,7 +69,7 @@ class Header extends React.Component {
     }
     return (
       <div className="Header">
-        <Navbar bg="dark" variant="dark" expand="lg">
+        <Navbar bg="light" variant="light" expand="lg">
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav" className="mx-5">
             {header}

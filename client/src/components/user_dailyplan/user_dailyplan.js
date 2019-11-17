@@ -44,7 +44,7 @@ class BlockElement extends React.Component {
 
   render() {
     const exercises = this.props.exercises.map((exercise, index) => {
-      return <ListGroup.Item className="bg-dark" key={index}><h6>{exercise.name}</h6><br></br><small>{exercise.comment}</small></ListGroup.Item>
+      return <ListGroup.Item className="border-0" key={index}><h6>{exercise.name}</h6><br></br><small>{exercise.comment}</small></ListGroup.Item>
     });
 
     const opts = {
@@ -56,17 +56,17 @@ class BlockElement extends React.Component {
     }
 
     return (
-      <Card>
-        <Card.Title className="text-align-center p-3">{this.props.title}</Card.Title>
-        <Card.Body className="bg-dark block-card-body" onClick={this.handleOpenModal}>
-          <ListGroup>
+      <Card className="block-card mx-3 pt-3">
+        <Card.Title className="text-align-center mb-0">{this.props.title}</Card.Title>
+        <Card.Body className="d-flex flex-column justify-content-between p-1 pt-0" onClick={this.handleOpenModal}>
+          <ListGroup className="block-card-body">
             {exercises}
           </ListGroup>
           <button className="position-relative youtubeButton" >
             <i className="fab fa-youtube"></i>
           </button>
         </Card.Body>
-        <Modal isOpen={this.state.showModal} contentLabel="OPEN">
+        <Modal className="youtube-modal m-auto" isOpen={this.state.showModal} contentLabel="OPEN">
           <button className="youtubeClose rounded-circle" onClick={this.handleCloseModal}>
             <i className="fas fa-times"></i>
           </button>
@@ -199,12 +199,12 @@ class UserDailyplan extends React.Component {
       <div style={{width: '90%'}} className="mx-auto p-4 bg-white text-left">
           <h3>Napi gyakorlataim</h3>
           <div className="d-flex align-items-center">
-              <button className="font" onClick={this.decreaseDate}>&#8249;</button>
-              <span className="text-center">{date}</span>
-              <button className="font" onClick={this.increaseDate}>&#8250;</button>
+              <button className="arrow" onClick={this.decreaseDate}><i class="fas fa-chevron-left"></i></button>
+              <span className="date text-center">{date}</span>
+              <button className="arrow" onClick={this.increaseDate}><i class="fas fa-chevron-right"></i></button>
           </div>
         </div>
-        <div className="mx-auto card-grid-view">{blocks}</div>
+        <div className="blocks mx-auto d-flex flex-wrap">{blocks}</div>
         {message}
       </div>
     );

@@ -1,7 +1,18 @@
+.blocks {
+  width: 90%;
+}
+
+.youtube-modal {
+  width: 700px;
+  height: 420px;
+  padding-top: 75px;
+}
+
 .youtubeButton{
-  visibility: hidden;
   color: red;
   font-size: 6rem;
+  line-height: 4rem;
+  max-height: 120px;
   border: none;
   background: transparent;
   outline: none;
@@ -16,6 +27,7 @@
   color: red;
   border: none;
   background: transparent;
+  font-size: 2rem;
   &:focus {
     outline: none;
   }
@@ -30,35 +42,25 @@ button {
   radius: 50%;
 }
 
-.font {
-font-size: 20px;
+.date, .arrow {
+  line-height: 40px;
+  color: #212529;
 }
 
-.font:focus{
+.arrow:focus{
   outline: none
 }
 
-.card-grid-view {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  margin: 1rem;
-  width: 90%;
-}
-
-.block-card-body {
-  min-width: 15rem;
-  border-radius: 4px;
-  color: #fff;
-  margin: 1.2rem;
+.blocks .block-card {
   cursor: pointer;
   transition: all 0.2s ease-out;
+  max-width: 30%;
 }
 
-.block-card-body:hover {
+.block-card:hover {
   box-shadow: 0 0 4em 0px rgba(0, 0, 0, 0.4);
   transform: scale(1.01);
 }
-.block-card-body:active {
+.block-card:active {
   transform: scale(1.01) translateY(0.2rem);
 }
