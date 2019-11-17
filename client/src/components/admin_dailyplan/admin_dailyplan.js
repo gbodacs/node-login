@@ -56,8 +56,8 @@ class AdminDailyPlan extends React.Component {
       blockElementList: [],
       dailyPlanComment: '',
       userId: '',
-      startDate: new Date(),
-      endDate: new Date()
+      startDate: new Date().setHours(1,0,0),
+      endDate: new Date().setHours(23,59,59)
     }
     this.saveStartDate = this.saveStartDate.bind(this);
     this.saveEndDate = this.saveEndDate.bind(this);
@@ -107,16 +107,18 @@ class AdminDailyPlan extends React.Component {
   }
 
   saveStartDate(date) {
-    this.setState({startDate: date});
+    let startDateToSave = date.setHours(1,0,0);
+    this.setState({startDate: startDateToSave});
   }
 
   saveEndDate(date) {
-    this.setState({endDate: date});
+    let endDateToSave = date.setHours(23,59,59);
+    this.setState({endDate: endDateToSave});
   }
 
   resetForm() {
     this.dailyplanForm.reset();
-    this.setState({startDate: new Date(), endDate: new Date()})
+    this.setState({startDate: new Date(), endDate: new Date(), userId: ''})
   }
 
   getBlockIDs() {
@@ -187,7 +189,8 @@ class AdminDailyPlan extends React.Component {
         } else {
           response.json()
             .then(serverError => {
-              alert(response.status + '\n' + serverError.message);
+              let errorMessage = serverError.message.message || serverError.message;
+              alert(response.status + '\n' + errorMessage);
             });
         }
       })

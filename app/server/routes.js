@@ -140,13 +140,17 @@ module.exports = function (app) {
 
 	app.post('/admin_dailyplan', function (req, res)
 	{
-		AccountManager.addNewDailyPlan({
+    let newData = {
       userId: req.body.userId,
 			blocks: req.body.blocks,
 			comment: req.body.comment,
 			startDate: req.body.startDate,
 			endDate: req.body.endDate
-		}, (error, dailyplan) => {
+		};
+    if (!newData.comment) {
+      newData.comment = '';
+    }
+		AccountManager.addNewDailyPlan(newData, (error, dailyplan) => {
       if (error) {
         res.status(500).json({message: error});
       } else {

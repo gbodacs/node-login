@@ -305,7 +305,6 @@ exports.getAllBlocks = function(callback)
 exports.addNewDailyPlan = function(newData, callback)
 {
 	Dailyplan.findOne(
-		// { startDate: { $lte: new Date(newData.startDate)}, endDate: { $gte: new Date(newData.endDate)}, userId: newData.userId}
 		{
 		$and: [
 			{
@@ -318,10 +317,8 @@ exports.addNewDailyPlan = function(newData, callback)
 			},
 			{userId: newData.userId}
 		]
-	}
-	, (error, dailyplan) => {
+	}, (error, dailyplan) => {
 		if (dailyplan) {
-			console.log(dailyplan)
 			callback('This user already have a dailyplan for the selected date!');
 		}	else if (error) {
 			callback(error.message.message);
