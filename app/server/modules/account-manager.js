@@ -337,6 +337,31 @@ exports.addNewDailyPlan = function(newData, callback)
 	});
 };
 
+exports.getUserAllDailyPlanDates = function(userData, callback)
+{
+	Dailyplan
+	.find({userId: userData.userId})
+	.select('startDate endDate -_id')
+	.exec((error, dailyplanDates) => {
+		let dates = [];
+		let oneDayinMs = 86400000;
+		if (error)
+			callback(error);
+		else
+			dailyplanDates.map(dailyplan => {
+				let days = Math.round((dailyplan.endDate - dailyplan.startDate)/oneDayinMs);
+				let startDate = Math.round(new Date(dailyplan.startDate).getTime()/1000);
+				let nextDate = new Date(dailyplan.startDate).getTime();
+				dates.push(startDate)
+				for (let i = 1; i < days; i++) {
+					nextDate += oneDayinMs;
+					dates.push(nextDate/1000);
+				}
+			});
+			callback(null, dates);
+	});
+};
+
 /*exports.updateDailyPlan = function(newData, callback)
 {
 	var o =

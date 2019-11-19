@@ -317,6 +317,17 @@ module.exports = function (app) {
 		User dailyplan
 	*/
 
+  app.post('/user_all_dailyplan', function (req, res) {
+    AccountManager.getUserAllDailyPlanDates(
+      {userId: req.body.userId}, (error, dailyplanDates) => {
+        if (error) {
+  				res.status(400).json({message: error});
+  			}	else {
+  				res.status(200).send(dailyplanDates);
+  			}
+      });
+  });
+
 	app.post('/user_dailyplan', function (req, res) {
     AccountManager.getUserDailyPlan({
 			id: req.body.id,

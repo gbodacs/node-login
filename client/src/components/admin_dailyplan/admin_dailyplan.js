@@ -57,12 +57,14 @@ class AdminDailyPlan extends React.Component {
       dailyPlanComment: '',
       userId: '',
       startDate: new Date().setHours(1,0,0),
-      endDate: new Date().setHours(23,59,59)
+      endDate: new Date().setHours(23,59,59),
+      excludeDates: []
     }
     this.saveStartDate = this.saveStartDate.bind(this);
     this.saveEndDate = this.saveEndDate.bind(this);
     this.addBlock = this.addBlock.bind(this);
     this.dailyplanFormChange = this.dailyplanFormChange.bind(this);
+    this.dailyplanUserSelectChange = this.dailyplanUserSelectChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.deleteBlockIDs = this.deleteBlockIDs.bind(this);
     this.resetForm = this.resetForm.bind(this);
@@ -101,6 +103,47 @@ class AdminDailyPlan extends React.Component {
     })
   }
 
+  dailyplanUserSelectChange(event) {
+    this.setState({[event.target.name]: event.target.value});
+
+    const userData = {
+      userId: event.target.value
+    }
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    const options = {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(userData)
+    }
+
+    const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/user_all_dailyplan`, options);
+
+    fetch(request)
+      .then(response => {
+        const status = response.status;
+        if (status === 200) {
+          response.json()
+            .then(data => {
+              let dates = data.map(date => {
+                return new Date(date*1000);
+              })
+              this.setState({excludeDates: dates});
+            })
+        } else {
+          response.json()
+            .then(serverError => {
+              alert(response.status + '\n' + serverError.message);
+            });
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
   addBlock() {
     const blocks = this.state.blockElementList.concat(NewBlock);
     this.setState({blockElementList: blocks});
@@ -118,7 +161,7 @@ class AdminDailyPlan extends React.Component {
 
   resetForm() {
     this.dailyplanForm.reset();
-    this.setState({startDate: new Date(), endDate: new Date(), userId: ''})
+    this.setState({startDate: new Date(), endDate: new Date(), userId: '', excludeDates: []})
   }
 
   getBlockIDs() {
@@ -205,6 +248,43 @@ class AdminDailyPlan extends React.Component {
       return <Element key={ index + 1} index={index + 1} blocks={this.state.blocks} onChangeValue={this.dailyplanFormChange}/>
     });
 
+    let endOfForm = <div></div>
+    if (this.state.excludeDates.length) {
+      endOfForm = <div>
+        <Form.Group as={Row} controlId="startDate">
+          <Form.Label column="column" sm="2">Kezdeti nap dátuma</Form.Label>
+          <Col sm="10">
+            <DatePicker dateFormat="yyyy. M. d" selected={this.state.startDate} onChange={this.saveStartDate} excludeDates={this.state.excludeDates}/>
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row} controlId="endDate">
+          <Form.Label column="column" sm="2">Utolsó nap dátuma</Form.Label>
+          <Col sm="10">
+            <DatePicker dateFormat="yyyy. M. d" selected={this.state.endDate} onChange={this.saveEndDate} excludeDates={this.state.excludeDates}/>
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row} controlId="exerciseComment">
+          <Form.Label column="column" sm="2">Megjegyzés</Form.Label>
+          <Col sm="10">
+            <Form.Control name="dailyPlanComment" type="text" onChange={this.dailyplanFormChange}/>
+          </Col>
+        </Form.Group>
+        {blocks}
+        <div className="d-flex justify-content-sm-center">
+          <Button variant="info" className="align-center" type="button" onClick={this.addBlock}><i className="fas fa-plus-circle mr-2"></i>Blokk hozzáadása</Button>
+        </div>
+        <hr/>
+        <div className="buttons d-flex justify-content-sm-end">
+          <Button variant="outline-secondary" type="reset" value="Reset" className="mr-3">
+            Törlés
+          </Button>
+          <Button variant="primary" type="submit" value="Submit">
+            Hozzáadás
+          </Button>
+        </div>
+      </div>
+    }
+
     return (
       <div className="AdminDailyPlan my-5 mx-auto">
         <Card className="p-4 bg-white text-left">
@@ -222,42 +302,12 @@ class AdminDailyPlan extends React.Component {
                     ref={(name) => {this.nameInput = name}}
                     name="userId"
                     as="select"
-                    onChange={this.dailyplanFormChange}>
+                    onChange={this.dailyplanUserSelectChange}>
                     {listUsers}
                   </Form.Control>
                 </Col>
               </Form.Group>
-              <Form.Group as={Row} controlId="startDate">
-                <Form.Label column="column" sm="2">Kezdeti nap dátuma</Form.Label>
-                <Col sm="10">
-                  <DatePicker dateFormat="yyyy. M. d" selected={this.state.startDate} onChange={this.saveStartDate}/>
-                </Col>
-              </Form.Group>
-              <Form.Group as={Row} controlId="endDate">
-                <Form.Label column="column" sm="2">Utolsó nap dátuma</Form.Label>
-                <Col sm="10">
-                  <DatePicker dateFormat="yyyy. M. d" selected={this.state.endDate} onChange={this.saveEndDate}/>
-                </Col>
-              </Form.Group>
-              <Form.Group as={Row} controlId="exerciseComment">
-                <Form.Label column="column" sm="2">Megjegyzés</Form.Label>
-                <Col sm="10">
-                  <Form.Control name="dailyPlanComment" type="text" onChange={this.dailyplanFormChange}/>
-                </Col>
-              </Form.Group>
-              {blocks}
-              <div className="d-flex justify-content-sm-center">
-                <Button variant="info" className="align-center" type="button" onClick={this.addBlock}><i className="fas fa-plus-circle mr-2"></i>Blokk hozzáadása</Button>
-              </div>
-              <hr/>
-              <div className="buttons d-flex justify-content-sm-end">
-                <Button variant="outline-secondary" type="reset" value="Reset" className="mr-3">
-                  Törlés
-                </Button>
-                <Button variant="primary" type="submit" value="Submit">
-                  Hozzáadás
-                </Button>
-              </div>
+              {endOfForm}
             </Form>
           </Card.Body>
         </Card>
@@ -265,4 +315,5 @@ class AdminDailyPlan extends React.Component {
     );
   }
 }
-    export default AdminDailyPlan;
+
+export default AdminDailyPlan;
