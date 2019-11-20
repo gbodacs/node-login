@@ -57,6 +57,22 @@ class AdminGetUsers extends React.Component {
       });
   }
 
+  openNewWindow(event) {
+    const idOfAccount = event.target.name.split(':')[0];
+    const nameOfUser = event.target.name.split(':')[1];
+
+    let windowObjectReference;
+
+    function openRequestedPopup() {
+      windowObjectReference = window.open(`${process.env.REACT_APP_FRONTEND_SERVER}/home/user_dailyplan`, "CNN_WindowName", "location=yes,resizable=yes,scrollbars=yes,status=yes");
+      windowObjectReference.sessionStorage.setItem('userId', idOfAccount);
+      windowObjectReference.sessionStorage.setItem('userName', nameOfUser);
+      windowObjectReference.sessionStorage.setItem('isAdmin', false);
+    }
+
+    openRequestedPopup();
+  }
+
   render() {
     const tableRow = this.state.accounts.map((account, index) =>
       <tr key={index + 1}>
@@ -69,6 +85,11 @@ class AdminGetUsers extends React.Component {
         <td className="align-middle">
           <Button variant="outline-danger" name={`${account._id}:${index}`} type="button" size="sm" onClick={this.deleteAccount}>
             Törlés
+          </Button>
+        </td>
+        <td className="align-middle">
+          <Button variant="outline-info" name={`${account._id}:${account.name}`} type="button" size="sm" onClick={this.openNewWindow}>
+            Bejelentkezés
           </Button>
         </td>
       </tr>
@@ -87,6 +108,7 @@ class AdminGetUsers extends React.Component {
                   <th>Ország</th>
                   <th>Jogosultság</th>
                   <th>Törlés</th>
+                  <th>Bejelentkezés</th>
                 </tr>
               </thead>
               <tbody>
