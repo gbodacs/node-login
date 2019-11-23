@@ -64,7 +64,7 @@ class AdminGetUsers extends React.Component {
     let windowObjectReference;
 
     function openRequestedPopup() {
-      windowObjectReference = window.open(`${process.env.REACT_APP_FRONTEND_SERVER}/home/user_dailyplan`, "CNN_WindowName", "location=yes,resizable=yes,scrollbars=yes,status=yes");
+      windowObjectReference = window.open(`${window.location.origin}/home/user_dailyplan`, "CNN_WindowName", "location=yes,resizable=yes,scrollbars=yes,status=yes");
       windowObjectReference.sessionStorage.setItem('userId', idOfAccount);
       windowObjectReference.sessionStorage.setItem('userName', nameOfUser);
       windowObjectReference.sessionStorage.setItem('isAdmin', false);
