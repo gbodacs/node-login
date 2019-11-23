@@ -127,10 +127,15 @@ class AdminDailyPlan extends React.Component {
         if (status === 200) {
           response.json()
             .then(data => {
-              let dates = data.map(date => {
-                return new Date(date*1000);
-              })
-              this.setState({excludeDates: dates});
+              if (data.length) {
+                let dates = data.map(date => {
+                  return new Date(date*1000);
+                })
+                this.setState({excludeDates: dates});
+              }
+              else {
+                this.setState({newUser: true});
+              }
             })
         } else {
           response.json()
@@ -249,7 +254,7 @@ class AdminDailyPlan extends React.Component {
     });
 
     let endOfForm = <div></div>
-    if (this.state.excludeDates.length) {
+    if (this.state.excludeDates.length || this.state.newUser) {
       endOfForm = <div>
         <Form.Group as={Row} controlId="startDate">
           <Form.Label column="column" sm="2">Kezdeti nap dátuma</Form.Label>
