@@ -2,7 +2,7 @@
 const crypto 		= require('crypto');
 const moment 		= require('moment');
 
-// var db, accounts, blockdb, excercise, dailyplan;
+// var db, accounts, blockdb, exercise, dailyplan;
 
 const Account = require('../models/account');
 const Exercise = require('../models/exercise');
@@ -194,15 +194,15 @@ exports.deleteAllAccounts = function(callback)
 };
 
 /**********************************************
-	excercise insertion, update & deletion methods
+	exercise insertion, update & deletion methods
  **********************************************/
 
-exports.addNewExcercise = function(newData, callback)
+exports.addNewExercise = function(newData, callback)
 {
 	Exercise.findOne({name:newData.name}, function(error, exercise)
 	{
 		if (exercise)
-			callback('excercise-name-taken');
+			callback('exercise-name-taken');
 		else {
 			// append date stamp when record was created //
 			newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
@@ -218,7 +218,7 @@ exports.addNewExcercise = function(newData, callback)
 	});
 };
 
-exports.updateExcercise = function(newData, callback)
+exports.updateExercise = function(newData, callback)
 {
 	var o =
 	{
@@ -228,22 +228,22 @@ exports.updateExcercise = function(newData, callback)
 		comment : newData.comment
 	};
 
-	excercise.findOneAndUpdate({_id:getObjectId(newData.id)}, {$set:o}, {returnOriginal : false}, callback);
+	exercise.findOneAndUpdate({_id:getObjectId(newData.id)}, {$set:o}, {returnOriginal : false}, callback);
 };
 
-exports.getAllExcercise = function(callback)
+exports.getAllExercise = function(callback)
 {
-	Exercise.find({}, (error, exercises) => {
+	Exercise.find({}, (error, exercise) => {
 		if (error)
 			callback(error);
 		else
-			callback(null, exercises);
+			callback(null, exercise);
 	});
 };
 
-exports.deleteExcercise = function(id, callback)
+exports.deleteExercise = function(id, callback)
 {
-	excercise.deleteOne({_id:getObjectId(id)}, callback);
+	exercise.deleteOne({_id:getObjectId(id)}, callback);
 };
 
 /**********************************************
@@ -276,7 +276,7 @@ exports.updateblock = function(newData, callback)
 	{
 		name : newData.name,
 		unit : newData.unit,
-		excercises: newData.excercises,
+		exercises: newData.exercises,
 		done: newData.done
 	};
 
@@ -295,6 +295,30 @@ exports.getAllBlocks = function(callback)
 			callback(error);
 		else
 			callback(null, blocks);
+	});
+};
+
+exports.getAllBlockWithExercise = function(callback)
+{
+	Block.find({}, (error, blocks) => {
+		if (error)
+		{
+			callback(error);
+		}
+		else
+		{
+			Exercise.find({}).select("name").exec((error, exercises) => {
+				if (error)
+				{
+					callback(error);
+				}
+				else
+				{
+					blocks.push({exercises});
+					callback(null, blocks);
+				}
+			});
+		}
 	});
 };
 
@@ -368,7 +392,7 @@ exports.getUserAllDailyPlanDates = function(userData, callback)
 	{
 		name : newData.name,
 		unit : newData.unit,
-		excercises: newData.excercises,
+		exercises: newData.exercises,
 		done: newData.done
 	};
 
@@ -406,6 +430,16 @@ exports.getUserDailyPlan = function(userData, callback) {
 		} else {
 			callback(null, dailyplan);
 		}
+	});
+};
+
+exports.getAllDailyPlan = function(callback)
+{
+	DailyPlan.find({}, (error, dailyplan) => {
+		if (error)
+			callback(error);
+		else
+			callback(null, dailyplan);
 	});
 };
 

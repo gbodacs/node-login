@@ -150,6 +150,29 @@ module.exports = function (app) {
       }
     });
 	});
+
+  app.get('/dailyplan_print', function (req, res)
+  {
+    AccountManager.getAllDailyPlan((error, dailyplan) => {
+      if (error) {
+        res.status(500).json({message: error});
+      } else {
+        res.status(200).json({dailyplan})
+      }
+    })
+  });
+
+  app.delete('/dailyplan_delete/:id', function (req, res)
+  {
+    AccountManager.deleteDailyPlan(req.params.id, function (error, obj)
+    {
+      if (!error)
+        res.status(204).send('ok');
+      else
+        res.status(400).send('record not found');
+    });
+  });
+
 //
 // 	/*
 // 		ADMIN - Users
@@ -158,7 +181,7 @@ module.exports = function (app) {
 // 		if (req.session.user == null) {
 // 			res.redirect('/');
 // 		} else {
-// 			res.render('admin_users', {excers: excercise});
+// 			res.render('admin_users', {excers: exercise});
 // 		}
 // 	});
 //
@@ -169,7 +192,7 @@ module.exports = function (app) {
 // 			res.redirect('/');
 // 		} else
 // 		{
-// 			/*AM.addNewExcercise({
+// 			/*AM.addNewExercise({
 // 				name		: req.body['name2'],
 // 				movielink	: req.body['movielink'],
 // 				unit		: req.body['unit'],
@@ -178,7 +201,7 @@ module.exports = function (app) {
 // 			{
 // 				if (e)
 // 				{
-// 					res.status(400).send('error-adding-excercise');
+// 					res.status(400).send('error-adding-exercise');
 // 				}	else
 // 				{
 // 					//req.session.user = o.value;
@@ -189,21 +212,43 @@ module.exports = function (app) {
 // 	});
 //
 	/*
-		ADMIN - Excercise
+		ADMIN - Exercise
 	*/
 
   app.post('/admin_exercise', (req, res) => {
-    AccountManager.addNewExcercise({
+    AccountManager.addNewExercise({
       name: req.body.name,
       movielink: req.body.movielink,
       unit: req.body.unit,
       comment: req.body.comment
     }, (error, exercise) => {
       if (error) {
-        res.status(400).json({message: 'error-adding-excercise'});
+        res.status(400).json({message: 'error-adding-exercise'});
       } else {
         res.status(201).send('ok');
       }
+    });
+  });
+
+  app.get('/exercise_print', function (req, res)
+  {
+    AccountManager.getAllExercise((error, exercise) => {
+      if (error) {
+        res.status(500).json({message: error});
+      } else {
+        res.status(200).json({exercise})
+      }
+    })
+  });
+
+  app.delete('/exercise_delete/:id', function (req, res)
+  {
+    AccountManager.deleteExercise(req.params.id, function (error, obj)
+    {
+      if (!error)
+        res.status(204).send('ok');
+      else
+        res.status(400).send('record not found');
     });
   });
 
@@ -213,7 +258,7 @@ module.exports = function (app) {
 
 	app.get('/admin_block', function (req, res)
 	{
-		AccountManager.getAllExcercise(function (error, exercises)
+		AccountManager.getAllExercise(function (error, exercises)
 		{
 			if (!error) {
         res.status(200).json({exercises});
@@ -229,7 +274,7 @@ module.exports = function (app) {
 			name: req.body.name,
 			repeat: req.body.repeat,
 			exerciseList: req.body.exerciseIdList,
-			// No excercise repeat in block excer_repeat: "1"
+			// No exercise repeat in block excer_repeat: "1"
 		}, (error, block) => {
 			if (error) {
 				res.status(400).json({message: 'error-adding-block'});
@@ -238,6 +283,29 @@ module.exports = function (app) {
 			}
 		});
 	});
+
+  app.get('/block_print', function (req, res)
+  {
+    AccountManager.getAllBlockWithExercise((error, blocks) => {
+      if (error) {
+        res.status(500).json({message: error});
+      } else {
+        res.status(200).json({blocks})
+      }
+    })
+  });
+
+  app.delete('/block_delete/:id', function (req, res)
+  {
+    AccountManager.deleteBlock(req.params.id, function (error, obj)
+    {
+      if (!error)
+        res.status(204).send('ok');
+      else
+        res.status(400).send('record not found');
+    });
+  });
+
 //
 // 	/*
 // 		Settings

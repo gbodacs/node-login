@@ -47,15 +47,36 @@ class Header extends React.Component {
               <NavDropdown.Item>Megtekintés</NavDropdown.Item>
             </LinkContainer>
           </NavDropdown>
-          <LinkContainer to="/home/admin_dailyplan">
-            <Nav.Link className="my-auto">Napi tervek</Nav.Link>
-          </LinkContainer>
-          <LinkContainer to="/home/admin_exercises">
-            <Nav.Link className="my-auto">Gyakorlatok</Nav.Link>
-          </LinkContainer>
-          <LinkContainer to="/home/admin_blocks">
-            <Nav.Link className="my-auto">Blokkok</Nav.Link>
-          </LinkContainer>
+
+          <NavDropdown className="my-auto" title="Gyakorlatok" id="basic-nav-dropdown">
+            <LinkContainer to="/home/admin_exercises">
+              <NavDropdown.Item>Hozzáadás</NavDropdown.Item>
+            </LinkContainer>
+            <NavDropdown.Divider />
+            <LinkContainer to="/home/admin_exercises_list">
+              <NavDropdown.Item>Megtekintés</NavDropdown.Item>
+            </LinkContainer>
+          </NavDropdown>
+
+          <NavDropdown className="my-auto" title="Blokkok" id="basic-nav-dropdown">
+            <LinkContainer to="/home/admin_blocks">
+              <NavDropdown.Item>Hozzáadás</NavDropdown.Item>
+            </LinkContainer>
+            <NavDropdown.Divider />
+            <LinkContainer to="/home/admin_blocks_list">
+              <NavDropdown.Item>Megtekintés</NavDropdown.Item>
+            </LinkContainer>
+          </NavDropdown>
+
+          <NavDropdown className="my-auto" title="Napi tervek" id="basic-nav-dropdown">
+            <LinkContainer to="/home/admin_dailyplan">
+              <NavDropdown.Item>Hozzáadás</NavDropdown.Item>
+            </LinkContainer>
+            <NavDropdown.Divider />
+            <LinkContainer to="/home/admin_dailyplan_list">
+              <NavDropdown.Item>Megtekintés</NavDropdown.Item>
+            </LinkContainer>
+          </NavDropdown>
         </Nav>
       );
     } else {

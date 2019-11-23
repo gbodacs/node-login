@@ -4,6 +4,7 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Modal from 'react-modal';
 import YouTube from 'react-youtube';
+import {formatDate} from '../../helpers/date-format';
 
 class BlockElement extends React.Component {
   constructor(props) {
@@ -161,15 +162,7 @@ class UserDailyplan extends React.Component {
   }
 
   render() {
-    const options = {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    };
-
-    const date = this.state.date.toLocaleDateString("hu-HU", options);
-
+  const date = formatDate(this.state.date);
     let message;
     let blocks;
     if (this.state.noDailyPlan) {
