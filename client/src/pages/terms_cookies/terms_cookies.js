@@ -1,6 +1,5 @@
 import React from 'react';
 import './terms_cookies.scss';
-import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Footer from '../../components/footer/footer';
 import Tabs from 'react-bootstrap/Tabs'
@@ -83,10 +82,6 @@ class Terms extends React.Component {
     return (
       <div>
         <div className="Terms">
-          <Card>
-            <Card.Body
-              variant="primary"
-              className="card-body">
                 <Tabs defaultActiveKey="cookie" id="uncontrolled-tab">
                   <Tab eventKey="data" title="Adatvédelmi szabályzat">
                     <div className='title-line'>
@@ -106,9 +101,7 @@ class Terms extends React.Component {
                   </Tab>
                 </Tabs>
                 <hr/>
-                  <Button variant="primary" type="button" onClick={this.redirectToHomePage}><span className="pr-3"><i className="fas fa-home"></i></span>Vissza a főoldalra</Button>
-              </Card.Body>
-          </Card>
+                  <Button variant="primary" type="button" onClick={this.redirectToHomePage}><span className="pr-3"><i className="fas fa-home"></i></span>Vissza</Button>
         </div>
         <Footer/>
       </div>
