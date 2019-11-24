@@ -64,6 +64,7 @@ class Terms extends React.Component {
     super(props);
     this.redirectToHomePage = this.redirectToHomePage.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.pageReq = "cookie";
     this.state = {
       text: this.dataText,
       title: this.dataTitle,
@@ -79,10 +80,18 @@ class Terms extends React.Component {
   }
 
   render() {
+    const search =this.props.location.search;
+    const params = new URLSearchParams(search);
+    const page = params.get('page'); 
+    if (page === "data")
+      this.pageReq = "data";
+    else
+      this.pageReq = "cookie";
+
     return (
       <div>
         <div className="Terms">
-                <Tabs defaultActiveKey="cookie" id="uncontrolled-tab">
+                <Tabs defaultActiveKey={this.pageReq} id="uncontrolled-tab">
                   <Tab eventKey="data" title="Adatvédelmi szabályzat">
                     <div className='title-line'>
                         <b>{this.dataTitle}</b>

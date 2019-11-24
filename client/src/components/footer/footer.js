@@ -8,8 +8,8 @@ class Footer extends React.Component {
       <Card.Footer>
         <Card.Link>Copyright © 2019 | Az oldalt a TEAM működteti</Card.Link>
         <Card.Link href="/connection">Kapcsolat</Card.Link>
-        <Card.Link href="/terms">Adatvédelmi elvek</Card.Link>
-        <Card.Link href="/terms">Süti szabályzat</Card.Link>
+        <Card.Link href="/terms?page=data">Adatvédelmi elvek</Card.Link>
+        <Card.Link href="/terms?page=cookie">Süti szabályzat</Card.Link>
       </Card.Footer>
     </Card>);
   }
