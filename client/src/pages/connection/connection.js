@@ -27,7 +27,7 @@ class Connection extends React.Component {
 
                 <span className="connect-container pr-3"><i className="fas fa-phone-square"></i></span><strong > +36 2o / 248 9 86o</strong>
                 <br/>
-                <span className="connect-container pr-3"><i className="fas fa-envelope"></i></span><strong>testtartasterapia<i> @ gmail . c0m </i></strong>
+                <span className="connect-container pr-3"><i className="fas fa-envelope"></i></span><strong>testtartasterapia<i> kukac-gmail-pont-c0m </i></strong>
                 <br/>
                 <span className="connect-container pr-3"><i className="fas fa-address-card"></i></span><strong>Nyilvántartási szám: 54050291</strong>
                 <br/>
