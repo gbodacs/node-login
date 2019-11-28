@@ -60,6 +60,7 @@ class Login extends React.Component {
     });
   }
 
+  
   handleSubmit(event) {
     event.preventDefault()
 
@@ -68,6 +69,8 @@ class Login extends React.Component {
       'pass': this.state.password,
       'remember-me': this.checkBoxInput.checked
     }
+
+   
 
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -119,16 +122,16 @@ class Login extends React.Component {
               <hr/>
               <Form ref={(form) => {
                   this.loginForm = form;
-                }} onSubmit={this.handleSubmit}>
+                }} validated={this.validated} onSubmit={this.handleSubmit}>
                 <Form.Group controlId="formBasicEmail">
                   <Form.Label>Felhasználó</Form.Label>
-                  <Form.Control ref={(input) => {
+                  <Form.Control required ref={(input) => {
                       this.userInput = input;
                     }} name="username" type="text" onChange={this.loginFormChange}/>
-                  </Form.Group>
+                   </Form.Group>
                   <Form.Group controlId="formBasicPassword">
                     <Form.Label>Jelszó</Form.Label>
-                    <Form.Control name="password" type="password" onChange={this.loginFormChange}/>
+                    <Form.Control required name="password" type="password" onChange={this.loginFormChange}/>
                   </Form.Group>
                   <Form.Group controlId="formBasicCheckbox">
                     <Form.Check ref={(check) => {

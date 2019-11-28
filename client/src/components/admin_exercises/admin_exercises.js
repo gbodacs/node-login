@@ -82,19 +82,19 @@ class AdminExercises extends React.Component {
               <Col sm="10">
                 <Form.Control ref={(exercise) => {
                     this.exerciseNameInput = exercise;
-                  }} name="exerciseName" type="text" onChange={this.exerciseFormChange}/>
+                  }} name="exerciseName" type="text" required onChange={this.exerciseFormChange}/>
               </Col>
             </Form.Group>
             <Form.Group as={Row} controlId="exerciseUrl">
               <Form.Label column="column" sm="2">Youtube URL</Form.Label>
               <Col sm="10">
-                <Form.Control name="exerciseUrl" type="text" onChange={this.exerciseFormChange}/>
+                <Form.Control name="exerciseUrl" type="text" required onChange={this.exerciseFormChange}/>
               </Col>
             </Form.Group>
             <Form.Group as={Row} controlId="exerciseUnit">
               <Form.Label column="column" sm="2">Mértékegység</Form.Label>
               <Col sm="10">
-                <Form.Control name="exerciseUnit" type="text" onChange={this.exerciseFormChange}/>
+                <Form.Control name="exerciseUnit" type="text" required onChange={this.exerciseFormChange}/>
               </Col>
             </Form.Group>
             <Form.Group as={Row} controlId="exerciseComment">

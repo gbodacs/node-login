@@ -43,7 +43,7 @@ class AdminDailyPlan extends React.Component {
     this.state = {
       users: [
         {
-          '_id': 0,
+          '_id': "",
           'name': 'Válassz!'
         }
       ],

@@ -16,7 +16,7 @@ class NewExercise extends React.Component {
       <Form.Group as={Row} controlId="blockExerciseItems">
         <Form.Label column="column" sm="2">Gyakorlat neve</Form.Label>
         <Col sm="10">
-          <Form.Control name={`blockExerciseItem_${this.props.index}`} as="select" onChange={this.props.onChangeValue}>
+          <Form.Control name={`blockExerciseItem_${this.props.index}`} as="select" required onChange={this.props.onChangeValue}>
             {listExercises}
           </Form.Control>
         </Col>
@@ -35,8 +35,8 @@ class AdminBlocks extends React.Component {
       blockExerciseList: [],
       exercises: [
         {
-          '_id': 0,
-          'name': 'Válassz!'
+          '_id': "",
+          'name': 'Válassz!',          
         }
       ]
     }
@@ -163,14 +163,14 @@ class AdminBlocks extends React.Component {
               <Col sm="10">
                 <Form.Control ref={(name) => {
                     this.blockNameInput = name;
-                  }} name="blockName" type="text" onChange={this.blockFormChange}/>
+                  }} name="blockName" type="text" required onChange={this.blockFormChange}/>
               </Col>
             </Form.Group>
             <Form.Group as={Row} controlId="blockRepetition">
               <Form.Label column="column" sm="2">Blokk sablon ismétlése</Form.Label>
               <Col sm="10">
-                <Form.Control name="blockRepetition" as="select" onChange={this.blockFormChange}>
-                  <option value="1">Válassz!</option>
+                <Form.Control name="blockRepetition" as="select" required onChange={this.blockFormChange}>
+                  <option value="">Válassz!</option>
                   <option value="n1x">Naponta egyszer</option>
                   <option value="n1xh3x">Naponta egyszer majd hetente háromszor</option>
                   <option value="h3x">Hetente háromszor</option>
@@ -180,7 +180,7 @@ class AdminBlocks extends React.Component {
             <Form.Group as={Row} controlId="blockExerciseItems">
               <Form.Label column="column" sm="2">Gyakorlat neve {}</Form.Label>
               <Col sm="10">
-                <Form.Control name="blockExerciseItem_0" as="select" onChange={this.blockFormChange}>
+                <Form.Control name="blockExerciseItem_0" as="select" required onChange={this.blockFormChange}>
                   {listExercises}
                 </Form.Control>
               </Col>
