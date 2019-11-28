@@ -23,6 +23,13 @@ class AdminBlocksList extends React.Component {
             response.json()
               .then(data => {
                 console.log(data);
+                for (let i = 0; i < data.blocks.length - 1; i++) {
+                  data.blocks[i].exerciseList = data.blocks[i].exerciseList.map(exerciseItem => {
+                    let exerciseObject = data.blocks[data.blocks.length - 1].exercises.find(item => item['_id'] === exerciseItem)
+                    console.log(exerciseObject)
+                    return exerciseObject.name
+                  })
+                }
                 this.setState({
                   blocks: data.blocks
                 })
@@ -73,7 +80,7 @@ class AdminBlocksList extends React.Component {
           </td>
 
           <td className="align-middle">
-            <Button variant="outline-info" name="" type="button" size="sm" onClick="">
+            <Button variant="outline-info" name="" type="button" size="sm">
               Szerkesztés
             </Button>
           </td>
