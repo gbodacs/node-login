@@ -128,10 +128,7 @@ class Login extends React.Component {
                   <Form.Control required ref={(input) => {
                       this.userInput = input;
                     }} name="username" type="text" onChange={this.loginFormChange}/>
-                    <Form.Control.Feedback type="invalid">
-              Please choose a username.
-            </Form.Control.Feedback>
-                  </Form.Group>
+                   </Form.Group>
                   <Form.Group controlId="formBasicPassword">
                     <Form.Label>Jelszó</Form.Label>
                     <Form.Control required name="password" type="password" onChange={this.loginFormChange}/>
