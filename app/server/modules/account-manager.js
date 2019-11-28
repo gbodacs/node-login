@@ -290,17 +290,17 @@ exports.deleteBlock = function(id, callback)
 
 exports.getAllBlocks = function(callback)
 {
-	Block.find({}, (error, blocks) => {
+	Block.find({}, (error, block) => {
 		if (error)
 			callback(error);
 		else
-			callback(null, blocks);
+			callback(null, block);
 	});
 };
 
 exports.getAllBlockWithExercise = function(callback)
 {
-	Block.find({}, (error, blocks) => {
+	Block.find({}, (error, block) => {
 		if (error)
 		{
 			callback(error);
@@ -314,8 +314,8 @@ exports.getAllBlockWithExercise = function(callback)
 				}
 				else
 				{
-					blocks.push({exercises});
-					callback(null, blocks);
+					block.push({exercises});
+					callback(null, block);
 				}
 			});
 		}
@@ -435,13 +435,38 @@ exports.getUserDailyPlan = function(userData, callback) {
 
 exports.getAllDailyPlan = function(callback)
 {
-	DailyPlan.find({}, (error, dailyplan) => {
+	Dailyplan.find({}, (error, dailyplan) => {
 		if (error)
 			callback(error);
 		else
 			callback(null, dailyplan);
 	});
 };
+
+exports.getAllDailyPlanWithBlock = function(callback)
+{
+	Dailyplan.find({}, (error, dailyplan) => {
+		if (error)
+		{
+			callback(error);
+		}
+		else
+		{
+			Block.find({}).select("name").exec((error, block) => {
+				if (error)
+				{
+					callback(error);
+				}
+				else
+				{
+					dailyplan.push({block});
+					callback(null, dailyplan);
+				}
+			});
+		}
+	});
+};
+
 
 /**********************************************
 	private encryption & validation methods

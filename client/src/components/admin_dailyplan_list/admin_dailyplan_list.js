@@ -23,7 +23,7 @@ class AdminDailyPlanList extends React.Component {
           response.json()
             .then(data => {
               this.setState({
-                exercises: data.dailyplan
+                dailyplan: data.dailyplan
               })
             })
         } else {
@@ -61,23 +61,21 @@ class AdminDailyPlanList extends React.Component {
     const tableRow = this.state.dailyplan.map((dailyplan, index) =>
       <tr key={index + 1}>
         <td className="align-middle">{index + 1}</td>
-        <td className="align-middle">{dailyplan.name}</td>
+        <td className="align-middle">{dailyplan.userId}</td>
         <td className="align-middle">{dailyplan.movielink}</td>
         <td className="align-middle">{dailyplan.unit}</td>
         <td className="align-middle">{dailyplan.comment}</td>
         <td className="align-middle">{dailyplan.date}</td>
         <td className="align-middle">
-          <Button variant="outline-danger" name={`${dailyplan._id}:${index}`} type="button" size="sm" onClick={this.deleteExercise}>
+          <Button variant="outline-danger" name={`${dailyplan._id}:${index}`} type="button" size="sm" onClick={this.deleteDailyPlan}>
             Törlés
           </Button>
         </td>
-      /*
         <td className="align-middle">
           <Button variant="outline-info" name="" type="button" size="sm" onClick="">
             Szerkesztés
           </Button>
         </td>
-      */
       </tr>
     );
     return (
@@ -91,8 +89,8 @@ class AdminDailyPlanList extends React.Component {
                   <th>Név</th>
                   <th>Url</th>
                   <th>Mértékegység</th>
-                  <th>Komment</th>
-                  <th>Felvétel dátuma</th>
+                  <th>Megjegyzés</th>
+                  <th>Dátum</th>
                   <th>Törlés</th>
                   <th>Szerkesztés</th>
                 </tr>

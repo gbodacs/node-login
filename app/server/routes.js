@@ -153,7 +153,7 @@ module.exports = function (app) {
 
   app.get('/dailyplan_print', function (req, res)
   {
-    AccountManager.getAllDailyPlan((error, dailyplan) => {
+    AccountManager.getAllDailyPlanWithBlock((error, dailyplan) => {
       if (error) {
         res.status(500).json({message: error});
       } else {

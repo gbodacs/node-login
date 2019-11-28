@@ -81,7 +81,8 @@ class AdminBlocksList extends React.Component {
         </tr>
       );
       return (
-        <div className="AdminBlocksList my-5 mx-auto">
+        <div className="AdminBlocksList my-5">
+
           <Card className={`p-4 bg-white`}>
             <Card.Body className="card-body">
               <Table striped bordered hover>
@@ -89,7 +90,7 @@ class AdminBlocksList extends React.Component {
                   <tr>
                     <th>#</th>
                     <th>Név</th>
-                    <th>Ismétlés</th>
+                    <th>Ismétlés*</th>
                     <th>Gyakorlatok</th>
                     <th>Felvétel dátuma</th>
                     <th>Törlés</th>
