@@ -68,15 +68,7 @@ module.exports = function (app) {
 	*/
 
 	app.get('/signup', (req, res) => {
-    AccountManager.validateAdmin(req.cookies.login, (error, valid) => {
-      if (!valid && error === 'not an admin') {
-        res.status(403).json({message: 'Not an admin user'});
-      } else if (!valid) {
-        res.status(500).json({message: 'Internal server error'});
-      } else {
-        res.status(200).json({countryList: CountryList});
-      }
-    })
+    res.status(200).json({countryList: CountryList});
 	});
 
 	app.post('/signup', (req, res) => {
@@ -123,30 +115,34 @@ module.exports = function (app) {
 	*/
 
 	app.get('/admin_dailyplan', function (req, res) {
-		let users;
 		AccountManager.getAllAccounts((error, accounts) => {
-      if (!error)
-			  users = accounts;
-      else
-        res.status(500).json({message: error})
-		});
-		AccountManager.getAllBlocks((error, blocks) => {
-      if (!error)
-			  res.status(200).json({users, blocks})
-      else
-        res.status(500).json({message: error})
+      if (!error) {
+			  let users = accounts;
+        AccountManager.getAllBlocks((err, blocks) => {
+          if (!err)
+          res.status(200).json({users, blocks})
+          else
+          res.status(500).json({message: err})
+        });
+      } else {
+        res.status(500).json({message: error});
+      }
 		});
 	});
 
 	app.post('/admin_dailyplan', function (req, res)
 	{
-		AccountManager.addNewDailyPlan({
+    let newData = {
       userId: req.body.userId,
 			blocks: req.body.blocks,
 			comment: req.body.comment,
 			startDate: req.body.startDate,
 			endDate: req.body.endDate
-		}, (error, dailyplan) => {
+		};
+    if (!newData.comment) {
+      newData.comment = '';
+    }
+		AccountManager.addNewDailyPlan(newData, (error, dailyplan) => {
       if (error) {
         res.status(500).json({message: error});
       } else {
@@ -320,6 +316,17 @@ module.exports = function (app) {
 	/*
 		User dailyplan
 	*/
+
+  app.post('/user_all_dailyplan', function (req, res) {
+    AccountManager.getUserAllDailyPlanDates(
+      {userId: req.body.userId}, (error, dailyplanDates) => {
+        if (error) {
+  				res.status(400).json({message: error});
+  			}	else {
+  				res.status(200).send(dailyplanDates);
+  			}
+      });
+  });
 
 	app.post('/user_dailyplan', function (req, res) {
     AccountManager.getUserDailyPlan({

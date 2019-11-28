@@ -85,7 +85,7 @@ class AdminBlocks extends React.Component {
     const stateItems = Object.keys(this.state);
     const exerciseItems = stateItems.filter(item => item.match('blockExerciseItem') !== null)
     let exerciseIDs = [];
-    exerciseItems.map(item => {
+    exerciseItems.forEach(item => {
       if (this.state[item] !== null)
         exerciseIDs.push(this.state[item])
     });

@@ -21,7 +21,7 @@ class NoPage extends React.Component {
         <Card.Body className="card-body">
           <h1>404</h1>
           <h4>Nincs ilyen oldal</h4>
-          <Button variant="primary" type="button" onClick={this.redirectToHomePage} className={`mt-4`}>Vissza a főoldalra</Button>
+            <Button variant="primary" type="button" onClick={this.redirectToHomePage}><span className="pr-3"><i class="fas fa-home"></i></span>Vissza a főoldalra</Button>
         </Card.Body>
       </Card>
     </div>);

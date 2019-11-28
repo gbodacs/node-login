@@ -24,14 +24,14 @@ class Home extends React.Component {
     return (<div className="Home">
       <Header isAdmin={this.state.isAdmin} history={this.props.history}/>
       <Switch>
-        //Admin pages
+        {/* Admin pages */}
         <PrivateRoute path="/home" exact component={AdminDailyPlan} />
         <PrivateRoute path="/home/admin_adduser" component={AdminAddUser} />
         <PrivateRoute path="/home/admin_getusers" component={AdminGetUsers} />
         <PrivateRoute path="/home/admin_dailyplan" component={AdminDailyPlan} />
         <PrivateRoute path="/home/admin_exercises" component={AdminExercises} />
         <PrivateRoute path="/home/admin_blocks" component={AdminBlocks} />
-        //User pages
+        {/* User pages */}
         <Route path="/home/user_dailyplan" component={UserDailyplan}/>
       </Switch>
       <Footer/>

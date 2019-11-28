@@ -304,11 +304,25 @@ exports.getAllBlocks = function(callback)
 
 exports.addNewDailyPlan = function(newData, callback)
 {
-	//this query should be refactored to select for user and date
-	Dailyplan.findOne({userId:newData.userId}, (error, dailyplan) => {
+	Dailyplan.findOne(
+		{
+		$and: [
+			{
+				$or: [
+					{$and: [{startDate: {$lte: new Date(newData.startDate)}}, {endDate: {$gte: new Date(newData.startDate)}}]},
+					{$and: [{startDate: {$lte: new Date(newData.endDate)}}, {endDate: {$gte: new Date(newData.endDate)}}]},
+					{$and: [{startDate: {$lte: new Date(newData.startDate)}}, {endDate: {$gte: new Date(newData.endDate)}}]},
+					{$and: [{startDate: {$gte: new Date(newData.startDate)}}, {endDate: {$lte: new Date(newData.endDate)}}]}
+				]
+			},
+			{userId: newData.userId}
+		]
+	}, (error, dailyplan) => {
 		if (dailyplan) {
-			callback('already have a dailyplan for this user');
-		}	else {
+			callback('This user already have a dailyplan for the selected date!');
+		}	else if (error) {
+			callback(error.message.message);
+		} else {
 			// append date stamp when record was created //
 			newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
 			const newDailyplan = new Dailyplan(newData);
@@ -320,6 +334,31 @@ exports.addNewDailyPlan = function(newData, callback)
 					callback(error);
 				});
 		}
+	});
+};
+
+exports.getUserAllDailyPlanDates = function(userData, callback)
+{
+	Dailyplan
+	.find({userId: userData.userId})
+	.select('startDate endDate -_id')
+	.exec((error, dailyplanDates) => {
+		let dates = [];
+		let oneDayinMs = 86400000;
+		if (error)
+			callback(error);
+		else
+			dailyplanDates.map(dailyplan => {
+				let days = Math.round((dailyplan.endDate - dailyplan.startDate)/oneDayinMs);
+				let startDate = Math.round(new Date(dailyplan.startDate).getTime()/1000);
+				let nextDate = new Date(dailyplan.startDate).getTime();
+				dates.push(startDate)
+				for (let i = 1; i < days; i++) {
+					nextDate += oneDayinMs;
+					dates.push(nextDate/1000);
+				}
+			});
+			callback(null, dates);
 	});
 };
 
@@ -345,7 +384,7 @@ exports.getUserDailyPlan = function(userData, callback) {
 	Dailyplan.aggregate([
 		{$match: { startDate: { $lte: new Date(userData.date)}, endDate: { $gte: new Date(userData.date)}, userId: userData.id}},
 		{
-			"$lookup": {
+			$lookup: {
 				"from": "blocks",
 				"localField": "id",
 				"foreignField": "id",
@@ -353,7 +392,7 @@ exports.getUserDailyPlan = function(userData, callback) {
 			}
 		},
 		{
-			"$lookup": {
+			$lookup: {
 				"from": "exercises",
 				"localField": "exerciseList",
 				"foreignField": "id",

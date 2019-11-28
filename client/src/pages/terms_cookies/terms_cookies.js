@@ -1,6 +1,5 @@
 import React from 'react';
 import './terms_cookies.scss';
-import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Footer from '../../components/footer/footer';
 import Tabs from 'react-bootstrap/Tabs'
@@ -11,9 +10,13 @@ class Terms extends React.Component {
   dataTitle = `Adatvédelmi és Adatkezelési szabályzat`;
   dataText = `
   Adatkezelő: Spuriga-Molnár Brigitta (székhely: 1048 Budapest. Bőröndös utca 12), amely önállóan az adatok kezelésének célját meghatározza, az adatkezelésre vonatkozó döntéseket meghozza, végrehajtja, vagy az általa megbízott adatfeldolgozóval végrehajtatja.
+
   Adatkezelés: az alkalmazott eljárástól függetlenül az adatokon végzett bármely művelet vagy a műveletek összessége, így különösen gyűjtése, felvétele, rögzítése, rendszerezése, tárolása, megváltoztatása, felhasználása, lekérdezése, továbbítása, nyilvánosságra hozatala, összehangolása vagy összekapcsolása, zárolása, törlése és megsemmisítése, valamint az adatok további felhasználásának megakadályozása.
+
   Adatfeldolgozó: Spuriga-Molnár Brigitta (székhely: 1048 Budapest. Bőröndös utca 12).
+
   Adatfeldolgozás: az adatkezelési műveletekhez kapcsolódó technikai feladatok elvégzése, függetlenül a műveletek végrehajtásához alkalmazott módszertől és eszköztől, valamint az alkalmazás helyétől, feltéve hogy a technikai feladatot az adatokon végzik;
+
 
   1. Milyen adatokat kezelünk?
   Az Adatkezelő a saját weboldalán (https://testtartasterapia.hu) regisztrációt nem biztosít, csak meghívás alapján csatlakozhatnak az oldalhoz. Ezt követően a kapott jelszóval beléphet a Felhasználó.
@@ -61,6 +64,7 @@ class Terms extends React.Component {
     super(props);
     this.redirectToHomePage = this.redirectToHomePage.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.pageReq = "cookie";
     this.state = {
       text: this.dataText,
       title: this.dataTitle,
@@ -76,14 +80,18 @@ class Terms extends React.Component {
   }
 
   render() {
+    const search =this.props.location.search;
+    const params = new URLSearchParams(search);
+    const page = params.get('page'); 
+    if (page === "data")
+      this.pageReq = "data";
+    else
+      this.pageReq = "cookie";
+
     return (
       <div>
         <div className="Terms">
-          <Card>
-            <Card.Body
-              variant="primary"
-              className="card-body">
-                <Tabs defaultActiveKey="cookie" id="uncontrolled-tab">
+                <Tabs defaultActiveKey={this.pageReq} id="uncontrolled-tab">
                   <Tab eventKey="data" title="Adatvédelmi szabályzat">
                     <div className='title-line'>
                         <b>{this.dataTitle}</b>
@@ -102,11 +110,7 @@ class Terms extends React.Component {
                   </Tab>
                 </Tabs>
                 <hr/>
-            </Card.Body>
-            <Card.Footer>
-              <Button variant="primary" type="button" onClick={this.redirectToHomePage} className={`my-4 ml-4`}>Vissza a főoldalra</Button>
-            </Card.Footer>
-          </Card>
+                  <Button variant="primary" type="button" onClick={this.redirectToHomePage}><span className="pr-3"><i className="fas fa-home"></i></span>Vissza</Button>
         </div>
         <Footer/>
       </div>
