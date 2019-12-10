@@ -23,8 +23,7 @@ class Login extends React.Component {
 
   componentDidMount() {
     this.userInput.focus();
-
-    if(getIsAdminFromStorage()) {
+    if(getIsAdminFromStorage() === 'true') {
       this.props.history.push('/home/admin_dailyplan');
     } else {
       const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/login`, {credentials: 'include'});
@@ -41,7 +40,11 @@ class Login extends React.Component {
             sessionStorage.setItem('userId', userDataFromServer['_id']);
             sessionStorage.setItem('userName', userDataFromServer['name']);
             sessionStorage.setItem('isAdmin', userDataFromServer['isAdmin']);
-            this.props.history.push('/home/admin_dailyplan');
+            if (userDataFromServer['isAdmin']) {
+              this.props.history.push('/home/admin_dailyplan');
+            } else {
+              this.props.history.push('/home/user_dailyplan');
+            }
           });
         } else if (status !== 400) {
           response.json()
