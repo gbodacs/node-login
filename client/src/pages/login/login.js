@@ -26,6 +26,8 @@ class Login extends React.Component {
     if(getIsAdminFromStorage() === 'true') {
       this.props.history.push('/home/admin_dailyplan');
     } else {
+      console.log("Backend URL from config: " + process.env.REACT_APP_BACKEND_SERVER);
+
       const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/login`, {credentials: 'include'});
 
       fetch(request)
