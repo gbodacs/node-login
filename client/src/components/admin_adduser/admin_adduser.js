@@ -6,95 +6,112 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-class AdminAddUser extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-      email: '',
-      country: '',
-      username: '',
-      password: '',
-      checkbox: false,
-      countryList: []
-    }
-    this.registerFormChange = this.registerFormChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.clearRegisterForm = this.clearRegisterForm.bind(this);
-  }
-
-  componentDidMount() {
-    this.nameInput.focus();
-
-    const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/signup` , {credentials: 'include'});
-
-    fetch(request)
-       .then(response => {
-         const status = response.status;
-         if (status === 200) {
-           response.json()
-             .then(data => {
-               this.setState({
-                 countryList: data.countryList
-               })
-             })
-         } else {
-           response.json()
-             .then(serverError => {
-               alert(response.status + '\n' + serverError.message);
-               this.props.history.push('/home');
-             });
-         }
-       });
-  }
-
-  registerFormChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  }
-
-  clearRegisterForm() {
-    this.registerForm.reset();
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-
-    const registerData = {
-      name: this.state.name,
-			email: this.state.email,
-			user: this.state.username,
-			pass: this.state.password,
-			country: this.state.country,
-      isAdmin: this.isAdminCheckBoxInput.checked
+class AdminAddUser extends React.Component
+{
+    constructor(props)
+    {
+        super(props);
+        this.state =
+        {
+            name: '',
+            email: '',
+            country: '',
+            username: '',
+            password: '',
+            checkbox: false,
+            countryList: []
+        };
+        this.registerFormChange = this.registerFormChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.clearRegisterForm = this.clearRegisterForm.bind(this);
     }
 
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
+    componentDidMount()
+    {
+        this.nameInput.focus();
 
-    const options = {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(registerData)
+        const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/signup`,{credentials: 'include'});
+
+        fetch(request)
+            .then(response => {
+            const status = response.status;
+            if (status === 200)
+            {
+                response.json().then(data =>
+                {
+                    this.setState(
+                    {
+                        countryList: data.countryList
+                    })
+                })
+            }
+            else
+            {
+                response.json().then(serverError =>
+                {
+                    alert(response.status + '\n' + serverError.message);
+                    this.props.history.push('/home');
+                });
+            }
+        });
     }
 
-    const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/signup`, options);
+    registerFormChange(event)
+    {
+        this.setState(
+        {
+            [event.target.name]: event.target.value
+        });
+    }
 
-    fetch(request)
-      .then(response => {
-        const status = response.status;
-        if (status === 201) {
-          this.registerForm.reset();
-          alert('Sikeresen felvettél egy felhasználót!');
-        } else {
-          response.json()
-            .then(serverError => {
-              alert(response.status + '\n' + serverError.message);
-            });
-        }
-      })
-  }
+    clearRegisterForm()
+    {
+        this.registerForm.reset();
+    }
+
+    handleSubmit(event)
+    {
+        event.preventDefault();
+
+        const registerData =
+        {
+            name: this.state.name,
+            email: this.state.email,
+            user: this.state.username,
+            pass: this.state.password,
+            country: this.state.country,
+            isAdmin: this.isAdminCheckBoxInput.checked
+        };
+
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        const options =
+        {
+            method: 'POST',
+            headers,
+            body: JSON.stringify(registerData)
+        };
+
+        const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/signup`, options);
+
+        fetch(request).then(response =>
+        {
+            const status = response.status;
+            if (status === 201)
+            {
+                this.registerForm.reset();
+                alert('Sikeresen felvettél egy felhasználót!');
+            }
+            else
+            {
+                response.json().then(serverError =>
+                {
+                    alert(response.status + '\n' + serverError.message);
+                });
+            }
+        })
+    }
 
   render() {
     const listCountries = this.state.countryList.map(country => 

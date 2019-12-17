@@ -6,64 +6,76 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-class AdminExercises extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      exerciseName: '',
-      exerciseUrl: '',
-      exerciseUnit: '',
-      exerciseComment: ''
-    }
-    this.exerciseFormChange = this.exerciseFormChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentDidMount() {
-    this.exerciseNameInput.focus();
-  }
-
-  exerciseFormChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-
-    const exerciseData = {
-      name: this.state.exerciseName,
-      movielink: this.state.exerciseUrl,
-      unit: this.state.exerciseUnit,
-      comment: this.state.exerciseComment
-    }
-
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-
-    const options = {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(exerciseData)
-    }
-
-    const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/admin_exercise`, options);
-
-    fetch(request)
-      .then(response => {
-        const status = response.status;
-        if (status === 201) {
-          this.exerciseForm.reset();
-          alert('Sikeresen felvettél egy gyakorlatot!');
-        } else {
-          response.json()
-            .then(serverError => {
-              alert(response.status + '\n' + serverError.message);
-            });
+class AdminExercises extends React.Component
+{
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            exerciseName: '',
+            exerciseUrl: '',
+            exerciseUnit: '',
+            exerciseComment: ''
         }
-      });
-  }
+        this.exerciseFormChange = this.exerciseFormChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    componentDidMount()
+    {
+        this.exerciseNameInput.focus();
+    }
+
+    exerciseFormChange(event)
+    {
+        this.setState(
+        {
+            [event.target.name]: event.target.value
+        });
+    }
+
+    handleSubmit(event)
+    {
+        event.preventDefault();
+
+        const exerciseData =
+        {
+            name: this.state.exerciseName,
+            movielink: this.state.exerciseUrl,
+            unit: this.state.exerciseUnit,
+            comment: this.state.exerciseComment
+        };
+
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        const options =
+        {
+            method: 'POST',
+            headers,
+            body: JSON.stringify(exerciseData)
+        };
+
+        const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/admin_exercise`, options);
+
+        fetch(request).then(response =>
+        {
+            const status = response.status;
+            if (status === 201)
+            {
+                this.exerciseForm.reset();
+                alert('Sikeresen felvettél egy gyakorlatot!');
+            }
+            else
+            {
+                response.json()
+                    .then(serverError =>
+                    {
+                        alert(response.status + '\n' + serverError.message);
+                    });
+            }
+        });
+    }
 
   render() {
     return (<div className="AdminExercises my-5">

@@ -4,17 +4,21 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Footer from '../../components/footer/footer';
 
-class Connection extends React.Component {
-  constructor(props) {
-    super(props);
-    this.redirectToHomePage = this.redirectToHomePage.bind(this);
+class Connection extends React.Component
+{
+  constructor(props)
+  {
+      super(props);
+      this.redirectToHomePage = this.redirectToHomePage.bind(this);
   }
 
-  redirectToHomePage() {
-    this.props.history.push('/login');
+  redirectToHomePage()
+  {
+      this.props.history.push('/login');
   }
 
-  render() {
+  render()
+  {
     return (
       <div>
         <div className="Connection">

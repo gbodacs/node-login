@@ -3,17 +3,21 @@ import './nopage.scss';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
-class NoPage extends React.Component {
-  constructor(props) {
+class NoPage extends React.Component
+{
+  constructor(props)
+  {
     super(props);
     this.redirectToHomePage = this.redirectToHomePage.bind(this);
   }
 
-  redirectToHomePage() {
+  redirectToHomePage()
+  {
     this.props.history.push('/home');
   }
 
-  render() {
+  render()
+  {
     return (<div className="NoPage">
       <Card style={{
           width: '30%'

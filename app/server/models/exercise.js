@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
-const exerciseSchema = mongoose.Schema({
+const exerciseSchema = mongoose.Schema(
+{
   name: { type: String, required: true},
   movielink: { type: String, required: true},
   unit: { type: String, required: true},

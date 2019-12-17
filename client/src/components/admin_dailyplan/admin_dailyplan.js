@@ -149,112 +149,131 @@ class AdminDailyPlan extends React.Component {
       });
   }
 
-  addBlock() {
-    const blocks = this.state.blockElementList.concat(NewBlock);
-    this.setState({blockElementList: blocks});
-  }
-
-  saveStartDate(date) {
-    let startDateToSave = date.setHours(1,0,0);
-    this.setState({startDate: startDateToSave});
-  }
-
-  saveEndDate(date) {
-    let endDateToSave = date.setHours(23,59,59);
-    this.setState({endDate: endDateToSave});
-  }
-
-  resetForm() {
-    this.dailyplanForm.reset();
-    this.setState({startDate: new Date(), endDate: new Date(), userId: '', excludeDates: []})
-  }
-
-  getBlockIDs() {
-    const stateItems = Object.keys(this.state);
-    const blockIdNames = stateItems.filter(item => item.match('block_name') !== null)
-    const blockIdRepeats = stateItems.filter(item => item.match('block_repeat') !== null)
-    let blockIds = [];
-    blockIdNames.forEach(item => {
-      if (this.state[item] !== null)
-        blockIds.push(this.state[item])
-    });
-    let blockObjectList = [];
-    blockIds.forEach((blockID, index) => {
-      let block = {};
-      block.id = blockID;
-      if (blockIdRepeats[index]) {
-        block.repeat = this.state[blockIdRepeats[index]];
-      } else {
-        block.repeat = null;
-      }
-      blockObjectList.push(block);
-    })
-    return (blockObjectList);
-  }
-
-  deleteBlockIDs() {
-    let actualState = Object.assign({}, this.state);
-    const stateItems = Object.keys(this.state);
-    const blockIdNames = stateItems.filter(item => item.match('block_name') !== null)
-    const blockIdRepeats = stateItems.filter(item => item.match('block_repeat') !== null)
-    for (let i = 0; i < blockIdNames.length; i++) {
-      actualState[blockIdNames[i]] = null;
-      actualState[blockIdRepeats[i]] = null;
-    }
-    actualState.blockElementList = [];
-    this.setState(actualState);
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-
-    const dailyplanData = {
-      userId: this.state.userId,
-      blocks: this.getBlockIDs(),
-      comment: this.state.dailyPlanComment,
-      startDate: new Date(this.state.startDate),
-      endDate: new Date(this.state.endDate)
+    addBlock()
+    {
+        const blocks = this.state.blockElementList.concat(NewBlock);
+        this.setState({blockElementList: blocks});
     }
 
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-
-    const options = {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(dailyplanData)
+    saveStartDate(date)
+    {
+        let startDateToSave = date.setHours(1,0,0);
+        this.setState({startDate: startDateToSave});
     }
 
-    const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/admin_dailyplan`, options);
+    saveEndDate(date)
+    {
+        let endDateToSave = date.setHours(23,59,59);
+        this.setState({endDate: endDateToSave});
+    }
 
-    fetch(request)
-      .then(response => {
-        const status = response.status;
-        if (status === 201) {
-          this.resetForm();
-          this.deleteBlockIDs();
-          alert('Sikeresen felvettél egy napi tervet!');
-        } else {
-          response.json()
-            .then(serverError => {
-              let errorMessage = serverError.message.message || serverError.message;
-              alert(response.status + '\n' + errorMessage);
-            });
+    resetForm()
+    {
+        this.dailyplanForm.reset();
+        this.setState({startDate: new Date(), endDate: new Date(), userId: '', excludeDates: []})
+    }
+
+    getBlockIDs()
+    {
+        const stateItems = Object.keys(this.state);
+        const blockIdNames = stateItems.filter(item => item.match('block_name') !== null)
+        const blockIdRepeats = stateItems.filter(item => item.match('block_repeat') !== null)
+        let blockIds = [];
+        blockIdNames.forEach(item =>
+        {
+            if (this.state[item] !== null)
+                blockIds.push(this.state[item])
+        });
+        let blockObjectList = [];
+        blockIds.forEach((blockID, index) =>
+        {
+            let block = {};
+            block.id = blockID;
+            if (blockIdRepeats[index])
+            {
+                block.repeat = this.state[blockIdRepeats[index]];
+            } else
+            {
+                block.repeat = null;
+            }
+            blockObjectList.push(block);
+        })
+        return (blockObjectList);
+    }
+
+    deleteBlockIDs()
+    {
+        let actualState = Object.assign({}, this.state);
+        const stateItems = Object.keys(this.state);
+        const blockIdNames = stateItems.filter(item => item.match('block_name') !== null)
+        const blockIdRepeats = stateItems.filter(item => item.match('block_repeat') !== null)
+        for (let i = 0; i < blockIdNames.length; i++) 
+        {
+            actualState[blockIdNames[i]] = null;
+            actualState[blockIdRepeats[i]] = null;
         }
-      })
-  }
+        actualState.blockElementList = [];
+        this.setState(actualState);
+    }
 
-  render() {
-    const listUsers = this.state.users.map(user => {
+    handleSubmit(event)
+    {
+        event.preventDefault();
+
+        const dailyplanData =
+        {
+            userId: this.state.userId,
+            blocks: this.getBlockIDs(),
+            comment: this.state.dailyPlanComment,
+            startDate: new Date(this.state.startDate),
+            endDate: new Date(this.state.endDate)
+        };
+
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        const options =
+        {
+            method: 'POST',
+            headers,
+            body: JSON.stringify(dailyplanData)
+        };
+
+        const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/admin_dailyplan`, options);
+
+        fetch(request).then(response =>
+        {
+            const status = response.status;
+            if (status === 201) 
+            {
+                this.resetForm();
+                this.deleteBlockIDs();
+                alert('Sikeresen felvettél egy napi tervet!');
+            } else
+            {
+                response.json().then(serverError => {
+                    let errorMessage = serverError.message.message || serverError.message;
+                    alert(response.status + '\n' + errorMessage);
+                });
+            }
+        })
+    }
+
+  render() 
+  {
+    const listUsers = this.state.users.map(user => 
+    {
       return <option key={user['_id']} value={user['_id']}>{user.name}</option>
     });
 
-    const blocks = this.state.blockElementList.map((Element, index) => {
+    const blocks = this.state.blockElementList.map((Element, index) =>
+    {
       return <Element key={ index + 1} index={index + 1} blocks={this.state.blocks} onChangeValue={this.dailyplanFormChange}/>
     });
 
     let endOfForm = <div></div>
-    if (this.state.excludeDates.length || this.state.newUser) {
+    if (this.state.excludeDates.length || this.state.newUser)
+    {
       endOfForm = <div>
         <Form.Group as={Row} controlId="startDate">
           <Form.Label column="column" sm="2">Kezdeti nap dátuma</Form.Label>

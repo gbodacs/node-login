@@ -12,15 +12,18 @@ import UserDailyplan from '../../components/user_dailyplan/user_dailyplan';
 import { getIsAdminFromStorage } from '../../helpers/is-admin';
 import PrivateRoute from '../../helpers/private-route';
 
-class Home extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isAdmin: getIsAdminFromStorage()
-    }
+class Home extends React.Component
+{
+  constructor(props)
+  {
+      super(props);
+      this.state = {
+          isAdmin: getIsAdminFromStorage()
+      };
   }
 
-  render() {
+  render()
+  {
     return (<div className="Home">
       <Header isAdmin={this.state.isAdmin} history={this.props.history}/>
       <Switch>

@@ -6,7 +6,8 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-class NewExercise extends React.Component {
+class NewExercise extends React.Component 
+{
   render() {
     const listExercises = this.props.exercises.map(exercise =>
       <option key={exercise._id} value={exercise._id}>{exercise.name}</option>

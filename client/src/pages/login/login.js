@@ -9,10 +9,13 @@ import { getIsAdminFromStorage } from '../../helpers/is-admin';
 
 const cookies = new Cookies();
 
-class Login extends React.Component {
-  constructor(props) {
+class Login extends React.Component
+{
+  constructor(props)
+  {
     super(props);
-    this.state = {
+    this.state =
+    {
       username: '',
       password: '',
       checkbox: false
@@ -21,11 +24,14 @@ class Login extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount()
+  {
     this.userInput.focus();
-    if(getIsAdminFromStorage() === 'true') {
+    if(getIsAdminFromStorage() === 'true')
+    {
       this.props.history.push('/home/admin_dailyplan');
-    } else {
+    } else
+    {
       console.log("Backend URL from config: " + process.env.REACT_APP_BACKEND_SERVER);
 
       const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/login`, {credentials: 'include'});
@@ -36,21 +42,26 @@ class Login extends React.Component {
         if (status === 200) {
           response.json()
           .then(userDataFromServer => {
-            if (userDataFromServer.cookie) {
+            if (userDataFromServer.cookie)
+            {
               cookies.set('login', userDataFromServer.cookie, {path: '/'});
             }
             sessionStorage.setItem('userId', userDataFromServer['_id']);
             sessionStorage.setItem('userName', userDataFromServer['name']);
             sessionStorage.setItem('isAdmin', userDataFromServer['isAdmin']);
-            if (userDataFromServer['isAdmin']) {
+            if (userDataFromServer['isAdmin'])
+            {
               this.props.history.push('/home/admin_dailyplan');
-            } else {
+            } else
+            {
               this.props.history.push('/home/user_dailyplan');
             }
           });
-        } else if (status !== 400) {
+        } else if (status !== 400)
+        {
           response.json()
-          .then(serverError => {
+          .then(serverError =>
+          {
             alert(response.status + '\n' + serverError.message);
           });
         }
@@ -59,28 +70,30 @@ class Login extends React.Component {
 
   }
 
-  loginFormChange(event) {
-    this.setState({
+  loginFormChange(event)
+  {
+    this.setState(
+    {
       [event.target.name]: event.target.value
     });
   }
 
-  
-  handleSubmit(event) {
-    event.preventDefault()
+  handleSubmit(event)
+  {
+    event.preventDefault();
 
-    const loginData = {
+    const loginData =
+    {
       'user': this.state.username,
       'pass': this.state.password,
       'remember-me': this.checkBoxInput.checked
-    }
-
-   
+    };
 
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
-    const options = {
+    const options =
+    {
       method: 'POST',
       headers,
       body: JSON.stringify(loginData)
@@ -88,33 +101,37 @@ class Login extends React.Component {
 
     const request = new Request(`${process.env.REACT_APP_BACKEND_SERVER}/login`, options);
 
-    fetch(request)
-      .then(response => {
-        const status = response.status;
-        if (status === 200) {
-          this.loginForm.reset();
-          response.json()
-            .then(userDataFromServer => {
-              if (userDataFromServer.cookie) {
-                cookies.set('login', userDataFromServer.cookie, {path: '/'});
-              }
-              sessionStorage.setItem('userId', userDataFromServer['_id']);
-              sessionStorage.setItem('userName', userDataFromServer['name']);
-              sessionStorage.setItem('isAdmin', userDataFromServer['isAdmin']);
-              this.props.history.push('/home/admin_dailyplan');
-            });
-        } else {
-          this.loginForm.reset();
-          response.json()
-            .then(serverError => {
-              alert(response.status + '\n' + serverError.message);
-            });
-        }
-      });
-
+    fetch(request).then(response =>
+    {
+      const status = response.status;
+      if (status === 200) {
+        this.loginForm.reset();
+        response.json()
+          .then(userDataFromServer =>
+          {
+            if (userDataFromServer.cookie)
+            {
+              cookies.set('login', userDataFromServer.cookie, {path: '/'});
+            }
+            sessionStorage.setItem('userId', userDataFromServer['_id']);
+            sessionStorage.setItem('userName', userDataFromServer['name']);
+            sessionStorage.setItem('isAdmin', userDataFromServer['isAdmin']);
+            this.props.history.push('/home/admin_dailyplan');
+          });
+      } else
+      {
+        this.loginForm.reset();
+        response.json()
+          .then(serverError =>
+          {
+            alert(response.status + '\n' + serverError.message);
+          });
+      }
+    });
   }
 
-  render() {
+  render()
+  {
     return (
       <div>
         <div className="Login">

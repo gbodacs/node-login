@@ -2,11 +2,12 @@ import React from 'react';
 import './terms_cookies.scss';
 import Button from 'react-bootstrap/Button';
 import Footer from '../../components/footer/footer';
-import Tabs from 'react-bootstrap/Tabs'
-import Tab from 'react-bootstrap/Tab'
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
 
 
-class Terms extends React.Component {
+class Terms extends React.Component
+{
   dataTitle = `Adatvédelmi és Adatkezelési szabályzat`;
   dataText = `
   Adatkezelő: Spuriga-Molnár Brigitta (székhely: 1048 Budapest. Bőröndös utca 12), amely önállóan az adatok kezelésének célját meghatározza, az adatkezelésre vonatkozó döntéseket meghozza, végrehajtja, vagy az általa megbízott adatfeldolgozóval végrehajtatja.
@@ -72,17 +73,20 @@ class Terms extends React.Component {
     };
   }
 
-  handleChange(event, newValue) {
+  handleChange(event, newValue)
+  {
   }
 
-  redirectToHomePage() {
+  redirectToHomePage()
+  {
     this.props.history.push('/login');
   }
 
-  render() {
+  render()
+  {
     const search =this.props.location.search;
     const params = new URLSearchParams(search);
-    const page = params.get('page'); 
+    const page = params.get('page');
     if (page === "data")
       this.pageReq = "data";
     else

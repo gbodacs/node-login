@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
-const blockSchema = mongoose.Schema({
+const blockSchema = mongoose.Schema(
+{
   name: { type: String, required: true},
   repeat: { type: String, required: true},
   exerciseList: { type: [], required: true},

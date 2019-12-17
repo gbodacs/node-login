@@ -7,7 +7,8 @@ import NoPage from './pages/nopage/nopage';
 import Terms from './pages/terms_cookies/terms_cookies';
 import Connection from './pages/connection/connection';
 
-function App() {
+function App() 
+{
   return (
     <Router>
       <div className="App">
